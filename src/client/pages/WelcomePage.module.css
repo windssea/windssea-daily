@@ -54,3 +54,25 @@
   opacity: 0.85;
   transform: scale(0.97);
 }
+
+.linkBtn {
+  height: 52px;
+  padding: 0 40px;
+  border: 2px solid #f4a261;
+  border-radius: 16px;
+  background: transparent;
+  color: #f4a261;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+}
+
+.linkBtn:active {
+  background: #f4a261;
+  color: #fff;
+  transform: scale(0.97);
+}

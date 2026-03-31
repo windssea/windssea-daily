@@ -14,6 +14,9 @@ function WelcomePage({ onEnter }: Props) {
         <button className={styles.btn} onClick={onEnter}>
           我的待办
         </button>
+        <a className={styles.linkBtn} href="https://trip.nanopanda.site/" target="_blank" rel="noreferrer">
+          黄山旅游
+        </a>
       </div>
     </div>
   )
