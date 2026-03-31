@@ -17,7 +17,11 @@ function formatDisplayDate(d: Date): string {
   return `${month}月${day}日 ${weekDays[d.getDay()]}`
 }
 
-function TodoPage() {
+interface Props {
+  onBack: () => void
+}
+
+function TodoPage({ onBack }: Props) {
   const [todos, setTodos] = useState<Todo[]>([])
   const [newTitle, setNewTitle] = useState('')
   const [selectedDate, setSelectedDate] = useState(() => new Date())
@@ -81,6 +85,9 @@ function TodoPage() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
+        <button onClick={onBack} className={styles.navBtn} aria-label="返回">
+          ←
+        </button>
         <button onClick={() => changeDate(-1)} className={styles.navBtn} aria-label="前一天">
           ‹
         </button>

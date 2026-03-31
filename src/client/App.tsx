@@ -5,7 +5,7 @@ import TodoPage from './pages/TodoPage'
 function App() {
   const [page, setPage] = useState<'welcome' | 'todo'>('welcome')
 
-  if (page === 'todo') return <TodoPage />
+  if (page === 'todo') return <TodoPage onBack={() => setPage('welcome')} />
   return <WelcomePage onEnter={() => setPage('todo')} />
 }
 
