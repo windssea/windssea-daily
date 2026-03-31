@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { api } from '../lib/api'
 import type { Todo } from '../../shared/types'
 import styles from './TodoPage.module.css'
@@ -10,11 +10,11 @@ function formatDate(d: Date): string {
   return `${y}-${m}-${day}`
 }
 
-function formatDisplayDate(d: Date): string {
+function formatDisplayDate(d: Date) {
   const month = d.getMonth() + 1
   const day = d.getDate()
   const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
-  return `${month}月${day}日 ${weekDays[d.getDay()]}`
+  return { date: `${month}月${day}日`, week: weekDays[d.getDay()] }
 }
 
 interface Props {
@@ -26,9 +26,14 @@ function TodoPage({ onBack }: Props) {
   const [newTitle, setNewTitle] = useState('')
   const [selectedDate, setSelectedDate] = useState(() => new Date())
   const [loading, setLoading] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const dateStr = formatDate(selectedDate)
   const isToday = dateStr === formatDate(new Date())
+  const { date: displayDate, week: displayWeek } = formatDisplayDate(selectedDate)
+
+  const completedCount = todos.filter((t) => t.completed).length
+  const totalCount = todos.length
 
   const fetchTodos = useCallback(async () => {
     setLoading(true)
@@ -46,15 +51,37 @@ function TodoPage({ onBack }: Props) {
     fetchTodos()
   }, [fetchTodos])
 
+  const handleTextareaInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNewTitle(e.target.value)
+    const el = e.target
+    el.style.height = 'auto'
+    el.style.height = el.scrollHeight + 'px'
+  }
+
+  const resetTextarea = () => {
+    setNewTitle('')
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'
+    }
+  }
+
   const addTodo = async () => {
     const title = newTitle.trim()
     if (!title) return
     try {
       const data = await api.createTodo(title)
       setTodos((prev) => [...prev, data.todo])
-      setNewTitle('')
+      resetTextarea()
+      textareaRef.current?.focus()
     } catch (err) {
       console.error('Failed to add todo:', err)
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      addTodo()
     }
   }
 
@@ -83,61 +110,69 @@ function TodoPage({ onBack }: Props) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.page}>
+      {/* Header */}
       <header className={styles.header}>
-        <button onClick={onBack} className={styles.navBtn} aria-label="返回">
+        <button onClick={onBack} className={styles.backBtn} aria-label="返回">
           ←
         </button>
-        <button onClick={() => changeDate(-1)} className={styles.navBtn} aria-label="前一天">
-          ‹
-        </button>
-        <div className={styles.dateDisplay}>
-          <span className={styles.dateText}>{formatDisplayDate(selectedDate)}</span>
+
+        <div className={styles.dateNav}>
+          <button onClick={() => changeDate(-1)} className={styles.navBtn} aria-label="前一天">‹</button>
+          <div className={styles.dateBlock}>
+            <span className={styles.dateText}>{displayDate}</span>
+            <span className={styles.weekText}>{displayWeek}</span>
+          </div>
+          <button onClick={() => changeDate(1)} className={styles.navBtn} aria-label="后一天">›</button>
+        </div>
+
+        <div className={styles.headerRight}>
           {!isToday && (
             <button onClick={() => setSelectedDate(new Date())} className={styles.todayBtn}>
-              回到今天
+              今天
             </button>
           )}
         </div>
-        <button onClick={() => changeDate(1)} className={styles.navBtn} aria-label="后一天">
-          ›
-        </button>
       </header>
 
-      <div className={styles.inputRow}>
-        <input
-          type="text"
-          value={newTitle}
-          onChange={(e) => setNewTitle(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && addTodo()}
-          placeholder="添加新待办..."
-          className={styles.input}
-        />
-        <button onClick={addTodo} className={styles.addBtn} disabled={!newTitle.trim()}>
-          添加
-        </button>
-      </div>
+      {/* Progress bar */}
+      {totalCount > 0 && (
+        <div className={styles.progressWrap}>
+          <div
+            className={styles.progressBar}
+            style={{ width: `${(completedCount / totalCount) * 100}%` }}
+          />
+          <span className={styles.progressLabel}>
+            {completedCount === totalCount ? '全部完成 ✓' : `${completedCount} / ${totalCount} 完成`}
+          </span>
+        </div>
+      )}
 
-      <div className={styles.listContainer}>
+      {/* Todo list */}
+      <div className={styles.listWrap}>
         {loading ? (
-          <div className={styles.empty}>加载中...</div>
+          <div className={styles.empty}>
+            <span className={styles.emptyDot} />
+            <span className={styles.emptyDot} />
+            <span className={styles.emptyDot} />
+          </div>
         ) : todos.length === 0 ? (
-          <div className={styles.empty}>暂无待办，添加一个吧 ✨</div>
+          <div className={styles.empty}>
+            <p className={styles.emptyText}>今天还没有待办</p>
+            <p className={styles.emptyHint}>在下方写下第一件事吧</p>
+          </div>
         ) : (
           <ul className={styles.list}>
             {todos.map((todo) => (
-              <li key={todo.id} className={styles.item}>
-                <label className={styles.label}>
-                  <input
-                    type="checkbox"
-                    checked={todo.completed}
-                    onChange={() => toggleTodo(todo)}
-                    className={styles.checkbox}
-                  />
-                  <span className={todo.completed ? styles.completed : styles.title}>
-                    {todo.title}
-                  </span>
-                </label>
+              <li key={todo.id} className={`${styles.item} ${todo.completed ? styles.itemDone : ''}`}>
+                <button
+                  className={`${styles.check} ${todo.completed ? styles.checked : ''}`}
+                  onClick={() => toggleTodo(todo)}
+                  aria-label={todo.completed ? '标记未完成' : '标记完成'}
+                >
+                  {todo.completed && <span className={styles.checkMark}>✓</span>}
+                </button>
+                <span className={styles.itemText}>{todo.title}</span>
                 <button
                   onClick={() => deleteTodo(todo.id)}
                   className={styles.deleteBtn}
@@ -149,6 +184,25 @@ function TodoPage({ onBack }: Props) {
             ))}
           </ul>
         )}
+      </div>
+
+      {/* Input area */}
+      <div className={styles.inputArea}>
+        <div className={styles.inputRule} />
+        <div className={styles.inputRow}>
+          <textarea
+            ref={textareaRef}
+            value={newTitle}
+            onChange={handleTextareaInput}
+            onKeyDown={handleKeyDown}
+            placeholder="写下待办事项… (Enter 添加, Shift+Enter 换行)"
+            className={styles.textarea}
+            rows={1}
+          />
+          <button onClick={addTodo} className={styles.addBtn} disabled={!newTitle.trim()}>
+            记下
+          </button>
+        </div>
       </div>
     </div>
   )

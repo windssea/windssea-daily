@@ -1,78 +1,139 @@
-.container {
+/* ── Page ─────────────────────────────────── */
+.page {
   min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #e8eeff 0%, #fafafa 100%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f7edd8;
+  font-family: 'Noto Sans SC', sans-serif;
+  padding: 24px 20px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
 }
 
-.content {
+.page.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Paper card ───────────────────────────── */
+.paper {
+  width: 100%;
+  max-width: 360px;
+  background: #fdf6e9;
+  border-radius: 4px;
+  box-shadow:
+    0 2px 0 #e2cfa8,
+    0 8px 32px rgba(100, 60, 20, 0.12);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 40px 32px;
-  text-align: center;
 }
 
-.icon {
-  font-size: 64px;
-  line-height: 1;
+/* ── Ruled lines decoration ───────────────── */
+.topRule {
+  height: 6px;
+  background: repeating-linear-gradient(
+    to right,
+    #c47c5a 0px,
+    #c47c5a 40px,
+    #e8d5b7 40px,
+    #e8d5b7 42px
+  );
+}
+
+.bottomRule {
+  height: 3px;
+  background: #e8d5b7;
+  margin: 0 24px 24px;
+  border-radius: 2px;
+}
+
+/* ── Body ─────────────────────────────────── */
+.body {
+  padding: 32px 28px 24px;
+  border-bottom: 1px dashed #e8d5b7;
+  margin-bottom: 28px;
+}
+
+.dateLine {
+  margin: 0 0 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #b89a7a;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .title {
-  margin: 0;
-  font-size: 28px;
-  font-weight: 700;
-  color: #1a1a2e;
-  letter-spacing: -0.5px;
+  margin: 0 0 16px;
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: clamp(44px, 12vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #3d2b1f;
+  letter-spacing: -0.02em;
 }
 
-.subtitle {
+.tagline {
   margin: 0;
-  font-size: 15px;
-  color: #888;
+  font-size: 14px;
+  color: #9e7f65;
   line-height: 1.6;
 }
 
-.btn {
-  margin-top: 16px;
-  height: 52px;
-  padding: 0 40px;
-  border: none;
-  border-radius: 16px;
-  background: #4361ee;
-  color: #fff;
-  font-size: 17px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s, transform 0.15s;
+/* ── Actions ──────────────────────────────── */
+.actions {
+  padding: 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.btn:active {
-  opacity: 0.85;
-  transform: scale(0.97);
+.primaryBtn {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 4px;
+  background: #c47c5a;
+  color: #fdf6e9;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+  box-shadow: 0 2px 0 #a05e3e;
+}
+
+.primaryBtn:active {
+  background: #a05e3e;
+  transform: translateY(2px);
+  box-shadow: none;
 }
 
 .linkBtn {
-  height: 52px;
-  padding: 0 40px;
-  border: 2px solid #f4a261;
-  border-radius: 16px;
+  width: 100%;
+  height: 48px;
+  border: 1.5px solid #e8d5b7;
+  border-radius: 4px;
   background: transparent;
-  color: #f4a261;
-  font-size: 17px;
-  font-weight: 600;
+  color: #9e7f65;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
   cursor: pointer;
   text-decoration: none;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  transition: background 0.15s, color 0.15s, transform 0.15s;
+  justify-content: center;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 
 .linkBtn:active {
-  background: #f4a261;
-  color: #fff;
-  transform: scale(0.97);
+  background: #f7edd8;
+  border-color: #c47c5a;
+  color: #c47c5a;
 }
