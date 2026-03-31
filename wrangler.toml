@@ -1,0 +1,12 @@
+name = "windssea-daily"
+main = "src/server/index.ts"
+compatibility_date = "2026-03-31"
+
+[assets]
+directory = "./dist/client"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "windssea-daily"
+database_id = "2f8979fb-98d1-4d4c-bdc4-9798dd560313"
+migrations_dir = "migrations"

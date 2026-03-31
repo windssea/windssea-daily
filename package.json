@@ -1,0 +1,32 @@
+{
+  "name": "windssea-daily",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -n api,client -c blue,green \"pnpm dev:api\" \"pnpm dev:client\"",
+    "dev:api": "wrangler dev",
+    "dev:client": "vite",
+    "build": "vite build",
+    "preview": "vite build && wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "db:migrate:remote": "wrangler d1 migrations apply DB --remote"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "hono": "^4.12.9",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260329.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.2.1",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.3",
+    "wrangler": "^4.78.0"
+  }
+}
