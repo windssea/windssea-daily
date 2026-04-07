@@ -33,7 +33,7 @@
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  font-family: 'Noto Sans SC', 'Noto Serif SC', serif;
+  font-family: 'Noto Sans SC', sans-serif;
   color: var(--ink);
   background: var(--paper);
   font-size: 15px;
@@ -106,7 +106,7 @@
 
 .headerTitle {
   flex: 1;
-  font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', serif;
+  font-family: 'ZCOOL XiaoWei', serif;
   font-size: 17px;
   color: var(--ink);
   line-height: 1.3;
@@ -149,7 +149,7 @@
 
 .heroBadge {
   position: relative;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.16em;
   opacity: 0.75;
   margin: 0 0 12px;
@@ -169,7 +169,7 @@
 
 .heroTitle {
   position: relative;
-  font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', cursive;
+  font-family: 'ZCOOL XiaoWei', serif;
   font-size: clamp(34px, 10vw, 46px);
   line-height: 1.1;
   margin: 0 0 8px;
@@ -202,13 +202,13 @@
 
 .heroStatN {
   font-size: 24px;
-  font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', cursive;
+  font-family: 'ZCOOL XiaoWei', serif;
   display: block;
   line-height: 1;
 }
 
 .heroStatL {
-  font-size: 10px;
+  font-size: 12px;
   opacity: 0.7;
   display: block;
   margin-top: 4px;
@@ -242,9 +242,9 @@
 
 .pill {
   flex-shrink: 0;
-  padding: 6px 14px;
+  padding: 10px 16px;
   border-radius: 16px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   font-family: inherit;
   background: rgba(255,255,255,0.08);
@@ -255,6 +255,9 @@
   transition: background 0.15s, color 0.15s;
   -webkit-tap-highlight-color: transparent;
   letter-spacing: 0.02em;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .pill.active {
@@ -274,7 +277,7 @@
 }
 
 .sectionLabel {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.22em;
   color: var(--accent);
   text-transform: uppercase;
@@ -282,7 +285,7 @@
 }
 
 .sectionTitle {
-  font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', cursive;
+  font-family: 'ZCOOL XiaoWei', serif;
   font-size: 22px;
   color: var(--ink);
   margin: 0 0 18px;
@@ -349,7 +352,7 @@
 }
 
 .routeCityDate {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--ink-muted);
 }
 
@@ -373,10 +376,22 @@
 
 /* ── Reservation Table ──────────────────────── */
 .tableScroll {
+  position: relative;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin: 0 -20px;
   padding: 0 20px;
+}
+
+.tableScroll::after {
+  content: '';
+  position: sticky;
+  right: 0;
+  top: 0;
+  width: 24px;
+  height: 100%;
+  background: linear-gradient(to right, transparent, var(--paper));
+  pointer-events: none;
 }
 
 .table {
@@ -446,7 +461,7 @@
   color: oklch(97% 0.005 50);
   border-radius: var(--r-xs);
   padding: 5px 8px;
-  font-size: 11px;
+  font-size: 12px;
   flex-shrink: 0;
   text-align: center;
   min-width: 44px;
@@ -497,7 +512,7 @@
 }
 
 .dayDateM {
-  font-size: 11px;
+  font-size: 12px;
   opacity: 0.85;
   display: block;
   line-height: 1.2;
@@ -505,7 +520,7 @@
 
 .dayDateD {
   font-size: 28px;
-  font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', cursive;
+  font-family: 'ZCOOL XiaoWei', serif;
   line-height: 1;
   display: block;
   margin-top: 2px;
@@ -517,7 +532,7 @@
 }
 
 .dayName {
-  font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', cursive;
+  font-family: 'ZCOOL XiaoWei', serif;
   font-size: 20px;
   line-height: 1.35;
   color: var(--ink);
@@ -621,7 +636,7 @@
 }
 
 .tlTime {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--ink-muted);
   letter-spacing: 0.04em;
   display: block;
@@ -669,7 +684,7 @@
   border-radius: var(--r-sm);
   padding: 14px 16px;
   margin-bottom: 8px;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.75;
   color: var(--ink-soft);
   border-left: 3px solid var(--paper-line);
@@ -683,6 +698,8 @@
 .tlBodyText {
   margin-bottom: 10px;
   white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .tlBodyText:last-child {
@@ -701,7 +718,7 @@
 }
 
 .sightLabel {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--accent);
   font-weight: 600;
   flex-shrink: 0;
@@ -709,9 +726,12 @@
 }
 
 .sightValue {
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--ink-soft);
   line-height: 1.65;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .badgeRow {
@@ -722,11 +742,11 @@
 }
 
 .badge {
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 10px;
   border-radius: 20px;
   line-height: 1.5;
-  white-space: nowrap;
+  overflow-wrap: break-word;
 }
 
 .badge-default {
@@ -790,6 +810,8 @@
 
 .tipsText {
   min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* ── Footer ─────────────────────────────────── */
@@ -797,7 +819,7 @@
   text-align: center;
   padding: 36px 20px 52px;
   color: var(--ink-muted);
-  font-size: 12px;
+  font-size: 13px;
   position: relative;
 }
 
@@ -811,7 +833,7 @@
 }
 
 .footerSeal {
-  font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', cursive;
+  font-family: 'ZCOOL XiaoWei', serif;
   font-size: 36px;
   color: var(--accent);
   display: block;
@@ -828,8 +850,8 @@
   background: var(--accent-light);
   border: 1px solid oklch(85% 0.05 40);
   border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 11px;
+  padding: 10px 14px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--accent);
   text-decoration: none;
@@ -850,7 +872,7 @@
 }
 
 .hotelSectionLabel {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent);
