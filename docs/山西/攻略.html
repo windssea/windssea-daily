@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="山西五日亲子自驾深度旅游攻略，五一假期，南京出发，涵盖云冈石窟、悬空寺、雁门关等核心景点">
+<title>山西五日亲子攻略 · 五一</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: oklch(22% 0.02 30);
+  --ink-soft: oklch(40% 0.025 35);
+  --ink-muted: oklch(58% 0.02 35);
+  --paper: oklch(97% 0.012 60);
+  --paper-warm: oklch(93% 0.018 65);
+  --paper-line: oklch(85% 0.02 60);
+  --red: oklch(52% 0.16 28);
+  --red-light: oklch(92% 0.04 30);
+  --gold: oklch(72% 0.1 75);
+  --green: oklch(60% 0.08 155);
+  --blue: oklch(58% 0.08 230);
+  --r: 12px;
+  --r-sm: 6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Serif SC', serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ===== HERO ===== */
+.hero {
+  background: var(--red);
+  color: oklch(97% 0.01 50);
+  padding: 52px 24px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect x='0' y='0' width='80' height='80' fill='none'/%3E%3Cpath d='M0 40h80M40 0v80' stroke='rgba(255,255,255,0.05)' stroke-width='0.5'/%3E%3C/svg%3E") repeat;
+}
+.hero-badge {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+  margin-bottom: 10px;
+  font-family: 'Noto Serif SC', serif;
+}
+.hero-title {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: clamp(32px, 9vw, 42px);
+  line-height: 1.15;
+  margin-bottom: 6px;
+  position: relative;
+}
+.hero-sub {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 24px;
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: rgba(255,255,255,0.15);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  position: relative;
+}
+.hero-stat {
+  background: rgba(0,0,0,0.12);
+  padding: 12px 0;
+  text-align: center;
+}
+.hero-stat-n {
+  font-size: 22px;
+  font-family: 'Ma Shan Zheng', cursive;
+  display: block;
+}
+.hero-stat-l {
+  font-size: 11px;
+  opacity: 0.7;
+  display: block;
+}
+
+/* ===== DAY TABS ===== */
+.tabs-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tabs-wrap::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 0 0 auto;
+  padding: 11px 16px;
+  font-size: 13px;
+  color: oklch(75% 0.01 50);
+  text-decoration: none;
+  white-space: nowrap;
+  font-family: 'Noto Serif SC', serif;
+  transition: color 0.2s, background 0.2s;
+  border-bottom: 2px solid transparent;
+}
+.tab.active, .tab:hover {
+  color: oklch(97% 0.01 50);
+  border-bottom-color: var(--gold);
+}
+
+/* ===== SECTION ===== */
+.section {
+  padding: 28px 20px;
+  border-bottom: 1px solid var(--paper-line);
+  animation: fadeUp 0.4s ease-out both;
+}
+.section:nth-child(2) { animation-delay: 0.05s; }
+.section:nth-child(3) { animation-delay: 0.1s; }
+.section:nth-child(4) { animation-delay: 0.15s; }
+.section:nth-child(5) { animation-delay: 0.2s; }
+.section:nth-child(6) { animation-delay: 0.25s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SECTION HEADER ===== */
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.section-title {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 22px;
+  color: var(--ink);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--paper-line);
+}
+
+/* ===== DAY HEADER ===== */
+.day-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.day-date {
+  background: var(--red);
+  color: white;
+  border-radius: var(--r-sm);
+  padding: 8px 12px;
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 52px;
+}
+.day-date-m { font-size: 11px; opacity: 0.85; display: block; }
+.day-date-d { font-size: 26px; font-family: 'Ma Shan Zheng', cursive; line-height: 1; display: block; }
+.day-info { flex: 1; }
+.day-name {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.day-meta {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.day-meta span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* ===== TIMELINE ===== */
+.timeline {
+  position: relative;
+  padding-left: 20px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--paper-line);
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 4px;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid var(--paper-line);
+  transition: border-color 0.2s, background 0.2s;
+}
+.tl-item.highlight::before {
+  background: var(--red);
+  border-color: var(--red);
+  width: 9px;
+  height: 9px;
+  left: -17px;
+}
+
+.tl-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 0;
+  cursor: pointer;
+  font-family: 'Noto Serif SC', serif;
+}
+.tl-time {
+  font-size: 11px;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 2px;
+}
+.tl-name {
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.tl-name .caret {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--ink-muted);
+  transition: transform 0.25s;
+}
+.tl-item.open .caret { transform: rotate(180deg); }
+
+.tl-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tl-item.open .tl-detail { grid-template-rows: 1fr; }
+.tl-inner {
+  overflow: hidden;
+}
+.tl-body {
+  background: var(--paper-warm);
+  border-radius: var(--r-sm);
+  padding: 14px;
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  border-left: 3px solid var(--paper-line);
+}
+.tl-body.is-sight {
+  border-left-color: var(--red);
+}
+
+.sight-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+.sight-label {
+  font-size: 11px;
+  color: var(--red);
+  font-weight: 600;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.sight-value {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+.badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: var(--paper-line);
+  color: var(--ink-soft);
+}
+.badge.red { background: var(--red-light); color: var(--red); }
+.badge.green { background: oklch(92% 0.04 155); color: var(--green); }
+.badge.gold { background: oklch(95% 0.03 75); color: oklch(52% 0.1 75); }
+
+/* ===== TABLE ===== */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -20px;
+  padding: 0 20px;
+}
+table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+th {
+  background: var(--ink);
+  color: oklch(97% 0.01 50);
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 500;
+  white-space: nowrap;
+}
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--paper-line);
+  vertical-align: top;
+  color: var(--ink-soft);
+}
+tr:nth-child(even) td { background: var(--paper-warm); }
+td:first-child { color: var(--ink); font-weight: 500; }
+
+/* ===== CHECKLIST ===== */
+.checklist { list-style: none; }
+.checklist li {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--paper-line);
+  font-size: 14px;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.checklist li:last-child { border-bottom: none; }
+.check-cat {
+  font-size: 11px;
+  background: var(--red);
+  color: white;
+  border-radius: 3px;
+  padding: 1px 6px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* ===== HOTEL CARDS ===== */
+.hotel-list { display: flex; flex-direction: column; gap: 10px; }
+.hotel-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+  background: var(--paper-warm);
+  border-radius: var(--r-sm);
+}
+.hotel-night {
+  background: var(--ink);
+  color: white;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  flex-shrink: 0;
+  text-align: center;
+  min-width: 40px;
+}
+.hotel-info .name { font-weight: 600; font-size: 14px; color: var(--ink); }
+.hotel-info .desc { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+
+/* ===== TIPS ===== */
+.tips-list { list-style: none; }
+.tips-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--paper-line);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: baseline;
+}
+.tips-list li:last-child { border-bottom: none; }
+.tips-num {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 22px;
+  color: var(--paper-line);
+  line-height: 1;
+}
+
+/* ===== ROUTE ===== */
+.route-bar {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  gap: 0;
+  padding: 16px 0 8px;
+  scrollbar-width: none;
+}
+.route-bar::-webkit-scrollbar { display: none; }
+.route-city {
+  flex-shrink: 0;
+  text-align: center;
+  min-width: 52px;
+}
+.route-city-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+.route-city-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+  margin: 6px auto;
+  border: 2px solid var(--paper);
+  box-shadow: 0 0 0 1.5px var(--red);
+}
+.route-city-date { font-size: 10px; color: var(--ink-muted); }
+.route-line {
+  flex: 1;
+  height: 1.5px;
+  background: var(--paper-line);
+  min-width: 20px;
+  position: relative;
+  top: -10px;
+}
+.route-line::after {
+  content: '→';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--ink-muted);
+  font-size: 10px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 32px 20px 48px;
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+footer .seal {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 32px;
+  color: var(--red);
+  display: block;
+  margin-bottom: 8px;
+  opacity: 0.4;
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-badge">五一亲子自驾 · 2025年4月30日—5月5日</p>
+  <h1 class="hero-title">山西五日<br>深度游</h1>
+  <p class="hero-sub">南京出发 · 晋北环线 · 两大两小</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-n">5</span>
+      <span class="hero-stat-l">天行程</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-n">760</span>
+      <span class="hero-stat-l">公里自驾</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-n">8+</span>
+      <span class="hero-stat-l">核心景点</span>
+    </div>
+  </div>
+</section>
+
+<!-- TABS -->
+<nav class="tabs-wrap" id="tabs">
+  <a class="tab active" href="#prep">行前准备</a>
+  <a class="tab" href="#d0">4/30 出发</a>
+  <a class="tab" href="#d1">5/1 大同</a>
+  <a class="tab" href="#d2">5/2 云冈</a>
+  <a class="tab" href="#d3">5/3 雁门</a>
+  <a class="tab" href="#d4">5/4 晋祠</a>
+  <a class="tab" href="#d5">5/5 返程</a>
+  <a class="tab" href="#tips">注意事项</a>
+</nav>
+
+<!-- ROUTE -->
+<section class="section" id="route">
+  <p class="section-label">行程路线</p>
+  <h2 class="section-title">晋北环线</h2>
+  <div class="route-bar">
+    <div class="route-city">
+      <div class="route-city-name">南京</div>
+      <div class="route-city-dot"></div>
+      <div class="route-city-date">4/30</div>
+    </div>
+    <div class="route-line"></div>
+    <div class="route-city">
+      <div class="route-city-name">太原</div>
+      <div class="route-city-dot"></div>
+      <div class="route-city-date">5/1</div>
+    </div>
+    <div class="route-line"></div>
+    <div class="route-city">
+      <div class="route-city-name">大同</div>
+      <div class="route-city-dot"></div>
+      <div class="route-city-date">5/1-2</div>
+    </div>
+    <div class="route-line"></div>
+    <div class="route-city">
+      <div class="route-city-name">应县</div>
+      <div class="route-city-dot"></div>
+      <div class="route-city-date">5/2-3</div>
+    </div>
+    <div class="route-line"></div>
+    <div class="route-city">
+      <div class="route-city-name">忻州</div>
+      <div class="route-city-dot"></div>
+      <div class="route-city-date">5/3</div>
+    </div>
+    <div class="route-line"></div>
+    <div class="route-city">
+      <div class="route-city-name">太原</div>
+      <div class="route-city-dot"></div>
+      <div class="route-city-date">5/3-5</div>
+    </div>
+    <div class="route-line"></div>
+    <div class="route-city">
+      <div class="route-city-name">南京</div>
+      <div class="route-city-dot"></div>
+      <div class="route-city-date">5/5</div>
+    </div>
+  </div>
+</section>
+
+<!-- PREP -->
+<section class="section" id="prep">
+  <p class="section-label">出发前</p>
+  <h2 class="section-title">行前准备</h2>
+
+  <h3 style="font-size:14px;color:var(--ink-soft);margin-bottom:10px;font-weight:500;">🎟 票务预约指南</h3>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>景点</th>
+          <th>预约渠道</th>
+          <th>提前</th>
+          <th>票价</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>云冈石窟</td><td>官方公众号</td><td>1天</td><td>成人120元·儿童半价</td></tr>
+        <tr><td>悬空寺</td><td>官方平台</td><td>7天</td><td>首道15元·登临100元</td></tr>
+        <tr><td>应县木塔</td><td>官方公众号</td><td>1天</td><td>成人50元·儿童半价</td></tr>
+        <tr><td>雁门关</td><td>官方公众号</td><td>1天</td><td>成人90元·电瓶车10元</td></tr>
+        <tr><td>忻州古城</td><td>免预约</td><td>—</td><td>免费</td></tr>
+        <tr><td>晋祠博物馆</td><td>官方公众号</td><td>1天</td><td>成人80元·儿童半价</td></tr>
+        <tr><td>山西博物院</td><td>官方公众号</td><td>3天</td><td>免费·每日7:00放票</td></tr>
+        <tr><td>大同市博物馆</td><td>免预约</td><td>—</td><td>免费</td></tr>
+        <tr><td>火车票</td><td>12306</td><td>15天</td><td>Z196软卧·G467二等座</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:14px;color:var(--ink-soft);margin:20px 0 10px;font-weight:500;">🎒 物品清单</h3>
+  <ul class="checklist">
+    <li><span class="check-cat">证件</span>身份证、户口本、驾驶证、租车订单、所有景点预约码</li>
+    <li><span class="check-cat">自驾</span>儿童安全座椅×2、行车记录仪、应急工具</li>
+    <li><span class="check-cat">衣物</span>薄外套、短袖、长裤、防滑运动鞋、防晒帽</li>
+    <li><span class="check-cat">儿童</span>旅行笔记本、画笔、贴纸书、零食、水杯</li>
+    <li><span class="check-cat">药品</span>肠胃药、创可贴、驱蚊液、感冒药、晕车药</li>
+  </ul>
+
+  <h3 style="font-size:14px;color:var(--ink-soft);margin:20px 0 10px;font-weight:500;">🏨 住宿安排</h3>
+  <div class="hotel-list">
+    <div class="hotel-item">
+      <div class="hotel-night">5/1</div>
+      <div class="hotel-info">
+        <div class="name">大同古城四星亲子酒店</div>
+        <div class="desc">永泰门附近 · 含早餐 · 停车位充足</div>
+      </div>
+    </div>
+    <div class="hotel-item">
+      <div class="hotel-night">5/2</div>
+      <div class="hotel-info">
+        <div class="name">应县县城连锁酒店</div>
+        <div class="desc">近应县木塔 · 出行便利</div>
+      </div>
+    </div>
+    <div class="hotel-item">
+      <div class="hotel-night">5/3-4</div>
+      <div class="hotel-info">
+        <div class="name">太原南站周边高端酒店</div>
+        <div class="desc">方便还车与返程 · 连住两晚</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 0 -->
+<section class="section" id="d0">
+  <div class="day-header">
+    <div class="day-date">
+      <span class="day-date-m">4月</span>
+      <span class="day-date-d">30</span>
+    </div>
+    <div class="day-info">
+      <div class="day-name">夜间出发<br>宿火车软卧</div>
+      <div class="day-meta">
+        <span>🚂 Z196次</span>
+        <span>软卧包厢</span>
+      </div>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">20:54</span>
+        <span class="tl-name">南京站乘坐Z196出发</span>
+      </div>
+      <div class="tl-body">
+        4人软卧包厢，适配两大两小休息，全程不占用白天游玩时间。行李分游玩随身包与夜间休息包，保证孩子正常入睡。
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">次日07:47</span>
+        <span class="tl-name">抵达太原站·准备提车</span>
+      </div>
+      <div class="tl-body">
+        出站后直接前往租车网点办理提车，提前备好证件，避免慌乱。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 1 -->
+<section class="section" id="d1">
+  <div class="day-header">
+    <div class="day-date">
+      <span class="day-date-m">5月</span>
+      <span class="day-date-d">1</span>
+    </div>
+    <div class="day-info">
+      <div class="day-name">太原→大同<br>古城休闲体验日</div>
+      <div class="day-meta">
+        <span>🚗 约280km</span>
+        <span>🏨 大同古城</span>
+      </div>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">07:47 - 08:30</span>
+        <span class="tl-name">太原站抵达 · 提车 + 早餐</span>
+      </div>
+      <div class="tl-body">
+        步行至租车门店办理手续，检查车辆并安装儿童安全座椅。早餐选择太原站周边面食、鲜肉包、鸡蛋醪糟，口味清淡适配儿童。
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">08:30 - 11:30</span>
+        <span class="tl-name">自驾前往大同</span>
+      </div>
+      <div class="tl-body">
+        走二广高速，全程约3小时，中途服务区停靠15分钟让孩子下车活动。高速费约120元，隧道限速80km/h。
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">11:30 - 14:30</span>
+        <span class="tl-name">入住 · 午餐 · 午休</span>
+      </div>
+      <div class="tl-body">
+        入住大同古城附近酒店，午餐品尝大同什锦铜火锅、烧麦、刀削面（清汤不辣）。12:30-14:30强制午休，避开五一正午高温。
+      </div>
+    </div>
+    <div class="tl-item highlight">
+      <button class="tl-btn" onclick="toggleItem(this)">
+        <span class="tl-time">14:40 - 16:40</span>
+        <span class="tl-name">大同古城墙
+          <svg class="caret" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+      <div class="tl-detail"><div class="tl-inner">
+        <div class="tl-body is-sight">
+          <div class="sight-row"><span class="sight-label">概述</span><span class="sight-value">明代洪武年间修建，周长7.24km，北方保存最完整的明城墙</span></div>
+          <div class="sight-row"><span class="sight-label">亮点</span><span class="sight-value">宽阔平整，可租赁四人家庭自行车骑行，360°俯瞰古城</span></div>
+          <div class="sight-row"><span class="sight-label">必打卡</span><span class="sight-value">永泰门瓮城、西北角乾楼、雁塔、护城河景观带</span></div>
+          <div class="badge-row">
+            <span class="badge green">免费开放</span>
+            <span class="badge gold">四人自行车 30元/时</span>
+          </div>
+          <div class="badge-row">
+            <span class="badge">一年级：寻找龙头排水口、数城门钉</span>
+          </div>
+          <div class="badge-row">
+            <span class="badge">三年级：记录城墙防御结构</span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="tl-item highlight">
+      <button class="tl-btn" onclick="toggleItem(this)">
+        <span class="tl-time">16:50 - 17:50</span>
+        <span class="tl-name">大同市博物馆
+          <svg class="caret" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+      <div class="tl-detail"><div class="tl-inner">
+        <div class="tl-body is-sight">
+          <div class="sight-row"><span class="sight-label">概述</span><span class="sight-value">国家二级博物馆，馆藏恐龙化石、北魏平城文物、辽金文化遗存</span></div>
+          <div class="sight-row"><span class="sight-label">亮点</span><span class="sight-value">恐龙化石展厅（剑龙、鸭嘴龙），低龄儿童极度感兴趣；全程室内，五一不晒</span></div>
+          <div class="sight-row"><span class="sight-label">必打卡</span><span class="sight-value">恐龙化石展区、北魏平城模型、辽金陶瓷展区、儿童互动角</span></div>
+          <div class="badge-row">
+            <span class="badge green">免费开放</span>
+            <span class="badge green">无需预约</span>
+            <span class="badge">凭身份证入场</span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">17:50 之后</span>
+        <span class="tl-name">晚餐 · 返回酒店休息</span>
+      </div>
+      <div class="tl-body">黄米凉糕、家常面食，清淡易消化。夜间不安排额外行程，保证充足睡眠。</div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 2 -->
+<section class="section" id="d2">
+  <div class="day-header">
+    <div class="day-date">
+      <span class="day-date-m">5月</span>
+      <span class="day-date-d">2</span>
+    </div>
+    <div class="day-info">
+      <div class="day-name">云冈石窟→悬空寺<br>世界遗产研学日</div>
+      <div class="day-meta">
+        <span>🚗 约160km</span>
+        <span>🏨 应县</span>
+      </div>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item highlight">
+      <button class="tl-btn" onclick="toggleItem(this)">
+        <span class="tl-time">08:30 - 11:30</span>
+        <span class="tl-name">云冈石窟深度游览
+          <svg class="caret" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+      <div class="tl-detail"><div class="tl-inner">
+        <div class="tl-body is-sight">
+          <div class="sight-row"><span class="sight-label">概述</span><span class="sight-value">世界文化遗产·5A级，北魏皇家石窟，现存45窟、5.1万尊造像</span></div>
+          <div class="sight-row"><span class="sight-label">亮点</span><span class="sight-value">造像宏伟，部分洞窟保留彩绘，建议儿童友好讲解</span></div>
+          <div class="sight-row"><span class="sight-label">必打卡</span><span class="sight-value">第20窟露天大佛、第5/6窟华丽双窟、第9-13窟飞天浮雕</span></div>
+          <div class="badge-row">
+            <span class="badge red">成人 120元</span>
+            <span class="badge green">儿童免票/半价</span>
+            <span class="badge">讲解 50元/次</span>
+          </div>
+          <div class="badge-row"><span class="badge">距大同酒店约18km·30分钟车程</span></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">11:30 - 13:00</span>
+        <span class="tl-name">返回大同 · 午餐休整</span>
+      </div>
+      <div class="tl-body">过油肉、莜面鱼鱼等本地简餐，快速补充体力。</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">13:00 - 14:30</span>
+        <span class="tl-name">自驾前往悬空寺</span>
+      </div>
+      <div class="tl-body">全程80km，山区高速，车程1.5小时，中途短暂停靠休息。</div>
+    </div>
+    <div class="tl-item highlight">
+      <button class="tl-btn" onclick="toggleItem(this)">
+        <span class="tl-time">14:30 - 16:00</span>
+        <span class="tl-name">悬空寺游览（远观为主）
+          <svg class="caret" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+      <div class="tl-detail"><div class="tl-inner">
+        <div class="tl-body is-sight">
+          <div class="sight-row"><span class="sight-label">概述</span><span class="sight-value">北魏建造，全球十大奇险建筑，国内唯一佛道儒三教合一悬空古建</span></div>
+          <div class="sight-row"><span class="sight-label">亮点</span><span class="sight-value">悬崖建筑视觉震撼，适合讲解力学与历史知识</span></div>
+          <div class="sight-row"><span class="sight-label">必打卡</span><span class="sight-value">霞客亭全景台、三教殿、李白"壮观"题刻</span></div>
+          <div class="badge-row">
+            <span class="badge red">首道门票 15元</span>
+            <span class="badge">登临票限量·儿童不建议</span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">16:00 - 17:00</span>
+        <span class="tl-name">自驾应县 · 入住休息</span>
+      </div>
+      <div class="tl-body">全程70km，1小时车程，17点前抵达，不赶夜路。晚餐：应县免辣凉粉、炖土鸡、黄米糕。</div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 3 -->
+<section class="section" id="d3">
+  <div class="day-header">
+    <div class="day-date">
+      <span class="day-date-m">5月</span>
+      <span class="day-date-d">3</span>
+    </div>
+    <div class="day-info">
+      <div class="day-name">木塔→雁门关→忻州<br>边塞文化日</div>
+      <div class="day-meta">
+        <span>🚗 约270km</span>
+        <span>🏨 太原南站</span>
+      </div>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item highlight">
+      <button class="tl-btn" onclick="toggleItem(this)">
+        <span class="tl-time">08:05 - 09:30</span>
+        <span class="tl-name">应县木塔研学游览
+          <svg class="caret" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+      <div class="tl-detail"><div class="tl-inner">
+        <div class="tl-body is-sight">
+          <div class="sight-row"><span class="sight-label">概述</span><span class="sight-value">辽代建造，世界最高最古老纯木结构塔，无铁钉，斗拱博物馆</span></div>
+          <div class="sight-row"><span class="sight-label">亮点</span><span class="sight-value">讲解榫卯结构与抗震智慧，可用积木模拟演示</span></div>
+          <div class="sight-row"><span class="sight-label">必打卡</span><span class="sight-value">木塔全景、一层辽代佛像、历代名人牌匾</span></div>
+          <div class="badge-row">
+            <span class="badge red">成人 50元</span>
+            <span class="badge green">儿童免票/半价</span>
+            <span class="badge">距酒店5分钟车程</span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">09:30 - 10:30</span>
+        <span class="tl-name">自驾前往雁门关北门</span>
+      </div>
+      <div class="tl-body">全程70km，1小时车程。<strong style="color:var(--red)">务必走北门</strong>，避免南门长距离上坡。</div>
+    </div>
+    <div class="tl-item highlight">
+      <button class="tl-btn" onclick="toggleItem(this)">
+        <span class="tl-time">10:30 - 12:30</span>
+        <span class="tl-name">雁门关精华游览
+          <svg class="caret" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+      <div class="tl-detail"><div class="tl-inner">
+        <div class="tl-body is-sight">
+          <div class="sight-row"><span class="sight-label">概述</span><span class="sight-value">5A级长城关隘，天下九塞之首，杨家将戍边核心战场</span></div>
+          <div class="sight-row"><span class="sight-label">亮点</span><span class="sight-value">边塞风光+英雄故事，可穿小将军汉服体验</span></div>
+          <div class="sight-row"><span class="sight-label">必打卡</span><span class="sight-value">明月楼、边贸街、瓮城、天险门、镇边祠</span></div>
+          <div class="badge-row">
+            <span class="badge red">门票 90元</span>
+            <span class="badge gold">电瓶车 10元·必买</span>
+            <span class="badge green">儿童优惠</span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">12:30 - 14:10</span>
+        <span class="tl-name">代县午餐 · 休整</span>
+      </div>
+      <div class="tl-body">定襄蒸肉、烩菜、莜面栲栳栳，口味温和适配儿童。</div>
+    </div>
+    <div class="tl-item highlight">
+      <button class="tl-btn" onclick="toggleItem(this)">
+        <span class="tl-time">15:00 - 16:30</span>
+        <span class="tl-name">忻州古城休闲游览
+          <svg class="caret" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+      <div class="tl-detail"><div class="tl-inner">
+        <div class="tl-body is-sight">
+          <div class="sight-row"><span class="sight-label">概述</span><span class="sight-value">晋北边塞千年古城，保留明清街巷格局，集民俗、非遗、小吃于一体</span></div>
+          <div class="sight-row"><span class="sight-label">亮点</span><span class="sight-value">网红小吃、非遗手作（剪纸、面塑）、古城巡游表演；全程平路无爬坡，节奏轻松</span></div>
+          <div class="sight-row"><span class="sight-label">必打卡</span><span class="sight-value">南北大街、秀容书院、古城墙观景台、非遗手作体验馆、特色小吃街</span></div>
+          <div class="badge-row">
+            <span class="badge green">免费开放</span>
+            <span class="badge green">无需预约</span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">16:30 - 17:50</span>
+        <span class="tl-name">自驾太原 · 办理入住</span>
+      </div>
+      <div class="tl-body">全程100km，1.2小时车程，抵达太原南站附近酒店。晚餐钟楼街：认一力蒸饺、老鼠窟元宵、六味斋酱肉。</div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 4 -->
+<section class="section" id="d4">
+  <div class="day-header">
+    <div class="day-date">
+      <span class="day-date-m">5月</span>
+      <span class="day-date-d">4</span>
+    </div>
+    <div class="day-info">
+      <div class="day-name">晋祠→山西博物院<br>历史文化收官日</div>
+      <div class="day-meta">
+        <span>🚗 约50km</span>
+        <span>🏨 续住太原</span>
+      </div>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item highlight">
+      <button class="tl-btn" onclick="toggleItem(this)">
+        <span class="tl-time">09:10 - 11:40</span>
+        <span class="tl-name">晋祠博物馆游览
+          <svg class="caret" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+      <div class="tl-detail"><div class="tl-inner">
+        <div class="tl-body is-sight">
+          <div class="sight-row"><span class="sight-label">概述</span><span class="sight-value">中国现存最古老祠庙园林，5A级景区，拥有晋祠三宝、三绝</span></div>
+          <div class="sight-row"><span class="sight-label">亮点</span><span class="sight-value">园林优美、步道平缓，历史故事丰富，适合慢游研学</span></div>
+          <div class="sight-row"><span class="sight-label">必打卡</span><span class="sight-value">圣母殿、鱼沼飞梁、献殿、周柏、难老泉、宋塑侍女像</span></div>
+          <div class="badge-row">
+            <span class="badge red">成人 80元</span>
+            <span class="badge green">儿童免票/半价</span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">11:40 - 14:55</span>
+        <span class="tl-name">晋祠周边午餐 · 酒店午休</span>
+      </div>
+      <div class="tl-body">农家菜、山西特色面食，清淡可口。12:55回酒店午休，避开午后高温与客流高峰。</div>
+    </div>
+    <div class="tl-item highlight">
+      <button class="tl-btn" onclick="toggleItem(this)">
+        <span class="tl-time">15:35 - 18:05</span>
+        <span class="tl-name">山西博物院深度参观
+          <svg class="caret" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+      <div class="tl-detail"><div class="tl-inner">
+        <div class="tl-body is-sight">
+          <div class="sight-row"><span class="sight-label">概述</span><span class="sight-value">国家一级博物馆，以"晋魂"为主题，完整展现三晋历史</span></div>
+          <div class="sight-row"><span class="sight-label">亮点</span><span class="sight-value">儿童互动区、镇馆之宝故事性强，室内舒适</span></div>
+          <div class="sight-row"><span class="sight-label">必打卡</span><span class="sight-value">晋侯鸟尊、雁鱼铜灯、侯马盟书、儿童体验区</span></div>
+          <div class="badge-row">
+            <span class="badge green">免费</span>
+            <span class="badge red">提前3天预约</span>
+            <span class="badge">每日7:00放票</span>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">18:05 之后</span>
+        <span class="tl-name">市区晚餐 · 收拾行李</span>
+      </div>
+      <div class="tl-body">太原本地正餐，饭后核对证件与车票，收拾全部行李，为明日返程做好准备。</div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY 5 -->
+<section class="section" id="d5">
+  <div class="day-header">
+    <div class="day-date">
+      <span class="day-date-m">5月</span>
+      <span class="day-date-d">5</span>
+    </div>
+    <div class="day-info">
+      <div class="day-name">太原→南京<br>轻松返程日</div>
+      <div class="day-meta">
+        <span>🚄 G467次</span>
+        <span>5小时48分钟</span>
+      </div>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">08:30 - 09:00</span>
+        <span class="tl-name">早餐 · 办理退房</span>
+      </div>
+      <div class="tl-body">整理所有行李，装车后办理退房手续。</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">09:00 - 10:30</span>
+        <span class="tl-name">上午休闲活动（二选一）</span>
+      </div>
+      <div class="tl-body">
+        <strong>汾河景区</strong>：免费开放，儿童游乐区、沙池、滨河散步<br>
+        <strong>山西省科技馆</strong>：免费预约，互动科学展品，适合小学生
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">10:30 - 11:30</span>
+        <span class="tl-name">前往太原南站 · 办理还车</span>
+      </div>
+      <div class="tl-body">自驾至南站租车点，满油还车，检查车辆与物品，完成交接。</div>
+    </div>
+    <div class="tl-item highlight">
+      <div class="tl-btn">
+        <span class="tl-time">12:27</span>
+        <span class="tl-name">🚄 乘坐G467高铁返程</span>
+      </div>
+      <div class="tl-body">太原南 12:27 → 南京南 18:15，全程5小时48分。高铁上可休息、看动画、完成旅行日记。</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-btn">
+        <span class="tl-time">18:15</span>
+        <span class="tl-name">🏠 抵达南京南站</span>
+      </div>
+      <div class="tl-body">行程圆满结束！当日到家休整，不影响次日上学与上班。</div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section class="section" id="tips">
+  <p class="section-label">出行须知</p>
+  <h2 class="section-title">注意事项</h2>
+  <ul class="tips-list">
+    <li>
+      <span class="tips-num">①</span>
+      <div><strong>儿童政策</strong>：6周岁以下/1.2米以下景区免票，6-18周岁半价，均需携带户口本</div>
+    </li>
+    <li>
+      <span class="tips-num">②</span>
+      <div><strong>自驾安全</strong>：山西高速隧道多，限速80km/h；景区停车费10-20元/次</div>
+    </li>
+    <li>
+      <span class="tips-num">③</span>
+      <div><strong>游览节奏</strong>：每日保证午休，人文与游乐交替，避免孩子疲劳抵触</div>
+    </li>
+    <li>
+      <span class="tips-num">④</span>
+      <div><strong>错峰提示</strong>：景点尽量8:30前或15:00后入园，减少排队</div>
+    </li>
+    <li>
+      <span class="tips-num">⑤</span>
+      <div><strong>天气适配</strong>：五月晋北早晚温差大，务必携带薄外套，做好防晒防风</div>
+    </li>
+    <li>
+      <span class="tips-num">⑥</span>
+      <div><strong>应急预留</strong>：每日行程预留30分钟弹性时间，应对堵车、排队等突发情况</div>
+    </li>
+  </ul>
+</section>
+
+<footer>
+  <span class="seal">晋</span>
+  <p>山西五日亲子自驾 · 2025年五一</p>
+  <p style="margin-top:4px;opacity:0.6">一路平安 · 满载而归</p>
+</footer>
+
+<script>
+function toggleItem(btn) {
+  const item = btn.closest('.tl-item');
+  item.classList.toggle('open');
+}
+
+// Tab active state on scroll
+const sections = document.querySelectorAll('section[id]');
+const tabs = document.querySelectorAll('.tab');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      tabs.forEach(t => t.classList.remove('active'));
+      const active = document.querySelector(`.tab[href="#${entry.target.id}"]`);
+      if (active) {
+        active.classList.add('active');
+        active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-80px 0px -60% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
