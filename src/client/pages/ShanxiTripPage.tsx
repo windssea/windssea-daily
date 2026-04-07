@@ -816,7 +816,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
                       className={styles.navBtn}
                       href={buildBaiduNavUrl(stripEmoji(entry.desc))}
                     >
-                      📍 百度地图导航
+                      📍 导航到这里
                     </a>
                   )}
 

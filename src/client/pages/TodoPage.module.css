@@ -8,6 +8,7 @@
   font-family: 'Noto Sans SC', sans-serif;
   color: #3d2b1f;
   background: #fdf6e9;
+  animation: fadeIn 0.5s ease;
 
   /* Notebook ruled lines */
   background-image: repeating-linear-gradient(
@@ -19,12 +20,18 @@
   );
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ── Header ───────────────────────────────── */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
+  padding-top: max(12px, env(safe-area-inset-top));
   background: #fdf6e9;
   border-bottom: 2px solid #e8d5b7;
   position: sticky;
@@ -34,8 +41,8 @@
 }
 
 .backBtn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
   border: none;
   background: none;
@@ -63,8 +70,8 @@
 }
 
 .navBtn {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border: none;
   background: none;
   font-size: 22px;
@@ -99,13 +106,13 @@
 }
 
 .weekText {
-  font-size: 11px;
+  font-size: 12px;
   color: #b89a7a;
   letter-spacing: 0.05em;
 }
 
 .headerRight {
-  width: 40px;
+  width: 44px;
   flex-shrink: 0;
   display: flex;
   justify-content: flex-end;
@@ -148,7 +155,7 @@
   position: absolute;
   right: 16px;
   top: 6px;
-  font-size: 11px;
+  font-size: 12px;
   color: #b89a7a;
   letter-spacing: 0.02em;
 }
@@ -198,6 +205,14 @@
   justify-content: center;
   transition: background 0.15s, border-color 0.15s;
   margin-top: 1px;
+  position: relative;
+}
+
+/* 44px touch target around visual 22px checkbox */
+.check::before {
+  content: '';
+  position: absolute;
+  inset: -11px;
 }
 
 .check.checked {
@@ -226,8 +241,8 @@
 }
 
 .deleteBtn {
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
   border: none;
   background: none;
@@ -239,7 +254,7 @@
   align-items: center;
   justify-content: center;
   transition: color 0.15s, background 0.15s;
-  margin-top: 0;
+  margin-top: -9px;
 }
 
 .deleteBtn:active {

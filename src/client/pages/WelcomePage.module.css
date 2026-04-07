@@ -4,12 +4,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f7edd8;
+  background: #fdf6e9;
   font-family: 'Noto Sans SC', sans-serif;
   padding: 24px 20px;
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .page.visible {
