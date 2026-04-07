@@ -3,6 +3,7 @@ import styles from './WelcomePage.module.css'
 
 interface Props {
   onEnter: () => void
+  onShanxiTrip: () => void
 }
 
 function getTodayLabel() {
@@ -13,7 +14,7 @@ function getTodayLabel() {
   return `${month}月${day}日 ${weekDays[d.getDay()]}`
 }
 
-function WelcomePage({ onEnter }: Props) {
+function WelcomePage({ onEnter, onShanxiTrip }: Props) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -44,6 +45,9 @@ function WelcomePage({ onEnter }: Props) {
           >
             黄山旅游 ↗
           </a>
+          <button className={styles.linkBtn} onClick={onShanxiTrip}>
+            山西旅游 ↗
+          </button>
         </div>
 
         <div className={styles.bottomRule} />

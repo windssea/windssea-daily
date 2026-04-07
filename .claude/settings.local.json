@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"D:\\\\dev\\\\windssea\\\\windssea-daily\\\\docs 2>/dev/null && cat D:devwindsseawindssea-dailytest-api.ps1\")"
+    ]
+  }
+}
