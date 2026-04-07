@@ -611,6 +611,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
   }
 
   return (
+    <>
     <div className={`${styles.page} ${visible ? styles.visible : ''}`}>
       {/* Sticky Header */}
       <header className={styles.header}>
@@ -643,19 +644,6 @@ export default function ShanxiTripPage({ onBack }: Props) {
           </div>
         </div>
       </section>
-
-      {/* BOTTOM PILL NAV */}
-      <nav className={styles.pillNav} ref={pillsRef}>
-        {DAYS.map(d => (
-          <button
-            key={d.id}
-            className={`${styles.pill} ${activeDay === d.id ? styles.active : ''}`}
-            onClick={() => scrollToDay(d.id)}
-          >
-            {d.label}
-          </button>
-        ))}
-      </nav>
 
       {/* ROUTE */}
       <section className={styles.section} id="prep" ref={setSectionRef('prep')}>
@@ -909,5 +897,19 @@ export default function ShanxiTripPage({ onBack }: Props) {
         <p style={{ marginTop: 4, opacity: 0.6 }}>一路平安 · 满载而归</p>
       </footer>
     </div>
+
+    {/* BOTTOM PILL NAV — outside .page to avoid transform breaking position:fixed */}
+    <nav className={styles.pillNav} ref={pillsRef}>
+      {DAYS.map(d => (
+        <button
+          key={d.id}
+          className={`${styles.pill} ${activeDay === d.id ? styles.active : ''}`}
+          onClick={() => scrollToDay(d.id)}
+        >
+          {d.label}
+        </button>
+      ))}
+    </nav>
+    </>
   )
 }
