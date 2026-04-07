@@ -138,16 +138,6 @@ function Icon({ name, size = 16, className = '' }: { name: string; size?: number
 
 /* ── Helper ──────────────────────────────────── */
 
-const DAY_ICONS: Record<string, string> = {
-  prep: 'backpack',
-  d0: 'train',
-  d1: 'castle',
-  d2: 'mountain',
-  d3: 'swords',
-  d4: 'temple',
-  d5: 'home',
-}
-
 const stripEmoji = (s: string) => s.replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F]+\s*/u, '')
 
 const CIRCLED_NUMBERS = ['①','②','③','④','⑤','⑥']
@@ -549,7 +539,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
 
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const isScrolling = useRef(false)
-  const tabsRef = useRef<HTMLDivElement>(null)
+  const pillsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 60)
@@ -571,10 +561,10 @@ export default function ShanxiTripPage({ onBack }: Props) {
     }
 
     // Scroll tab into view
-    const tabIndex = DAYS.findIndex(d => d.id === dayId)
-    if (tabsRef.current && tabIndex >= 0) {
-      const tabButtons = tabsRef.current.querySelectorAll('button')
-      tabButtons[tabIndex]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+    const pillIndex = DAYS.findIndex(d => d.id === dayId)
+    if (pillsRef.current && pillIndex >= 0) {
+      const pillButtons = pillsRef.current.querySelectorAll('button')
+      pillButtons[pillIndex]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
     }
 
     setTimeout(() => {
@@ -654,18 +644,15 @@ export default function ShanxiTripPage({ onBack }: Props) {
         </div>
       </section>
 
-      {/* BOTTOM TAB NAV */}
-      <nav className={styles.tabsWrap} ref={tabsRef}>
+      {/* BOTTOM PILL NAV */}
+      <nav className={styles.pillNav} ref={pillsRef}>
         {DAYS.map(d => (
           <button
             key={d.id}
-            className={`${styles.tab} ${activeDay === d.id ? styles.active : ''}`}
+            className={`${styles.pill} ${activeDay === d.id ? styles.active : ''}`}
             onClick={() => scrollToDay(d.id)}
           >
-            <span className={styles.tabIcon}>
-              <Icon name={DAY_ICONS[d.id] || 'backpack'} size={20} />
-            </span>
-            <span>{d.label}</span>
+            {d.label}
           </button>
         ))}
       </nav>
@@ -836,6 +823,15 @@ export default function ShanxiTripPage({ onBack }: Props) {
                     </div>
                   )}
 
+                  {entry.isSight && (
+                    <a
+                      className={styles.navBtn}
+                      href={buildBaiduNavUrl(stripEmoji(entry.desc))}
+                    >
+                      📍 百度地图导航
+                    </a>
+                  )}
+
                   {hasAccordion && (
                     <div className={styles.tlDetail}>
                       <div className={styles.tlInner}>
@@ -866,6 +862,27 @@ export default function ShanxiTripPage({ onBack }: Props) {
               )
             })}
           </div>
+
+          {/* 当日住宿 */}
+          {(() => {
+            const hotel = HOTELS.find(h => h.dayId === day.id)
+            if (!hotel) return null
+            return (
+              <div className={styles.hotelSection}>
+                <div className={styles.hotelSectionLabel}>今日住宿</div>
+                <div className={styles.hotelItem}>
+                  <div className={styles.hotelNight}>
+                    <span className={styles.hotelNightIcon}><Icon name="hotel" size={13} /></span>
+                    {hotel.night}
+                  </div>
+                  <div className={styles.hotelInfo}>
+                    <div className={styles.hotelName}>{hotel.name}</div>
+                    <div className={styles.hotelDesc}>{hotel.desc}</div>
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
         </section>
       ))}
 

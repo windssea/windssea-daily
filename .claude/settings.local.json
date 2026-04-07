@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ls \"D:\\\\dev\\\\windssea\\\\windssea-daily\\\\docs 2>/dev/null && cat D:devwindsseawindssea-dailytest-api.ps1\")"
+      "Bash(ls \"D:\\\\dev\\\\windssea\\\\windssea-daily\\\\docs 2>/dev/null && cat D:devwindsseawindssea-dailytest-api.ps1\")",
+      "Bash(scripts/start-server.sh:*)",
+      "Bash(cat \"D:/dev/windssea/windssea-daily/.superpowers/brainstorm/\"*/state/server-info)",
+      "Bash(~/.claude/skills/brainstorming/scripts/start-server.sh:*)",
+      "Bash(pnpm tsc:*)",
+      "Bash(npx tsc:*)",
+      "Bash(echo \"exit:$?\")",
+      "Bash(git -C \"D:/dev/windssea/windssea-daily\" add src/client/pages/ShanxiTripPage.module.css)",
+      "Bash(git -C D:/dev/windssea/windssea-daily commit -m ':*)"
     ]
   }
 }

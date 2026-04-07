@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>山西攻略 · 完整设计预览</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #e8e0d8;
+  font-family: 'PingFang SC', 'Noto Sans SC', sans-serif;
+  padding: 24px 16px 40px;
+  min-height: 100vh;
+}
+
+h2 { font-size: 17px; color: #2d2018; margin-bottom: 4px; }
+.page-subtitle { font-size: 12px; color: #9a8070; margin-bottom: 28px; }
+
+/* ── Layout ── */
+.layout {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* ── Phone Frame ── */
+.phone-frame {
+  width: 280px;
+  flex-shrink: 0;
+}
+.phone-frame-label {
+  font-size: 11px; font-weight: 700; color: #7a6050;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 8px; text-align: center;
+}
+.phone {
+  width: 280px;
+  height: 560px;
+  border-radius: 28px;
+  border: 3px solid #2d1f14;
+  overflow: hidden;
+  box-shadow: 0 12px 48px rgba(45,31,20,0.25), 0 4px 12px rgba(0,0,0,0.1);
+  position: relative;
+  background: #fdf6e9;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Sticky Header ── */
+.ph-header {
+  background: rgba(253,246,233,0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e8d5b7;
+  padding: 10px 14px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  z-index: 10;
+}
+.ph-back {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: #f0e8d8;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ph-back svg { width: 14px; height: 14px; }
+.ph-title {
+  font-size: 13px; font-weight: 600; color: #3d2b1f;
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ── Hero ── */
+.ph-hero {
+  background: linear-gradient(150deg, #6b3020 0%, #c47c5a 55%, #d4956e 100%);
+  padding: 20px 16px 16px;
+  color: white;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.ph-hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20 0v40M0 20h40' stroke='rgba(255,255,255,0.04)' stroke-width='0.5'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.ph-hero-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(0,0,0,0.15); border-radius: 10px;
+  padding: 3px 9px; font-size: 9px; letter-spacing: 0.1em;
+  margin-bottom: 10px; position: relative;
+}
+.ph-hero-title {
+  font-size: clamp(22px, 8vw, 28px);
+  font-weight: 800; line-height: 1.15;
+  letter-spacing: 0.02em;
+  position: relative;
+}
+.ph-hero-sub {
+  font-size: 10px; opacity: 0.78;
+  margin-top: 5px; letter-spacing: 0.06em;
+  position: relative;
+}
+.ph-stats {
+  display: flex; gap: 1px; margin-top: 14px;
+  background: rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;
+  position: relative;
+}
+.ph-stat {
+  flex: 1; padding: 8px 4px; text-align: center;
+  background: rgba(0,0,0,0.08);
+}
+.ph-stat-n { font-size: 18px; font-weight: 800; display: block; line-height: 1; }
+.ph-stat-l { font-size: 8px; opacity: 0.7; display: block; margin-top: 2px; }
+
+/* ── Scrollable Content ── */
+.ph-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+.ph-scroll::-webkit-scrollbar { display: none; }
+
+/* ── Day Content ── */
+.ph-day-header {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 14px 14px 10px;
+}
+.ph-date-badge {
+  background: linear-gradient(145deg, #c47c5a, #a05e3e);
+  color: white; border-radius: 8px;
+  width: 42px; min-height: 46px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(160,94,62,0.3);
+}
+.ph-date-m { font-size: 8px; opacity: 0.85; display: block; }
+.ph-date-d { font-size: 22px; font-weight: 800; display: block; line-height: 1.1; }
+.ph-day-info { flex: 1; min-width: 0; }
+.ph-day-name {
+  font-size: 13.5px; font-weight: 700; color: #3d2b1f; line-height: 1.4;
+}
+.ph-day-meta {
+  display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 4px;
+}
+.ph-meta-item {
+  display: flex; align-items: center; gap: 3px;
+  font-size: 9px; color: #9a7a5a;
+}
+
+/* ── Section label ── */
+.ph-section-label {
+  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: #c47c5a; font-weight: 700;
+  padding: 0 14px 5px;
+}
+
+/* ── Timeline ── */
+.ph-timeline {
+  padding: 0 14px;
+  border-left: none;
+  position: relative;
+}
+.ph-tl-track {
+  position: absolute; left: 20px; top: 0; bottom: 0;
+  width: 1.5px; background: #e8d5b7;
+}
+.ph-tl-item {
+  padding: 0 0 2px 22px;
+  position: relative;
+}
+.ph-tl-item::before {
+  content: ''; position: absolute;
+  left: 13px; top: 11px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #fdf6e9; border: 1.5px solid #d0b890;
+}
+.ph-tl-item.hl::before {
+  background: #c47c5a; border-color: #c47c5a;
+  box-shadow: 0 0 0 2.5px rgba(196,124,90,0.2);
+  width: 9px; height: 9px; left: 12px;
+}
+.ph-tl-btn {
+  width: 100%; text-align: left; background: none; border: none;
+  padding: 9px 0 7px; cursor: pointer;
+  font-family: inherit; color: inherit;
+}
+.ph-tl-time { font-size: 9px; color: #b09070; display: block; margin-bottom: 1px; }
+.ph-tl-name {
+  font-size: 12px; font-weight: 600; color: #3d2b1f;
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+}
+.ph-tl-caret {
+  width: 12px; height: 12px; color: #c0a080; flex-shrink: 0;
+}
+.ph-nav-link {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: #fef3ea; border: 1px solid #f0d8be;
+  border-radius: 5px; padding: 3px 7px;
+  font-size: 9px; color: #c47c5a; font-weight: 600;
+  margin-top: 3px; text-decoration: none;
+}
+
+/* ── Expanded detail ── */
+.ph-tl-body {
+  background: #faf0e0;
+  border-radius: 8px; padding: 10px 11px;
+  margin-bottom: 8px;
+  font-size: 10px; line-height: 1.7; color: #7a5a3a;
+  border-left: 3px solid #c47c5a;
+}
+.ph-detail-row {
+  display: flex; gap: 6px; margin-bottom: 4px;
+}
+.ph-detail-row:last-child { margin-bottom: 0; }
+.ph-detail-label { font-size: 9px; color: #c47c5a; font-weight: 700; flex-shrink: 0; white-space: nowrap; }
+.ph-detail-val { font-size: 10px; color: #7a5a3a; line-height: 1.6; }
+.ph-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
+.ph-badge {
+  font-size: 9px; padding: 2px 7px; border-radius: 10px;
+}
+.ph-badge-green { background: #e8f5e9; color: #388e3c; }
+.ph-badge-red { background: #fde8e8; color: #c0392b; }
+.ph-badge-gold { background: #fef9e7; color: #b7950b; }
+.ph-badge-default { background: #f0e8d8; color: #9a7a5a; }
+
+/* ── Hotel card ── */
+.ph-hotel {
+  margin: 0 14px 12px;
+  background: #faf0e0;
+  border-radius: 8px; padding: 10px 12px;
+  display: flex; gap: 9px; align-items: flex-start;
+  border: 1px solid #edd8b8;
+}
+.ph-hotel-night {
+  background: #3d2b1f; color: #f7edd8;
+  border-radius: 5px; padding: 4px 7px;
+  font-size: 9px; font-weight: 600; flex-shrink: 0;
+  text-align: center;
+}
+.ph-hotel-name { font-size: 11px; font-weight: 700; color: #3d2b1f; }
+.ph-hotel-desc { font-size: 9.5px; color: #9a7a5a; margin-top: 2px; line-height: 1.5; }
+
+/* ── Section divider ── */
+.ph-divider {
+  height: 1px; background: #e8d5b7; margin: 4px 14px 12px;
+}
+
+/* ── Bottom Pill Nav ── */
+.ph-bottom-nav {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(45, 31, 20, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+  padding: 9px 10px 8px;
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.ph-bottom-nav::-webkit-scrollbar { display: none; }
+.ph-pill {
+  flex-shrink: 0;
+  padding: 5px 11px;
+  border-radius: 14px;
+  font-size: 10px; font-weight: 600;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.45);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ph-pill.act {
+  background: #c47c5a;
+  color: #fff2e0;
+}
+
+/* ── Right column: annotations ── */
+.annotations {
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 8px;
+}
+.ann-item {
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.ann-arrow {
+  width: 24px; height: 24px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: #c47c5a; border-radius: 50%; color: white;
+  font-size: 11px; font-weight: 700; margin-top: 1px;
+}
+.ann-text h4 { font-size: 12px; font-weight: 700; color: #3d2b1f; margin-bottom: 2px; }
+.ann-text p { font-size: 11px; color: #9a7a5a; line-height: 1.55; }
+
+/* ── Approve bar ── */
+.approve-bar {
+  margin-top: 32px;
+  text-align: center;
+}
+.options { justify-content: center; }
+.option {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 24px; border-radius: 10px;
+  background: white; cursor: pointer;
+  border: 2px solid #e8d5b7;
+  transition: border-color 0.15s, background 0.15s;
+  font-size: 13px; color: #3d2b1f;
+}
+.option:hover, .option.selected { border-color: #c47c5a; background: #fdf0e5; }
+.option .letter {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #f0e0d0; color: #c47c5a; font-weight: 700; font-size: 12px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.option.selected .letter { background: #c47c5a; color: white; }
+</style>
+</head>
+<body>
+
+<h2>完整设计预览</h2>
+<p class="page-subtitle">展示了 Day1（大同）的完整视图，包含折叠/展开的景点详情。这是你最终看到的样子。</p>
+
+<div class="layout">
+  <!-- Phone mockup -->
+  <div class="phone-frame">
+    <div class="phone-frame-label">手机端预览</div>
+    <div class="phone">
+      <!-- Header -->
+      <div class="ph-header">
+        <div class="ph-back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3d2b1f" stroke-width="2" stroke-linecap="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </div>
+        <div class="ph-title">山西五日亲子自驾攻略</div>
+      </div>
+
+      <!-- Hero -->
+      <div class="ph-hero">
+        <div class="ph-hero-badge">五一亲子自驾 · 2025</div>
+        <div class="ph-hero-title">山西五日<br/>深度游</div>
+        <div class="ph-hero-sub">南京出发 · 晋北环线 · 两大两小</div>
+        <div class="ph-stats">
+          <div class="ph-stat"><span class="ph-stat-n">5</span><span class="ph-stat-l">天行程</span></div>
+          <div class="ph-stat"><span class="ph-stat-n">760</span><span class="ph-stat-l">公里自驾</span></div>
+          <div class="ph-stat"><span class="ph-stat-n">8+</span><span class="ph-stat-l">核心景点</span></div>
+        </div>
+      </div>
+
+      <!-- Scrollable body -->
+      <div class="ph-scroll">
+        <!-- Day header -->
+        <div class="ph-day-header">
+          <div class="ph-date-badge">
+            <span class="ph-date-m">5月</span>
+            <span class="ph-date-d">1</span>
+          </div>
+          <div class="ph-day-info">
+            <div class="ph-day-name">太原→大同<br/>古城休闲体验日</div>
+            <div class="ph-day-meta">
+              <span class="ph-meta-item">🚗 约280km</span>
+              <span class="ph-meta-item">🏨 大同古城</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: 今日行程 -->
+        <div class="ph-section-label">今日行程</div>
+        <div class="ph-timeline">
+          <div class="ph-tl-track"></div>
+
+          <!-- Item 1: regular -->
+          <div class="ph-tl-item">
+            <button class="ph-tl-btn">
+              <span class="ph-tl-time">07:47 – 08:30</span>
+              <span class="ph-tl-name">太原站抵达 · 提车 + 早餐</span>
+            </button>
+          </div>
+
+          <!-- Item 2: sight, expanded -->
+          <div class="ph-tl-item hl">
+            <button class="ph-tl-btn">
+              <span class="ph-tl-time">14:40 – 16:40</span>
+              <span class="ph-tl-name">
+                大同古城墙
+                <svg class="ph-tl-caret" viewBox="0 0 16 16" fill="none"><path d="M4 10l4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <a class="ph-nav-link" href="#">📍 百度地图导航</a>
+            <div class="ph-tl-body">
+              <div class="ph-detail-row">
+                <span class="ph-detail-label">亮点</span>
+                <span class="ph-detail-val">宽阔平整，可租四人家庭自行车骑行</span>
+              </div>
+              <div class="ph-detail-row">
+                <span class="ph-detail-label">必打卡</span>
+                <span class="ph-detail-val">永泰门瓮城 · 护城河景观带</span>
+              </div>
+              <div class="ph-badges">
+                <span class="ph-badge ph-badge-green">免费开放</span>
+                <span class="ph-badge ph-badge-gold">四人车 30元/时</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3: sight, collapsed -->
+          <div class="ph-tl-item hl">
+            <button class="ph-tl-btn">
+              <span class="ph-tl-time">16:50 – 17:50</span>
+              <span class="ph-tl-name">
+                大同市博物馆
+                <svg class="ph-tl-caret" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <a class="ph-nav-link" href="#">📍 百度地图导航</a>
+          </div>
+
+          <!-- Item 4: regular -->
+          <div class="ph-tl-item" style="padding-bottom:4px">
+            <button class="ph-tl-btn">
+              <span class="ph-tl-time">17:50 之后</span>
+              <span class="ph-tl-name">晚餐 · 返回酒店休息</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="ph-divider"></div>
+
+        <!-- Section: 今日住宿 -->
+        <div class="ph-section-label">今日住宿</div>
+        <div class="ph-hotel">
+          <div class="ph-hotel-night">5/1</div>
+          <div>
+            <div class="ph-hotel-name">大同古城四星亲子酒店</div>
+            <div class="ph-hotel-desc">永泰门附近 · 含早餐 · 停车位充足</div>
+          </div>
+        </div>
+
+        <div style="height: 60px;"></div><!-- spacer for bottom nav -->
+      </div>
+
+      <!-- Bottom Pill Nav -->
+      <div class="ph-bottom-nav">
+        <div class="ph-pill">准备</div>
+        <div class="ph-pill">出发</div>
+        <div class="ph-pill act">大同</div>
+        <div class="ph-pill">云冈</div>
+        <div class="ph-pill">边塞</div>
+        <div class="ph-pill">晋祠</div>
+        <div class="ph-pill">返程</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Annotations -->
+  <div class="annotations">
+    <div class="ann-item">
+      <div class="ann-arrow">1</div>
+      <div class="ann-text">
+        <h4>暖棕 Hero 区</h4>
+        <p>延续手账风格，梯度暖棕。行程统计数字内嵌在 Hero 底部，不单独做卡片。</p>
+      </div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-arrow">2</div>
+      <div class="ann-text">
+        <h4>日期 + 行程标题</h4>
+        <p>左侧是带梯度的日期徽章，右侧是当日标题 + 距离/酒店/列车元信息。</p>
+      </div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-arrow">3</div>
+      <div class="ann-text">
+        <h4>景点带「百度导航」按钮</h4>
+        <p>每个景点条目下方直接跟 <code>baidumap://</code> 深链接按钮，点击直接打开百度地图导航。非景点（路途/餐饮/休息）不显示。</p>
+      </div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-arrow">4</div>
+      <div class="ann-text">
+        <h4>可展开的景点详情</h4>
+        <p>点击景点行展开：概述/亮点/必打卡 + 价格标签（绿=免费、红=付费、金=推荐消费）。</p>
+      </div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-arrow">5</div>
+      <div class="ann-text">
+        <h4>今日住宿卡</h4>
+        <p>每天行程底部有一张住宿卡，日期+酒店名+备注。</p>
+      </div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-arrow">6</div>
+      <div class="ann-text">
+        <h4>底部胶囊导航（固定）</h4>
+        <p>7个日期胶囊横向排列，可左右滑动。当前日期高亮暖棕。背景深棕色半透明。</p>
+      </div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-arrow">7</div>
+      <div class="ann-text">
+        <h4>「准备」页保留路线图、预约表、注意事项</h4>
+        <p>第一个胶囊（准备）展示路线图、8个景点预约指南表格、整体注意事项6条。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Approval -->
+<div class="approve-bar">
+  <p style="font-size:12px;color:#9a8070;margin-bottom:14px">这个设计方向看起来对吗？点击确认或者告诉我需要调整的地方。</p>
+  <div class="options" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+      <div class="letter">✓</div>
+      <div class="content"><strong>确认，按此方案执行</strong></div>
+    </div>
+    <div class="option" data-choice="revise" onclick="toggleSelect(this)">
+      <div class="letter">✎</div>
+      <div class="content"><strong>需要调整某些地方</strong></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,389 @@
+<style>
+  body { background: #f0ede8; font-family: 'PingFang SC', 'Noto Sans SC', sans-serif; }
+  h2 { font-size: 18px; margin-bottom: 4px; color: #2d2018; }
+  .subtitle { color: #7a6a5a; font-size: 13px; margin-bottom: 24px; }
+
+  .phones { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; padding: 8px 0 24px; }
+
+  .phone-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; }
+  .phone-wrap .label { font-size: 13px; font-weight: 600; color: #4a3828; }
+  .phone-wrap .desc { font-size: 11px; color: #9a8a7a; text-align: center; max-width: 160px; line-height: 1.5; }
+
+  .phone {
+    width: 160px; height: 310px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+    border: 3px solid #2d1f14;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+  }
+  .phone-wrap:hover .phone { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.2); }
+
+  /* Selected state */
+  .option.selected .phone { border-color: #c47c5a; box-shadow: 0 0 0 3px #c47c5a, 0 8px 32px rgba(196,124,90,0.3); }
+  .option.selected .label { color: #c47c5a; }
+  .option.selected .phone-badge { opacity: 1; }
+  .phone-badge {
+    position: absolute; top: -8px; right: -8px;
+    background: #c47c5a; color: white; font-size: 10px; font-weight: 700;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.2s;
+    z-index: 10;
+  }
+
+  /* ── Option A: 手账清新风 ── */
+  .phone-a { background: #fdf6e9; }
+  .phone-a .ph-header {
+    background: #3d2b1f; color: #f7edd8; padding: 8px 10px 6px;
+    font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .phone-a .ph-hero {
+    background: linear-gradient(145deg, #8b4b2f, #c47c5a);
+    color: white; padding: 14px 10px 12px;
+    font-size: 18px; font-weight: 700; letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
+  .phone-a .ph-hero .sub { font-size: 9px; opacity: 0.8; margin-top: 4px; letter-spacing: 0.1em; }
+  .phone-a .ph-tabs-top {
+    background: #2d1f14; display: flex; overflow: hidden;
+  }
+  .phone-a .ph-tab {
+    flex: 1; padding: 5px 0; text-align: center;
+    font-size: 9px; color: rgba(255,255,255,0.5);
+  }
+  .phone-a .ph-tab.act { color: #e8c285; border-bottom: 1.5px solid #e8c285; }
+  .phone-a .ph-content { padding: 10px; flex: 1; }
+  .phone-a .ph-day-head {
+    display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+  }
+  .phone-a .ph-date {
+    background: #c47c5a; color: white; border-radius: 6px;
+    width: 32px; height: 36px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .phone-a .ph-date .m { font-size: 7px; opacity: 0.8; }
+  .phone-a .ph-date .d { font-size: 16px; font-weight: 700; line-height: 1; }
+  .phone-a .ph-day-title { font-size: 11px; font-weight: 700; color: #3d2b1f; line-height: 1.4; }
+  .phone-a .ph-day-sub { font-size: 8.5px; color: #9a7a5a; margin-top: 1px; }
+  .phone-a .ph-tl { padding-left: 10px; border-left: 1.5px solid #e8d5b7; margin-left: 4px; }
+  .phone-a .ph-item { padding: 5px 0 5px 8px; position: relative; }
+  .phone-a .ph-item::before {
+    content: ''; position: absolute; left: -5px; top: 9px;
+    width: 7px; height: 7px; border-radius: 50%; background: #e8d5b7; border: 1.5px solid #c47c5a;
+  }
+  .phone-a .ph-item.hl::before { background: #c47c5a; }
+  .phone-a .ph-time { font-size: 8px; color: #a08060; }
+  .phone-a .ph-name { font-size: 10px; color: #3d2b1f; font-weight: 500; }
+  .phone-a .ph-nav-btn {
+    display: inline-flex; align-items: center; gap: 2px;
+    background: #f0e8d8; border-radius: 3px; padding: 1px 5px;
+    font-size: 8px; color: #c47c5a; margin-top: 2px;
+  }
+  .phone-a .ph-bottom-nav {
+    background: #2d1f14; display: flex; padding: 6px 0 4px;
+    border-top: 1px solid #4a3020;
+    position: absolute; bottom: 0; left: 0; right: 0;
+  }
+  .phone-a .ph-bnav-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 2px; font-size: 7px; color: rgba(255,255,255,0.45);
+  }
+  .phone-a .ph-bnav-item.act { color: #e8c285; }
+  .phone-a .ph-bnav-dot { width: 14px; height: 14px; background: rgba(255,255,255,0.1); border-radius: 3px; }
+  .phone-a .ph-bnav-item.act .ph-bnav-dot { background: #e8c285; }
+
+  /* ── Option B: 清白简约风 ── */
+  .phone-b { background: #ffffff; }
+  .phone-b .pb-header {
+    background: #fff; border-bottom: 1px solid #f0f0f0;
+    padding: 8px 10px; display: flex; align-items: center; gap: 8px;
+  }
+  .phone-b .pb-back { width: 20px; height: 20px; background: #f5f5f5; border-radius: 50%; }
+  .phone-b .pb-title { font-size: 12px; font-weight: 700; color: #1a1a1a; }
+  .phone-b .pb-hero {
+    height: 70px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative; overflow: hidden; padding: 14px;
+  }
+  .phone-b .pb-hero-title { font-size: 16px; font-weight: 800; color: white; }
+  .phone-b .pb-hero-sub { font-size: 8px; color: rgba(255,255,255,0.8); margin-top: 2px; }
+  .phone-b .pb-pills { display: flex; gap: 4px; padding: 8px 10px; overflow: hidden; }
+  .phone-b .pb-pill {
+    flex-shrink: 0; padding: 4px 8px; border-radius: 12px;
+    font-size: 9px; font-weight: 600; background: #f5f5f5; color: #666;
+  }
+  .phone-b .pb-pill.act { background: #4f46e5; color: white; }
+  .phone-b .pb-card {
+    margin: 0 10px 8px; background: #fff;
+    border-radius: 10px; padding: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  }
+  .phone-b .pb-card-label { font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: #999; margin-bottom: 4px; }
+  .phone-b .pb-card-title { font-size: 12px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px; }
+  .phone-b .pb-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .phone-b .pb-dot { width: 6px; height: 6px; border-radius: 50%; background: #4f46e5; flex-shrink: 0; }
+  .phone-b .pb-row-text { font-size: 9px; color: #555; }
+  .phone-b .pb-tag { display: inline-block; background: #eff0ff; color: #4f46e5; border-radius: 4px; padding: 2px 5px; font-size: 8px; margin-top: 4px; }
+  .phone-b .pb-bottom {
+    background: #fff; display: flex; gap: 0; border-top: 1px solid #f0f0f0;
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 0 4px;
+  }
+  .phone-b .pb-bnav {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+    font-size: 7px; color: #bbb;
+  }
+  .phone-b .pb-bnav.act { color: #4f46e5; }
+  .phone-b .pb-bnav-icon { width: 16px; height: 16px; background: #f0f0f0; border-radius: 4px; }
+  .phone-b .pb-bnav.act .pb-bnav-icon { background: #eff0ff; }
+
+  /* ── Option C: 自然山水风 ── */
+  .phone-c { background: #f5f8f2; }
+  .phone-c .pc-header {
+    background: #2c4a2e; color: #e8f0e0; padding: 8px 10px;
+    font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .phone-c .pc-hero {
+    background: linear-gradient(160deg, #2c4a2e, #4a7a4a, #6a9e5a);
+    color: white; padding: 16px 12px 12px;
+  }
+  .phone-c .pc-hero-badge {
+    display: inline-block; background: rgba(255,255,255,0.15); border-radius: 10px;
+    padding: 2px 8px; font-size: 8px; letter-spacing: 0.1em; margin-bottom: 8px;
+  }
+  .phone-c .pc-hero-title { font-size: 20px; font-weight: 800; line-height: 1.2; }
+  .phone-c .pc-hero-sub { font-size: 8px; opacity: 0.8; margin-top: 3px; }
+  .phone-c .pc-day-strip {
+    background: #2c4a2e; display: flex; overflow: hidden;
+  }
+  .phone-c .pc-ds-item {
+    flex: 1; padding: 6px 0 5px; text-align: center;
+    font-size: 8px; color: rgba(255,255,255,0.4);
+    border-bottom: 2px solid transparent;
+  }
+  .phone-c .pc-ds-item.act { color: #a8d878; border-bottom-color: #a8d878; }
+  .phone-c .pc-content { padding: 10px 10px 60px; }
+  .phone-c .pc-section-title {
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: #6a9e5a; margin-bottom: 5px; font-weight: 700;
+  }
+  .phone-c .pc-item {
+    display: flex; gap: 6px; align-items: flex-start;
+    padding: 6px 0; border-bottom: 1px dashed #d8e8d0;
+  }
+  .phone-c .pc-item-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #c8e0b0; border: 1.5px solid #6a9e5a;
+    flex-shrink: 0; margin-top: 3px;
+  }
+  .phone-c .pc-item-dot.hl { background: #6a9e5a; }
+  .phone-c .pc-item-name { font-size: 10px; font-weight: 600; color: #2c3a28; }
+  .phone-c .pc-item-meta { font-size: 8px; color: #7a9a70; margin-top: 1px; }
+  .phone-c .pc-nav-btn {
+    display: inline-flex; align-items: center; gap: 2px;
+    background: #e0f0d0; border-radius: 3px; padding: 2px 5px;
+    font-size: 7.5px; color: #4a7a4a; margin-top: 2px; font-weight: 600;
+  }
+  .phone-c .pc-bottom {
+    background: #2c4a2e; display: flex; padding: 6px 0 4px;
+    border-top: 1px solid #3a5c3a;
+    position: absolute; bottom: 0; left: 0; right: 0;
+  }
+  .phone-c .pc-bnav {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+    font-size: 7px; color: rgba(255,255,255,0.35);
+  }
+  .phone-c .pc-bnav.act { color: #a8d878; }
+  .phone-c .pc-bnav-icon { width: 14px; height: 14px; background: rgba(255,255,255,0.1); border-radius: 3px; }
+  .phone-c .pc-bnav.act .pc-bnav-icon { background: rgba(168,216,120,0.25); }
+</style>
+
+<h2>整体设计方向</h2>
+<p class="subtitle">三种风格方向，每种都包含底部导航 + 地点导航 + 清晰的每日行程。点击选择你更喜欢的方向。</p>
+
+<div class="phones">
+  <!-- Option A -->
+  <div class="option phone-wrap" data-choice="a" onclick="toggleSelect(this)">
+    <div style="position:relative">
+      <div class="phone phone-a">
+        <div class="ph-header">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          山西五日亲子自驾攻略
+        </div>
+        <div class="ph-hero">
+          山西五日<br/>深度游
+          <div class="sub">南京出发 · 晋北环线 · 两大两小</div>
+        </div>
+        <div class="ph-tabs-top">
+          <div class="ph-tab">准备</div>
+          <div class="ph-tab act">大同</div>
+          <div class="ph-tab">云冈</div>
+          <div class="ph-tab">边塞</div>
+          <div class="ph-tab">晋祠</div>
+        </div>
+        <div class="ph-content">
+          <div class="ph-day-head">
+            <div class="ph-date"><span class="m">5月</span><span class="d">1</span></div>
+            <div>
+              <div class="ph-day-title">太原→大同<br/>古城休闲日</div>
+              <div class="ph-day-sub">约280km · 大同古城</div>
+            </div>
+          </div>
+          <div class="ph-tl">
+            <div class="ph-item">
+              <div class="ph-time">08:30 - 11:30</div>
+              <div class="ph-name">自驾前往大同</div>
+            </div>
+            <div class="ph-item hl">
+              <div class="ph-time">14:40 - 16:40</div>
+              <div class="ph-name">大同古城墙</div>
+              <div class="ph-nav-btn">📍 导航前往</div>
+            </div>
+            <div class="ph-item hl">
+              <div class="ph-time">16:50 - 17:50</div>
+              <div class="ph-name">大同市博物馆</div>
+              <div class="ph-nav-btn">📍 导航前往</div>
+            </div>
+          </div>
+        </div>
+        <div class="ph-bottom-nav">
+          <div class="ph-bnav-item"><div class="ph-bnav-dot"></div>准备</div>
+          <div class="ph-bnav-item"><div class="ph-bnav-dot"></div>出发</div>
+          <div class="ph-bnav-item act"><div class="ph-bnav-dot"></div>大同</div>
+          <div class="ph-bnav-item"><div class="ph-bnav-dot"></div>云冈</div>
+          <div class="ph-bnav-item"><div class="ph-bnav-dot"></div>边塞</div>
+          <div class="ph-bnav-item"><div class="ph-bnav-dot"></div>晋祠</div>
+          <div class="ph-bnav-item"><div class="ph-bnav-dot"></div>返程</div>
+        </div>
+      </div>
+      <div class="phone-badge">✓</div>
+    </div>
+    <div class="label">A · 手账暖棕风</div>
+    <div class="desc">沿用现有暖色调<br/>温暖·仪式感·手账质感</div>
+  </div>
+
+  <!-- Option B -->
+  <div class="option phone-wrap" data-choice="b" onclick="toggleSelect(this)">
+    <div style="position:relative">
+      <div class="phone phone-b">
+        <div class="pb-header">
+          <div class="pb-back"></div>
+          <div class="pb-title">山西五日亲子游</div>
+        </div>
+        <div class="pb-hero">
+          <div class="pb-hero-title">山西五日深度游</div>
+          <div class="pb-hero-sub">南京出发 · 晋北环线 · 两大两小</div>
+        </div>
+        <div class="pb-pills">
+          <div class="pb-pill">准备</div>
+          <div class="pb-pill act">Day1</div>
+          <div class="pb-pill">Day2</div>
+          <div class="pb-pill">Day3</div>
+          <div class="pb-pill">Day4</div>
+        </div>
+        <div class="pb-card">
+          <div class="pb-card-label">5月1日 · 大同</div>
+          <div class="pb-card-title">古城休闲体验日</div>
+          <div class="pb-row">
+            <div class="pb-dot"></div>
+            <div class="pb-row-text">14:40 大同古城墙（免费）</div>
+          </div>
+          <div style="padding-left: 12px; margin-top: 2px;">
+            <span style="font-size:8px;color:#888;background:#f5f5f5;padding:1px 5px;border-radius:3px;">📍 导航</span>
+            <span style="font-size:8px;color:#4f46e5;background:#eff0ff;padding:1px 5px;border-radius:3px;margin-left:3px;">四人自行车 30元</span>
+          </div>
+          <div class="pb-row" style="margin-top:5px">
+            <div class="pb-dot"></div>
+            <div class="pb-row-text">16:50 大同市博物馆（免费）</div>
+          </div>
+          <div style="padding-left: 12px; margin-top: 2px;">
+            <span style="font-size:8px;color:#888;background:#f5f5f5;padding:1px 5px;border-radius:3px;">📍 导航</span>
+            <span style="font-size:8px;color:#16a34a;background:#dcfce7;padding:1px 5px;border-radius:3px;margin-left:3px;">免费</span>
+          </div>
+          <div style="margin-top:7px;padding-top:7px;border-top:1px solid #f0f0f0;font-size:8.5px;color:#333;">
+            🏨 大同古城四星亲子酒店 · 永泰门附近
+          </div>
+        </div>
+        <div class="pb-bottom">
+          <div class="pb-bnav"><div class="pb-bnav-icon"></div>行程</div>
+          <div class="pb-bnav act"><div class="pb-bnav-icon"></div>今日</div>
+          <div class="pb-bnav"><div class="pb-bnav-icon"></div>酒店</div>
+          <div class="pb-bnav"><div class="pb-bnav-icon"></div>须知</div>
+        </div>
+      </div>
+      <div class="phone-badge">✓</div>
+    </div>
+    <div class="label">B · 简约白卡风</div>
+    <div class="desc">纯白底·清爽现代<br/>类似微信小程序风格</div>
+  </div>
+
+  <!-- Option C -->
+  <div class="option phone-wrap" data-choice="c" onclick="toggleSelect(this)">
+    <div style="position:relative">
+      <div class="phone phone-c">
+        <div class="pc-header">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          山西五日亲子自驾攻略
+          <span style="font-size:9px;color:rgba(255,255,255,0.5)">·</span>
+        </div>
+        <div class="pc-hero">
+          <div class="pc-hero-badge">山西 · 晋北环线</div>
+          <div class="pc-hero-title">山西五日<br/>深度游</div>
+          <div class="pc-hero-sub">南京出发 · 两大两小 · 五天四夜</div>
+        </div>
+        <div class="pc-day-strip">
+          <div class="pc-ds-item">准备</div>
+          <div class="pc-ds-item">出发</div>
+          <div class="pc-ds-item act">大同</div>
+          <div class="pc-ds-item">云冈</div>
+          <div class="pc-ds-item">边塞</div>
+          <div class="pc-ds-item">晋祠</div>
+        </div>
+        <div class="pc-content">
+          <div class="pc-section-title">景点</div>
+          <div class="pc-item">
+            <div class="pc-item-dot hl"></div>
+            <div>
+              <div class="pc-item-name">大同古城墙</div>
+              <div class="pc-item-meta">14:40–16:40 · 免费开放</div>
+              <div class="pc-nav-btn">↗ 高德导航</div>
+            </div>
+          </div>
+          <div class="pc-item">
+            <div class="pc-item-dot hl"></div>
+            <div>
+              <div class="pc-item-name">大同市博物馆</div>
+              <div class="pc-item-meta">16:50–17:50 · 免费 · 无需预约</div>
+              <div class="pc-nav-btn">↗ 高德导航</div>
+            </div>
+          </div>
+          <div class="pc-section-title" style="margin-top:8px">住宿</div>
+          <div class="pc-item" style="border:none">
+            <div class="pc-item-dot"></div>
+            <div>
+              <div class="pc-item-name">大同古城四星亲子酒店</div>
+              <div class="pc-item-meta">永泰门附近 · 含早餐</div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-bottom">
+          <div class="pc-bnav"><div class="pc-bnav-icon"></div>准备</div>
+          <div class="pc-bnav"><div class="pc-bnav-icon"></div>出发</div>
+          <div class="pc-bnav act"><div class="pc-bnav-icon"></div>大同</div>
+          <div class="pc-bnav"><div class="pc-bnav-icon"></div>云冈</div>
+          <div class="pc-bnav"><div class="pc-bnav-icon"></div>边塞</div>
+          <div class="pc-bnav"><div class="pc-bnav-icon"></div>晋祠</div>
+          <div class="pc-bnav"><div class="pc-bnav-icon"></div>返</div>
+        </div>
+      </div>
+      <div class="phone-badge">✓</div>
+    </div>
+    <div class="label">C · 自然山水绿</div>
+    <div class="desc">清新绿色调·自然感<br/>类似户外旅行APP风格</div>
+  </div>
+</div>
+
+<p style="font-size:12px;color:#9a8a7a;text-align:center;margin-top:4px">三种方案都包含：底部日期导航 + 每个景点的导航按钮 + 清晰的每日行程结构</p>

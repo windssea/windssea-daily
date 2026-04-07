@@ -1,0 +1,190 @@
+<style>
+  body { background: #f0ede8; font-family: 'PingFang SC', 'Noto Sans SC', sans-serif; }
+  h2 { font-size: 18px; margin-bottom: 4px; color: #2d2018; }
+  .subtitle { color: #7a6a5a; font-size: 13px; margin-bottom: 24px; }
+
+  .phones { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; padding: 8px 0 24px; }
+  .phone-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; }
+  .phone-wrap .label { font-size: 13px; font-weight: 600; color: #4a3828; }
+  .phone-wrap .desc { font-size: 11px; color: #9a8a7a; text-align: center; max-width: 170px; line-height: 1.5; }
+  .phone-badge {
+    position: absolute; top: -8px; right: -8px;
+    background: #c47c5a; color: white; font-size: 10px; font-weight: 700;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.2s; z-index: 10;
+  }
+  .option.selected .phone { border-color: #c47c5a !important; box-shadow: 0 0 0 3px #c47c5a, 0 8px 32px rgba(196,124,90,0.3) !important; }
+  .option.selected .label { color: #c47c5a; }
+  .option.selected .phone-badge { opacity: 1; }
+
+  .phone {
+    width: 180px; height: 120px;
+    border-radius: 16px 16px 12px 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border: 2.5px solid #2d1f14;
+    position: relative;
+    background: #fdf6e9;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .phone-wrap:hover .phone { transform: translateY(-3px); }
+
+  /* Shared content area */
+  .ph-content {
+    height: 70px; padding: 8px 10px; overflow: hidden;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .ph-day-row { font-size: 9.5px; font-weight: 700; color: #3d2b1f; }
+  .ph-item-row {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 8.5px; color: #7a5a3a;
+  }
+  .ph-item-row::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #e8d5b7; border: 1px solid #c47c5a; flex-shrink: 0; }
+  .ph-item-row.hl::before { background: #c47c5a; }
+
+  /* Nav style 1: 7 days scrollable */
+  .nav1 {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: #2d1f14;
+    display: flex; overflow: hidden; height: 48px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-bottom: 0;
+  }
+  .n1-item {
+    flex: 1; min-width: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2px; font-size: 7px; color: rgba(255,255,255,0.38);
+    border-top: 1.5px solid transparent;
+    padding: 0 2px;
+  }
+  .n1-item.act { color: #e8c285; border-top-color: #e8c285; }
+  .n1-icon { width: 14px; height: 10px; border-radius: 2px; background: currentColor; opacity: 0.4; }
+  .n1-item.act .n1-icon { opacity: 1; background: #e8c285; }
+
+  /* Nav style 2: 5 items (grouped) */
+  .nav2 {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: #2d1f14;
+    display: flex; height: 48px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .n2-item {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2px; font-size: 7.5px; color: rgba(255,255,255,0.38);
+    border-top: 1.5px solid transparent;
+  }
+  .n2-item.act { color: #e8c285; border-top-color: #e8c285; }
+  .n2-icon { width: 16px; height: 11px; border-radius: 3px; background: currentColor; opacity: 0.35; }
+  .n2-item.act .n2-icon { opacity: 1; background: #e8c285; }
+
+  /* Nav style 3: pills strip */
+  .nav3 {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: #2d1f14;
+    height: 48px; padding: 0 8px;
+    display: flex; align-items: center; gap: 5px;
+    overflow: hidden;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .n3-pill {
+    flex-shrink: 0; padding: 4px 8px;
+    border-radius: 12px; font-size: 8.5px; font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.06);
+    white-space: nowrap;
+  }
+  .n3-pill.act {
+    background: #c47c5a; color: #fff2e0;
+  }
+
+  .note {
+    font-size: 10.5px; color: #9a8a7a; text-align: center;
+    background: rgba(196,124,90,0.08); border-radius: 8px; padding: 8px 12px;
+    margin-top: 4px;
+  }
+</style>
+
+<h2>底部导航结构</h2>
+<p class="subtitle">选择日期切换导航的形式。内容区都是一样的——区别只在底部导航栏。</p>
+
+<div class="phones">
+  <!-- Option A: 7 days icon+text -->
+  <div class="option phone-wrap" data-choice="a" onclick="toggleSelect(this)">
+    <div style="position:relative">
+      <div class="phone">
+        <div class="ph-content">
+          <div class="ph-day-row">5月1日 · 大同 · 古城休闲日</div>
+          <div class="ph-item-row hl">大同古城墙 &nbsp;📍</div>
+          <div class="ph-item-row hl">大同市博物馆 &nbsp;📍</div>
+          <div class="ph-item-row">晚餐·返回酒店</div>
+        </div>
+        <div class="nav1">
+          <div class="n1-item"><div class="n1-icon"></div>准备</div>
+          <div class="n1-item"><div class="n1-icon"></div>出发</div>
+          <div class="n1-item act"><div class="n1-icon"></div>大同</div>
+          <div class="n1-item"><div class="n1-icon"></div>云冈</div>
+          <div class="n1-item"><div class="n1-icon"></div>边塞</div>
+          <div class="n1-item"><div class="n1-icon"></div>晋祠</div>
+          <div class="n1-item"><div class="n1-icon"></div>返程</div>
+        </div>
+      </div>
+      <div class="phone-badge">✓</div>
+    </div>
+    <div class="label">A · 7天全部显示</div>
+    <div class="desc">所有日期一眼可见<br/>图标+文字，一键跳转<br/>7个挤一点但信息完整</div>
+  </div>
+
+  <!-- Option B: 5 items grouped -->
+  <div class="option phone-wrap" data-choice="b" onclick="toggleSelect(this)">
+    <div style="position:relative">
+      <div class="phone">
+        <div class="ph-content">
+          <div class="ph-day-row">5月1日 · 大同 · 古城休闲日</div>
+          <div class="ph-item-row hl">大同古城墙 &nbsp;📍</div>
+          <div class="ph-item-row hl">大同市博物馆 &nbsp;📍</div>
+          <div class="ph-item-row">晚餐·返回酒店</div>
+        </div>
+        <div class="nav2">
+          <div class="n2-item"><div class="n2-icon"></div>总览</div>
+          <div class="n2-item"><div class="n2-icon"></div>Day1</div>
+          <div class="n2-item act"><div class="n2-icon"></div>Day2</div>
+          <div class="n2-item"><div class="n2-icon"></div>Day3</div>
+          <div class="n2-item"><div class="n2-icon"></div>Day4+</div>
+        </div>
+      </div>
+      <div class="phone-badge">✓</div>
+    </div>
+    <div class="label">B · 5项合并</div>
+    <div class="desc">总览+合并尾日<br/>更宽松·更易点击<br/>Day4+ 展开二级菜单</div>
+  </div>
+
+  <!-- Option C: pill strip -->
+  <div class="option phone-wrap" data-choice="c" onclick="toggleSelect(this)">
+    <div style="position:relative">
+      <div class="phone">
+        <div class="ph-content">
+          <div class="ph-day-row">5月1日 · 大同 · 古城休闲日</div>
+          <div class="ph-item-row hl">大同古城墙 &nbsp;📍</div>
+          <div class="ph-item-row hl">大同市博物馆 &nbsp;📍</div>
+          <div class="ph-item-row">晚餐·返回酒店</div>
+        </div>
+        <div class="nav3">
+          <div class="n3-pill">准备</div>
+          <div class="n3-pill">出发</div>
+          <div class="n3-pill act">大同</div>
+          <div class="n3-pill">云冈</div>
+          <div class="n3-pill">边塞</div>
+          <div class="n3-pill">晋祠</div>
+          <div class="n3-pill">返程</div>
+        </div>
+      </div>
+      <div class="phone-badge">✓</div>
+    </div>
+    <div class="label">C · 胶囊滑动条</div>
+    <div class="desc">底部横滑胶囊<br/>手感轻盈·左右滑动<br/>活跃项高亮暖棕色</div>
+  </div>
+</div>
+
+<p class="note">三种方案都固定在底部 + 支持一键跳转到对应日期。推荐 <strong>C · 胶囊滑动条</strong>——手感最自然，不会因为7个tab挤在一起而影响点击精度。</p>
