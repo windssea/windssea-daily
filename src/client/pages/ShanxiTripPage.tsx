@@ -5,7 +5,143 @@ interface Props {
   onBack: () => void
 }
 
-/* ── Static Data ───────────────────────────── */
+/* ── SVG Icon System ─────────────────────────── */
+
+const iconProps = {
+  viewBox: '0 0 24 24',
+  fill: 'none' as const,
+  stroke: 'currentColor',
+  strokeWidth: 1.5,
+  strokeLinecap: 'round' as const,
+  strokeLinejoin: 'round' as const,
+}
+
+function Ic({ children, ...extra }: { children: React.ReactNode } & React.SVGProps<SVGSVGElement>) {
+  return <svg {...iconProps} {...extra}>{children}</svg>
+}
+
+const ICONS: Record<string, React.ReactNode> = {
+  arrowLeft: (
+    <Ic><path d="M19 12H5M12 19l-7-7 7-7"/></Ic>
+  ),
+  backpack: (
+    <Ic>
+      <rect x="6" y="8" width="12" height="13" rx="2"/>
+      <path d="M9 8V6a3 3 0 016 0v2"/>
+      <path d="M6 13h12"/>
+    </Ic>
+  ),
+  train: (
+    <Ic>
+      <rect x="4" y="3" width="16" height="15" rx="2"/>
+      <path d="M4 9h16"/>
+      <path d="M12 3v6"/>
+      <path d="M8 22l2-4M16 22l-2-4"/>
+      <circle cx="8" cy="14" r="1" fill="currentColor" stroke="none"/>
+      <circle cx="16" cy="14" r="1" fill="currentColor" stroke="none"/>
+    </Ic>
+  ),
+  castle: (
+    <Ic>
+      <path d="M12 2L3 8h18L12 2z"/>
+      <rect x="4" y="8" width="16" height="4"/>
+      <path d="M7 12v5h10v-5"/>
+      <path d="M3 17h18"/>
+      <rect x="10" y="17" width="4" height="4"/>
+    </Ic>
+  ),
+  mountain: (
+    <Ic>
+      <path d="M2 20l7-10 4 6 3-4 6 8"/>
+      <path d="M14 6l2-3 3 5"/>
+    </Ic>
+  ),
+  swords: (
+    <Ic>
+      <path d="M7 4l10 16M17 4L7 20"/>
+      <path d="M4 7l3-3 3 3M14 7l3-3 3 3"/>
+      <path d="M4 17l3 3 3-3M14 17l3 3 3-3"/>
+    </Ic>
+  ),
+  temple: (
+    <Ic>
+      <path d="M12 3L3 9h18L12 3z"/>
+      <path d="M6 9v12M18 9v12M12 9v12"/>
+      <path d="M4 21h16"/>
+      <path d="M12 3v6"/>
+    </Ic>
+  ),
+  home: (
+    <Ic>
+      <path d="M3 12l9-8 9 8"/>
+      <path d="M5 10.5V20a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9.5"/>
+    </Ic>
+  ),
+  car: (
+    <Ic>
+      <path d="M5 17h14"/>
+      <path d="M6 17V12l2.5-5h7L18 12v5"/>
+      <circle cx="8.5" cy="17" r="1.5"/>
+      <circle cx="15.5" cy="17" r="1.5"/>
+    </Ic>
+  ),
+  hotel: (
+    <Ic>
+      <path d="M3 21h18"/>
+      <rect x="5" y="3" width="14" height="18" rx="1"/>
+      <path d="M10 21v-5h4v5"/>
+      <path d="M9 8h0.01M15 8h0.01M9 12h0.01M15 12h0.01"/>
+    </Ic>
+  ),
+  ticket: (
+    <Ic>
+      <path d="M2 9a3 3 0 013-3h14a3 3 0 013 3v1a1 1 0 01-1 1 1 1 0 00-1 1v2a1 1 0 001 1 1 1 0 011 1v1a3 3 0 01-3 3H5a3 3 0 01-3-3v-1a1 1 0 011-1 1 1 0 001-1v-2a1 1 0 00-1-1 1 1 0 01-1-1V9z"/>
+      <path d="M13 6v12"/>
+    </Ic>
+  ),
+  calendar: (
+    <Ic>
+      <rect x="3" y="4" width="18" height="18" rx="2"/>
+      <path d="M16 2v4M8 2v4M3 10h18"/>
+      <path d="M8 14h0.01M12 14h0.01M16 14h0.01M8 18h0.01M12 18h0.01"/>
+    </Ic>
+  ),
+  mapPin: (
+    <Ic>
+      <path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/>
+      <circle cx="12" cy="9" r="2.5"/>
+    </Ic>
+  ),
+}
+
+function Icon({ name, size = 16, className = '' }: { name: string; size?: number; className?: string }) {
+  return (
+    <span
+      className={`${styles.icon} ${className}`}
+      style={{ width: size, height: size }}
+    >
+      {ICONS[name]}
+    </span>
+  )
+}
+
+/* ── Helper ──────────────────────────────────── */
+
+const DAY_ICONS: Record<string, string> = {
+  prep: 'backpack',
+  d0: 'train',
+  d1: 'castle',
+  d2: 'mountain',
+  d3: 'swords',
+  d4: 'temple',
+  d5: 'home',
+}
+
+const stripEmoji = (s: string) => s.replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F]+\s*/u, '')
+
+const CIRCLED_NUMBERS = ['①','②','③','④','⑤','⑥']
+
+/* ── Static Data ─────────────────────────────── */
 
 const DAYS = [
   { id: 'prep', label: '准备', emoji: '🎒' },
@@ -401,6 +537,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
 
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const isScrolling = useRef(false)
+  const tabsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 60)
@@ -412,7 +549,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
     setActiveDay(dayId)
     const el = sectionRefs.current[dayId]
     if (el) {
-      const topOffset = 64 // Header height offset
+      const topOffset = 106 // Header + tabs height
       const elementPosition = el.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.pageYOffset - topOffset
       window.scrollTo({
@@ -420,6 +557,14 @@ export default function ShanxiTripPage({ onBack }: Props) {
         behavior: 'smooth'
       })
     }
+
+    // Scroll tab into view
+    const tabIndex = DAYS.findIndex(d => d.id === dayId)
+    if (tabsRef.current && tabIndex >= 0) {
+      const tabButtons = tabsRef.current.querySelectorAll('button')
+      tabButtons[tabIndex]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+    }
+
     setTimeout(() => {
       isScrolling.current = false
     }, 800)
@@ -435,7 +580,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
           }
         }
       },
-      { rootMargin: '-100px 0px -70% 0px', threshold: 0 }
+      { rootMargin: '-120px 0px -70% 0px', threshold: 0 }
     )
 
     const prepEl = sectionRefs.current['prep']
@@ -468,14 +613,17 @@ export default function ShanxiTripPage({ onBack }: Props) {
       {/* Sticky Header */}
       <header className={styles.header}>
         <button onClick={onBack} className={styles.backBtn} aria-label="返回">
-          ←
+          <Icon name="arrowLeft" size={20} />
         </button>
         <span className={styles.headerTitle}>山西五日亲子自驾攻略</span>
       </header>
 
       {/* Hero */}
       <section className={styles.hero}>
-        <p className={styles.heroBadge}>五一亲子自驾 · 2025年4月30日—5月5日</p>
+        <p className={styles.heroBadge}>
+          <span className={styles.heroBadgeIcon}><Icon name="calendar" size={13} /></span>
+          五一亲子自驾 · 2025年4月30日—5月5日
+        </p>
         <h1 className={styles.heroTitle}>山西五日<br/>深度游</h1>
         <p className={styles.heroSub}>南京出发 · 晋北环线 · 两大两小</p>
         <div className={styles.heroStats}>
@@ -495,13 +643,16 @@ export default function ShanxiTripPage({ onBack }: Props) {
       </section>
 
       {/* TABS */}
-      <nav className={styles.tabsWrap}>
+      <nav className={styles.tabsWrap} ref={tabsRef}>
         {DAYS.map(d => (
           <button
             key={d.id}
             className={`${styles.tab} ${activeDay === d.id ? styles.active : ''}`}
             onClick={() => scrollToDay(d.id)}
           >
+            <span className={styles.tabIcon}>
+              <Icon name={DAY_ICONS[d.id] || 'backpack'} size={15} />
+            </span>
             {d.label}
           </button>
         ))}
@@ -518,11 +669,15 @@ export default function ShanxiTripPage({ onBack }: Props) {
             <div className={styles.routeCityDate}>4/30</div>
           </div>
           <div className={styles.routeLine}></div>
+          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
+          <div className={styles.routeLine}></div>
           <div className={styles.routeCity}>
             <div className={styles.routeCityName}>太原</div>
             <div className={styles.routeCityDot}></div>
             <div className={styles.routeCityDate}>5/1</div>
           </div>
+          <div className={styles.routeLine}></div>
+          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
           <div className={styles.routeLine}></div>
           <div className={styles.routeCity}>
             <div className={styles.routeCityName}>大同</div>
@@ -530,11 +685,15 @@ export default function ShanxiTripPage({ onBack }: Props) {
             <div className={styles.routeCityDate}>5/1-2</div>
           </div>
           <div className={styles.routeLine}></div>
+          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
+          <div className={styles.routeLine}></div>
           <div className={styles.routeCity}>
             <div className={styles.routeCityName}>应县</div>
             <div className={styles.routeCityDot}></div>
             <div className={styles.routeCityDate}>5/2-3</div>
           </div>
+          <div className={styles.routeLine}></div>
+          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
           <div className={styles.routeLine}></div>
           <div className={styles.routeCity}>
             <div className={styles.routeCityName}>忻州</div>
@@ -542,11 +701,15 @@ export default function ShanxiTripPage({ onBack }: Props) {
             <div className={styles.routeCityDate}>5/3</div>
           </div>
           <div className={styles.routeLine}></div>
+          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
+          <div className={styles.routeLine}></div>
           <div className={styles.routeCity}>
             <div className={styles.routeCityName}>太原</div>
             <div className={styles.routeCityDot}></div>
             <div className={styles.routeCityDate}>5/3-5</div>
           </div>
+          <div className={styles.routeLine}></div>
+          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
           <div className={styles.routeLine}></div>
           <div className={styles.routeCity}>
             <div className={styles.routeCityName}>南京</div>
@@ -555,7 +718,10 @@ export default function ShanxiTripPage({ onBack }: Props) {
           </div>
         </div>
 
-        <h3 className={styles.subTitle} style={{ marginTop: 24 }}>🎟 票务预约指南</h3>
+        <h3 className={styles.subTitle} style={{ marginTop: 24 }}>
+          <span className={styles.subTitleIcon}><Icon name="ticket" size={18} /></span>
+          票务预约指南
+        </h3>
         <div className={styles.tableScroll}>
           <table className={styles.table}>
             <thead>
@@ -579,11 +745,17 @@ export default function ShanxiTripPage({ onBack }: Props) {
           </table>
         </div>
 
-        <h3 className={styles.subTitle} style={{ marginTop: 28 }}>酒店安排</h3>
+        <h3 className={styles.subTitle} style={{ marginTop: 28 }}>
+          <span className={styles.subTitleIcon}><Icon name="hotel" size={18} /></span>
+          酒店安排
+        </h3>
         <div className={styles.hotelList}>
           {HOTELS.map((h, i) => (
             <div key={i} className={styles.hotelItem}>
-              <div className={styles.hotelNight}>{h.night}</div>
+              <div className={styles.hotelNight}>
+                <span className={styles.hotelNightIcon}><Icon name="hotel" size={13} /></span>
+                {h.night}
+              </div>
               <div className={styles.hotelInfo}>
                 <div className={styles.hotelName}>{h.name}</div>
                 <div className={styles.hotelDesc}>{h.desc}</div>
@@ -608,9 +780,24 @@ export default function ShanxiTripPage({ onBack }: Props) {
                 ))}
               </div>
               <div className={styles.dayMeta}>
-                {day.train && <span>🚂 {day.train}</span>}
-                {day.distance && <span>🚗 {day.distance}</span>}
-                {day.hotel && <span>🏨 {day.hotel}</span>}
+                {day.train && (
+                  <span className={styles.dayMetaItem}>
+                    <span className={styles.dayMetaIcon}><Icon name="train" size={14} /></span>
+                    {day.train}
+                  </span>
+                )}
+                {day.distance && (
+                  <span className={styles.dayMetaItem}>
+                    <span className={styles.dayMetaIcon}><Icon name="car" size={14} /></span>
+                    {day.distance}
+                  </span>
+                )}
+                {day.hotel && (
+                  <span className={styles.dayMetaItem}>
+                    <span className={styles.dayMetaIcon}><Icon name="hotel" size={14} /></span>
+                    {day.hotel}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -626,14 +813,14 @@ export default function ShanxiTripPage({ onBack }: Props) {
                     <button className={styles.tlBtn} onClick={() => toggleItem(entry.id)}>
                       <span className={styles.tlTime}>{entry.time}</span>
                       <span className={styles.tlName}>
-                        {entry.desc}
+                        {stripEmoji(entry.desc)}
                         <svg className={styles.caret} viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       </span>
                     </button>
                   ) : (
                     <div className={`${styles.tlBtn} ${styles.tlBtnStatic}`}>
                       <span className={styles.tlTime}>{entry.time}</span>
-                      <span className={styles.tlName}>{entry.desc}</span>
+                      <span className={styles.tlName}>{stripEmoji(entry.desc)}</span>
                     </div>
                   )}
 
@@ -679,8 +866,8 @@ export default function ShanxiTripPage({ onBack }: Props) {
             const [bold, rest] = tip.split('：')
             return (
               <li key={i}>
-                <span className={styles.tipsNum}>①②③④⑤⑥[i]</span>
-                <div><strong>{bold}</strong>：{rest}</div>
+                <span className={styles.tipsCircle}>{CIRCLED_NUMBERS[i] || i + 1}</span>
+                <div className={styles.tipsText}><strong>{bold}</strong>：{rest}</div>
               </li>
             )
           })}
