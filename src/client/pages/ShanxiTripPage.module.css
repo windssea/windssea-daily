@@ -321,60 +321,72 @@
   color: var(--accent);
 }
 
-/* ── Route Bar ──────────────────────────────── */
-.routeBar {
+/* ── Route Map ──────────────────────────────── */
+.routeMap {
+  background: var(--paper-warm);
+  border-radius: var(--r);
+  border: 1px solid oklch(90% 0.015 60);
+  padding: 16px 12px;
+}
+
+.routeRow {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 16px 0 12px;
   gap: 0;
 }
 
-.routeCity {
-  flex-shrink: 0;
-  text-align: center;
-  min-width: 48px;
+.routeRowReverse {
+  flex-direction: row-reverse;
 }
 
-.routeCityName {
+.routeStop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  min-width: 44px;
+}
+
+.routeStopDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  order: -1;
+  box-shadow: 0 0 0 2.5px var(--accent-light);
+}
+
+.routeStopName {
   font-size: 12px;
   font-weight: 600;
   color: var(--ink);
+  line-height: 1.2;
 }
 
-.routeCityDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent);
-  margin: 6px auto;
-  border: 2px solid var(--paper);
-  box-shadow: 0 0 0 1.5px var(--accent);
-  transition: transform 0.2s;
-}
-
-.routeCityDate {
-  font-size: 12px;
+.routeStopDate {
+  font-size: 11px;
   color: var(--ink-muted);
+  line-height: 1.2;
 }
 
-.routeLine {
+.routeDash {
   flex: 1;
-  min-width: 8px;
+  min-width: 12px;
   height: 0;
   border-top: 1.5px dashed var(--paper-line);
   position: relative;
-  top: -9px;
+  top: -16px;
 }
 
-.routeArrow {
-  width: 12px;
-  height: 12px;
-  color: var(--ink-muted);
+.routeConnector {
+  height: 0;
+  border-left: 1.5px dashed var(--paper-line);
+  margin-left: 50%;
+  margin-bottom: 8px;
   position: relative;
-  top: -9px;
-  flex-shrink: 0;
+  top: -4px;
+  height: 16px;
 }
 
 /* ── Reservation List (card-based) ───────────── */

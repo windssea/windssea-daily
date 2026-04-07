@@ -625,81 +625,59 @@ export default function ShanxiTripPage({ onBack }: Props) {
           <span className={styles.heroBadgeIcon}><Icon name="calendar" size={13} /></span>
           五一亲子自驾 · 2025年4月30日—5月5日
         </p>
-        <h1 className={styles.heroTitle}>山西五日<br/>深度游</h1>
-        <p className={styles.heroSub}>南京出发 · 晋北环线 · 两大两小</p>
-        <div className={styles.heroStats}>
-          <div className={styles.heroStat}>
-            <span className={styles.heroStatN}>5</span>
-            <span className={styles.heroStatL}>天行程</span>
-          </div>
-          <div className={styles.heroStat}>
-            <span className={styles.heroStatN}>760</span>
-            <span className={styles.heroStatL}>公里自驾</span>
-          </div>
-          <div className={styles.heroStat}>
-            <span className={styles.heroStatN}>8+</span>
-            <span className={styles.heroStatL}>核心景点</span>
-          </div>
-        </div>
+        <h1 className={styles.heroTitle}>山西五日深度游</h1>
+        <p className={styles.heroSub}>南京出发 · 晋北环线</p>
       </section>
 
       {/* ROUTE */}
       <section className={styles.section} id="prep" ref={setSectionRef('prep')}>
         <p className={styles.sectionLabel}>行程路线</p>
         <h2 className={styles.sectionTitle}>晋北环线</h2>
-        <div className={styles.routeBar}>
-          <div className={styles.routeCity}>
-            <div className={styles.routeCityName}>南京</div>
-            <div className={styles.routeCityDot}></div>
-            <div className={styles.routeCityDate}>4/30</div>
+        <div className={styles.routeMap}>
+          <div className={styles.routeRow}>
+            <span className={styles.routeStop}>
+              <span className={styles.routeStopDot} />
+              <span className={styles.routeStopName}>南京</span>
+              <span className={styles.routeStopDate}>4/30</span>
+            </span>
+            <span className={styles.routeDash} />
+            <span className={styles.routeStop}>
+              <span className={styles.routeStopDot} />
+              <span className={styles.routeStopName}>太原</span>
+              <span className={styles.routeStopDate}>5/1</span>
+            </span>
+            <span className={styles.routeDash} />
+            <span className={styles.routeStop}>
+              <span className={styles.routeStopDot} />
+              <span className={styles.routeStopName}>大同</span>
+              <span className={styles.routeStopDate}>5/1-2</span>
+            </span>
+            <span className={styles.routeDash} />
+            <span className={styles.routeStop}>
+              <span className={styles.routeStopDot} />
+              <span className={styles.routeStopName}>应县</span>
+              <span className={styles.routeStopDate}>5/2-3</span>
+            </span>
           </div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeCity}>
-            <div className={styles.routeCityName}>太原</div>
-            <div className={styles.routeCityDot}></div>
-            <div className={styles.routeCityDate}>5/1</div>
-          </div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeCity}>
-            <div className={styles.routeCityName}>大同</div>
-            <div className={styles.routeCityDot}></div>
-            <div className={styles.routeCityDate}>5/1-2</div>
-          </div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeCity}>
-            <div className={styles.routeCityName}>应县</div>
-            <div className={styles.routeCityDot}></div>
-            <div className={styles.routeCityDate}>5/2-3</div>
-          </div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeCity}>
-            <div className={styles.routeCityName}>忻州</div>
-            <div className={styles.routeCityDot}></div>
-            <div className={styles.routeCityDate}>5/3</div>
-          </div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeCity}>
-            <div className={styles.routeCityName}>太原</div>
-            <div className={styles.routeCityDot}></div>
-            <div className={styles.routeCityDate}>5/3-5</div>
-          </div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeArrow}><Icon name="arrowLeft" size={12} /></div>
-          <div className={styles.routeLine}></div>
-          <div className={styles.routeCity}>
-            <div className={styles.routeCityName}>南京</div>
-            <div className={styles.routeCityDot}></div>
-            <div className={styles.routeCityDate}>5/5</div>
+          <div className={styles.routeConnector} />
+          <div className={`${styles.routeRow} ${styles.routeRowReverse}`}>
+            <span className={styles.routeStop}>
+              <span className={styles.routeStopDot} />
+              <span className={styles.routeStopName}>南京</span>
+              <span className={styles.routeStopDate}>5/5</span>
+            </span>
+            <span className={styles.routeDash} />
+            <span className={styles.routeStop}>
+              <span className={styles.routeStopDot} />
+              <span className={styles.routeStopName}>太原</span>
+              <span className={styles.routeStopDate}>5/3-5</span>
+            </span>
+            <span className={styles.routeDash} />
+            <span className={styles.routeStop}>
+              <span className={styles.routeStopDot} />
+              <span className={styles.routeStopName}>忻州</span>
+              <span className={styles.routeStopDate}>5/3</span>
+            </span>
           </div>
         </div>
 
