@@ -621,12 +621,9 @@ export default function ShanxiTripPage({ onBack }: Props) {
 
       {/* Hero */}
       <section className={styles.hero}>
-        <p className={styles.heroBadge}>
-          <span className={styles.heroBadgeIcon}><Icon name="calendar" size={13} /></span>
-          五一亲子自驾 · 2025年4月30日—5月5日
-        </p>
         <h1 className={styles.heroTitle}>山西五日深度游</h1>
-        <p className={styles.heroSub}>南京出发 · 晋北环线</p>
+        <p className={styles.heroSub}>五一亲子自驾 · 2025.4.30 — 5.5</p>
+        <p className={styles.heroSubDetail}>南京出发 · 晋北环线</p>
       </section>
 
       {/* ROUTE */}
@@ -721,6 +718,15 @@ export default function ShanxiTripPage({ onBack }: Props) {
       {/* Main Itinerary */}
       {ITINERARY.map(day => (
         <section key={day.id} className={styles.section} id={day.id} ref={setSectionRef(day.id)}>
+          {(() => {
+            const dayInfo = DAYS.find(d => d.id === day.id)
+            if (!dayInfo) return null
+            return (
+              <div className={styles.dayDivider}>
+                <span className={styles.dayDividerEmoji}>{dayInfo.emoji}</span>
+              </div>
+            )
+          })()}
           <div className={styles.dayHeader}>
             <div className={styles.dayDateCircle}>
               <span className={styles.dayDateM}>{day.month}</span>

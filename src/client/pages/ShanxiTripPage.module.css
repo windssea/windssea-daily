@@ -146,26 +146,6 @@
   pointer-events: none;
 }
 
-.heroBadge {
-  position: relative;
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  opacity: 0.75;
-  margin: 0 0 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: oklch(0% 0 0 / 0.12);
-  padding: 4px 12px;
-  border-radius: 20px;
-}
-
-.heroBadgeIcon {
-  width: 13px;
-  height: 13px;
-  opacity: 0.7;
-}
-
 .heroTitle {
   position: relative;
   font-family: 'ZCOOL XiaoWei', serif;
@@ -179,8 +159,16 @@
   position: relative;
   font-size: 15px;
   opacity: 0.8;
-  margin: 0 0 28px;
+  margin: 0 0 6px;
   letter-spacing: 0.08em;
+}
+
+.heroSubDetail {
+  position: relative;
+  font-size: 13px;
+  opacity: 0.6;
+  margin: 0;
+  letter-spacing: 0.06em;
 }
 
 .heroStats {
@@ -331,7 +319,7 @@
 
 .routeRow {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0;
 }
 
@@ -353,7 +341,6 @@
   height: 8px;
   border-radius: 50%;
   background: var(--accent);
-  order: -1;
   box-shadow: 0 0 0 2.5px var(--accent-light);
 }
 
@@ -375,17 +362,13 @@
   min-width: 12px;
   height: 0;
   border-top: 1.5px dashed var(--paper-line);
-  position: relative;
-  top: -16px;
+  margin-top: 4px;
 }
 
 .routeConnector {
-  height: 0;
   border-left: 1.5px dashed var(--paper-line);
   margin-left: 50%;
   margin-bottom: 8px;
-  position: relative;
-  top: -4px;
   height: 16px;
 }
 
@@ -498,6 +481,28 @@
   font-size: 12px;
   color: var(--ink-muted);
   margin-top: 3px;
+}
+
+/* ── Day Divider ────────────────────────────── */
+.dayDivider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: var(--paper-line);
+}
+
+.dayDivider::before,
+.dayDivider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--paper-line);
+}
+
+.dayDividerEmoji {
+  font-size: 14px;
+  opacity: 0.6;
 }
 
 /* ── Day Header ─────────────────────────────── */
@@ -630,6 +635,19 @@
   transition: opacity 0.15s;
 }
 
+/* Clickable accordion buttons get a subtle hit-area background */
+.tlBtn:not(.tlBtnStatic) {
+  background: oklch(0% 0 0 / 0.015);
+  border-radius: var(--r-xs);
+  padding: 10px 8px;
+  margin: 0 -8px;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.tlBtn:not(.tlBtnStatic):hover {
+  background: oklch(0% 0 0 / 0.03);
+}
+
 .tlBtn:active {
   opacity: 0.7;
 }
@@ -669,10 +687,10 @@
 }
 
 .caret {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
-  color: var(--ink-muted);
+  color: var(--ink-soft);
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -773,8 +791,8 @@
 }
 
 .badge-default {
-  background: oklch(88% 0.015 60);
-  color: var(--ink-soft);
+  background: oklch(85% 0.02 60);
+  color: var(--ink);
 }
 
 .badge-red {
@@ -861,14 +879,14 @@
   color: var(--accent);
   display: block;
   margin-bottom: 10px;
-  opacity: 0.35;
+  opacity: 0.55;
   letter-spacing: 0.1em;
   animation: sealBreathe 4s ease-in-out infinite;
 }
 
 @keyframes sealBreathe {
-  0%, 100% { opacity: 0.35; }
-  50% { opacity: 0.45; }
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.65; }
 }
 
 /* ── Pin Link (inline nav icon) ──────────────── */
@@ -877,7 +895,7 @@
   align-items: center;
   color: var(--accent);
   flex-shrink: 0;
-  opacity: 0.5;
+  opacity: 0.7;
   transition: opacity 0.15s;
   -webkit-tap-highlight-color: transparent;
 }
