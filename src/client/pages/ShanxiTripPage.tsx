@@ -709,27 +709,17 @@ export default function ShanxiTripPage({ onBack }: Props) {
           <span className={styles.subTitleIcon}><Icon name="ticket" size={18} /></span>
           票务预约指南
         </h3>
-        <div className={styles.tableScroll}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>景点</th>
-                <th>预约渠道</th>
-                <th>提前</th>
-                <th>票价</th>
-              </tr>
-            </thead>
-            <tbody>
-              {RESERVATIONS.map(r => (
-                <tr key={r.name}>
-                  <td>{r.name}</td>
-                  <td>{r.channel}</td>
-                  <td>{r.advance}</td>
-                  <td>{r.price}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className={styles.reservList}>
+          {RESERVATIONS.map(r => (
+            <div key={r.name} className={styles.reservItem}>
+              <span className={styles.reservName}>{r.name}</span>
+              <span className={styles.reservMeta}>
+                <span className={styles.reservChannel}>{r.channel}</span>
+                {r.advance !== '—' && <span className={styles.reservAdvance}>提前{r.advance}</span>}
+                <span className={styles.reservPrice}>{r.price}</span>
+              </span>
+            </div>
+          ))}
         </div>
 
         <h3 className={styles.subTitle} style={{ marginTop: 28 }}>
@@ -801,23 +791,26 @@ export default function ShanxiTripPage({ onBack }: Props) {
                       <span className={styles.tlTime}>{entry.time}</span>
                       <span className={styles.tlName}>
                         {stripEmoji(entry.desc)}
+                        {entry.isSight && (
+                          <a className={styles.pinLink} href={buildBaiduNavUrl(stripEmoji(entry.desc))} aria-label="导航" onClick={e => e.stopPropagation()}>
+                            <Icon name="mapPin" size={14} />
+                          </a>
+                        )}
                         <svg className={styles.caret} viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       </span>
                     </button>
                   ) : (
                     <div className={`${styles.tlBtn} ${styles.tlBtnStatic}`}>
                       <span className={styles.tlTime}>{entry.time}</span>
-                      <span className={styles.tlName}>{stripEmoji(entry.desc)}</span>
+                      <span className={styles.tlName}>
+                        {stripEmoji(entry.desc)}
+                        {entry.isSight && (
+                          <a className={styles.pinLink} href={buildBaiduNavUrl(stripEmoji(entry.desc))} aria-label="导航">
+                            <Icon name="mapPin" size={14} />
+                          </a>
+                        )}
+                      </span>
                     </div>
-                  )}
-
-                  {entry.isSight && (
-                    <a
-                      className={styles.navBtn}
-                      href={buildBaiduNavUrl(stripEmoji(entry.desc))}
-                    >
-                      📍 导航到这里
-                    </a>
                   )}
 
                   {hasAccordion && (
@@ -906,7 +899,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
           className={`${styles.pill} ${activeDay === d.id ? styles.active : ''}`}
           onClick={() => scrollToDay(d.id)}
         >
-          {d.label}
+          {d.emoji} {d.label}
         </button>
       ))}
     </nav>
