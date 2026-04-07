@@ -41,6 +41,7 @@
   position: relative;
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
+  padding-bottom: calc(58px + env(safe-area-inset-bottom));
 
   opacity: 0;
   transform: translateY(8px);
@@ -117,7 +118,7 @@
 /* ── Hero ───────────────────────────────────── */
 .hero {
   position: relative;
-  padding: 48px 24px 36px;
+  padding: 56px 24px 44px;
   overflow: hidden;
   background: linear-gradient(
     155deg,
@@ -214,17 +215,26 @@
   letter-spacing: 0.05em;
 }
 
-/* ── Tabs Navigation ────────────────────────── */
+/* ── Bottom Tab Navigation ──────────────────── */
 .tabsWrap {
-  position: sticky;
-  top: 60px;
-  z-index: 15;
-  background: var(--ink);
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  z-index: 20;
+  background: oklch(17% 0.02 30 / 0.97);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   display: flex;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   scroll-snap-type: x proximity;
+  border-top: 1px solid oklch(30% 0.018 35);
+  box-shadow: 0 -4px 24px oklch(0% 0 0 / 0.18);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .tabsWrap::-webkit-scrollbar { display: none; }
@@ -235,8 +245,8 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: 28px;
-  background: linear-gradient(to left, var(--ink), transparent);
+  width: 32px;
+  background: linear-gradient(to left, oklch(17% 0.02 30), transparent);
   pointer-events: none;
   z-index: 1;
 }
@@ -244,44 +254,51 @@
 .tab {
   flex: 0 0 auto;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  gap: 3px;
   padding: 0 14px;
-  height: 46px;
-  font-size: 13px;
+  height: 56px;
+  font-size: 11px;
   font-family: inherit;
-  color: oklch(72% 0.01 50);
+  color: oklch(56% 0.015 50);
   background: none;
   border: none;
-  border-bottom: 2.5px solid transparent;
+  border-top: 2px solid transparent;
   cursor: pointer;
   white-space: nowrap;
-  transition: color 0.2s, border-color 0.25s;
+  transition: color 0.2s, border-color 0.2s;
   -webkit-tap-highlight-color: transparent;
   scroll-snap-align: start;
+  min-width: 52px;
 }
 
 .tab.active {
-  color: oklch(97% 0.005 50);
-  border-bottom-color: var(--gold);
+  color: var(--gold);
+  border-top-color: var(--gold);
 }
 
 .tabIcon {
-  width: 15px;
-  height: 15px;
-  opacity: 0.6;
-  transition: opacity 0.2s;
+  width: 20px;
+  height: 20px;
+  opacity: 0.55;
+  transition: opacity 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tab.active .tabIcon {
   opacity: 1;
+  transform: translateY(-1px);
 }
 
 /* ── Sections ───────────────────────────────── */
 .section {
   padding: 28px 20px;
   border-bottom: 1px solid var(--paper-line);
-  scroll-margin-top: 106px;
+  scroll-margin-top: 66px;
 }
 
 .sectionLabel {

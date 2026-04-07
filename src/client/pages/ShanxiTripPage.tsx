@@ -549,7 +549,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
     setActiveDay(dayId)
     const el = sectionRefs.current[dayId]
     if (el) {
-      const topOffset = 106 // Header + tabs height
+      const topOffset = 66 // Header height only (tabs are now bottom nav)
       const elementPosition = el.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.pageYOffset - topOffset
       window.scrollTo({
@@ -580,7 +580,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
           }
         }
       },
-      { rootMargin: '-120px 0px -70% 0px', threshold: 0 }
+      { rootMargin: '-70px 0px -65% 0px', threshold: 0 }
     )
 
     const prepEl = sectionRefs.current['prep']
@@ -642,7 +642,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
         </div>
       </section>
 
-      {/* TABS */}
+      {/* BOTTOM TAB NAV */}
       <nav className={styles.tabsWrap} ref={tabsRef}>
         {DAYS.map(d => (
           <button
@@ -651,9 +651,9 @@ export default function ShanxiTripPage({ onBack }: Props) {
             onClick={() => scrollToDay(d.id)}
           >
             <span className={styles.tabIcon}>
-              <Icon name={DAY_ICONS[d.id] || 'backpack'} size={15} />
+              <Icon name={DAY_ICONS[d.id] || 'backpack'} size={20} />
             </span>
-            {d.label}
+            <span>{d.label}</span>
           </button>
         ))}
       </nav>
