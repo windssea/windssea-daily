@@ -145,8 +145,6 @@ const CIRCLED_NUMBERS = ['①','②','③','④','⑤','⑥']
 /* ── Static Data ─────────────────────────────── */
 
 const DAYS = [
-  { id: 'prep', label: '准备', emoji: '🎒' },
-  { id: 'd0', label: '出发', emoji: '🚂' },
   { id: 'd1', label: '大同', emoji: '🏯' },
   { id: 'd2', label: '云冈', emoji: '🗿' },
   { id: 'd3', label: '边塞', emoji: '⚔️' },
