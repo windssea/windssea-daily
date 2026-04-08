@@ -39,4 +39,18 @@ export const api = {
 
   health: () =>
     request<{ status: string; db: string }>('/health'),
+
+  /** Fetch weather for multiple city+date pairs in one call */
+  batchWeather: (items: Array<{ city: string; date: string }>) => {
+    const param = items.map(i => `${i.city}:${i.date}`).join(',')
+    return request<{
+      results: Record<string, {
+        tempHigh: string
+        tempLow: string
+        textDay: string
+        windDir: string
+        windScale: string
+      } | null>
+    }>(`/weather/batch?items=${encodeURIComponent(param)}`)
+  },
 }

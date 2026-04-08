@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>设计方案完整预览</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #1a1a2e; font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif; color: #fff; min-height: 100vh; }
+
+.phone-wrap {
+  max-width: 380px;
+  margin: 0 auto;
+  background: #f7f4f0;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── HEADER ── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(26,26,46,.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.back-btn {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.7);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.header-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255,255,255,.9);
+  flex: 1;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(160deg, #12111e 0%, #1e1630 40%, #2c1a3e 100%);
+  padding: 28px 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 85% 15%, rgba(212,112,74,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 90%, rgba(80,50,160,.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-label {
+  font-size: 11px;
+  letter-spacing: .2em;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 6px;
+  position: relative;
+}
+.hero-title {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: .02em;
+  margin-bottom: 6px;
+  position: relative;
+  background: linear-gradient(135deg, #fff 0%, #f5c4a0 60%, #e8956a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,.5);
+  margin-bottom: 20px;
+  position: relative;
+  letter-spacing: .05em;
+}
+
+/* Stats row */
+.hero-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1px;
+  background: rgba(255,255,255,.06);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  position: relative;
+}
+.stat {
+  background: rgba(255,255,255,.05);
+  padding: 10px 4px;
+  text-align: center;
+}
+.stat-n {
+  font-size: 20px;
+  font-weight: 800;
+  color: #e8956a;
+  display: block;
+  line-height: 1;
+}
+.stat-l {
+  font-size: 10px;
+  color: rgba(255,255,255,.4);
+  display: block;
+  margin-top: 3px;
+  letter-spacing: .04em;
+}
+
+/* Chip strip at bottom of hero */
+.hero-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 16px;
+  position: relative;
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.hero-chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.7);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.chip.active {
+  background: #d4704a;
+  border-color: #d4704a;
+  color: #fff;
+}
+
+/* ── CONTENT AREA ── */
+.content {
+  background: #f7f4f0;
+  min-height: 60vh;
+}
+
+/* ── SECTION ── */
+.section {
+  padding: 24px 18px;
+  border-bottom: 1px solid #ede8e2;
+}
+
+/* ── DAY HEADER ── */
+.day-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.day-badge {
+  background: linear-gradient(145deg, #d4704a, #b85a35);
+  color: #fff;
+  border-radius: 10px;
+  padding: 6px 12px;
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 52px;
+  box-shadow: 0 4px 12px rgba(212,112,74,.3);
+}
+.day-badge-m { font-size: 11px; opacity: .8; display: block; line-height: 1.2; }
+.day-badge-d { font-size: 26px; font-weight: 800; line-height: 1; display: block; }
+.day-info { flex: 1; min-width: 0; }
+.day-name { font-size: 17px; font-weight: 800; color: #1a1208; line-height: 1.35; }
+.day-meta {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px;
+}
+.day-meta-chip {
+  font-size: 11px;
+  color: #7a6050;
+  display: flex; align-items: center; gap: 3px;
+}
+
+/* Divider emoji */
+.day-divider {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 18px;
+  color: #ccc;
+}
+.day-divider::before, .day-divider::after {
+  content: ''; flex: 1; height: 1px; background: #e8e0d8;
+}
+.day-divider-emoji { font-size: 16px; }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, #d4704a, #e8c8b8, #d4704a);
+  border-radius: 1px;
+  opacity: .4;
+}
+
+/* Regular entry */
+.tl-item { position: relative; margin-bottom: 2px; }
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -19px; top: 14px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #f7f4f0;
+  border: 2px solid #d0c8c0;
+}
+.tl-regular {
+  padding: 10px 0 10px 4px;
+  cursor: pointer;
+}
+.tl-time { font-size: 11px; color: #b0a090; display: block; letter-spacing: .04em; margin-bottom: 2px; }
+.tl-title { font-size: 15px; font-weight: 600; color: #2a1810; display: flex; align-items: center; justify-content: space-between; }
+.tl-caret { font-size: 12px; color: #c0b0a0; }
+
+/* Sight card */
+.tl-item.sight::before {
+  background: #d4704a;
+  border-color: #d4704a;
+  width: 10px; height: 10px;
+  left: -20px; top: 14px;
+  box-shadow: 0 0 0 3px rgba(212,112,74,.15);
+}
+.tl-sight-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid rgba(212,112,74,.15);
+  box-shadow: 0 2px 12px rgba(0,0,0,.07), 0 0 0 1px rgba(212,112,74,.06);
+  margin: 4px 0 8px -4px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.tl-sight-head {
+  padding: 12px 14px 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.tl-sight-left { flex: 1; min-width: 0; }
+.tl-sight-label { font-size: 11px; color: #d4704a; font-weight: 700; letter-spacing: .05em; margin-bottom: 2px; }
+.tl-sight-name { font-size: 15px; font-weight: 800; color: #1a1208; }
+.tl-sight-caret { color: #c0b0a0; margin-top: 2px; font-size: 13px; }
+.tl-sight-body {
+  border-top: 1px solid #f0e8e0;
+  padding: 10px 14px 12px;
+  background: linear-gradient(to bottom, rgba(212,112,74,.03), transparent);
+}
+.sight-row { display: flex; gap: 8px; margin-bottom: 6px; align-items: baseline; }
+.sight-label { font-size: 11px; color: #d4704a; font-weight: 700; flex-shrink: 0; }
+.sight-val { font-size: 13px; color: #5a4030; line-height: 1.6; }
+.badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+.badge { font-size: 11px; padding: 2px 9px; border-radius: 20px; font-weight: 500; }
+.badge-green { background: #e8f5e9; color: #2e7d32; }
+.badge-red { background: #fce4ec; color: #c62828; }
+.badge-gold { background: #fff8e1; color: #e65100; }
+.badge-default { background: #f0ece8; color: #6a5040; }
+
+/* ── HOTEL SECTION ── */
+.hotel-section { padding: 4px 18px 20px; }
+.hotel-label { font-size: 11px; letter-spacing: .18em; color: #d4704a; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; }
+.hotel-card {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #ede8e2;
+  padding: 12px 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+.hotel-night {
+  background: #1a1208;
+  color: #fff;
+  border-radius: 7px;
+  padding: 5px 9px;
+  font-size: 12px;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+.hotel-name { font-size: 13px; font-weight: 700; color: #1a1208; }
+.hotel-desc { font-size: 12px; color: #8a7060; margin-top: 2px; }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  position: sticky;
+  bottom: 0;
+  background: rgba(18,17,30,.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 8px;
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.bottom-nav::-webkit-scrollbar { display: none; }
+.nav-pill {
+  flex-shrink: 0;
+  padding: 8px 13px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255,255,255,.07);
+  color: rgba(255,255,255,.45);
+  white-space: nowrap;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+}
+.nav-pill.active {
+  background: #d4704a;
+  color: #fff;
+}
+
+/* ── OUTER WRAPPER ── */
+.outer {
+  background: #0e0d1a;
+  min-height: 100vh;
+  padding: 16px 0;
+}
+.caption {
+  text-align: center;
+  color: rgba(255,255,255,.4);
+  font-size: 12px;
+  padding: 12px 0 0;
+}
+</style>
+</head>
+<body>
+<div class="outer">
+<div class="phone-wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="back-btn">←</div>
+    <div class="header-title">山西五日亲子自驾攻略</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">SHANXI · FAMILY ROAD TRIP · 2025</div>
+    <div class="hero-title">山西五日<br>亲子自驾</div>
+    <div class="hero-sub">五一出发 · 晋北环线 · 南京→山西</div>
+
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-n">5</span><span class="stat-l">天</span></div>
+      <div class="stat"><span class="stat-n">8</span><span class="stat-l">景点</span></div>
+      <div class="stat"><span class="stat-n">760</span><span class="stat-l">公里</span></div>
+      <div class="stat"><span class="stat-n">4</span><span class="stat-l">人</span></div>
+    </div>
+
+    <div class="hero-chips">
+      <div class="chip active">🏯 大同</div>
+      <div class="chip">🗿 云冈</div>
+      <div class="chip">⚔️ 边塞</div>
+      <div class="chip">🏛️ 晋祠</div>
+      <div class="chip">🏠 返程</div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- DAY 1 -->
+    <div class="section">
+      <div class="day-divider"><span class="day-divider-emoji">🏯</span></div>
+      <div class="day-header">
+        <div class="day-badge">
+          <span class="day-badge-m">5月</span>
+          <span class="day-badge-d">1</span>
+        </div>
+        <div class="day-info">
+          <div class="day-name">太原→大同<br>古城休闲体验日</div>
+          <div class="day-meta">
+            <span class="day-meta-chip">🚗 约280km</span>
+            <span class="day-meta-chip">🏨 大同古城</span>
+            <span class="day-meta-chip">☀️ 6~21°C</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline">
+
+        <!-- Regular -->
+        <div class="tl-item">
+          <div class="tl-regular">
+            <span class="tl-time">07:47 - 08:30</span>
+            <div class="tl-title">太原站抵达 · 提车 + 早餐 <span class="tl-caret">›</span></div>
+          </div>
+        </div>
+
+        <!-- Regular -->
+        <div class="tl-item">
+          <div class="tl-regular">
+            <span class="tl-time">08:30 - 11:30</span>
+            <div class="tl-title">自驾前往大同</div>
+          </div>
+        </div>
+
+        <!-- Regular -->
+        <div class="tl-item">
+          <div class="tl-regular">
+            <span class="tl-time">11:30 - 14:30</span>
+            <div class="tl-title">入住 · 午餐 · 午休 <span class="tl-caret">›</span></div>
+          </div>
+        </div>
+
+        <!-- Sight card (open state) -->
+        <div class="tl-item sight">
+          <span class="tl-time" style="padding-left:4px;display:block;margin-bottom:4px;">14:40 - 16:40</span>
+          <div class="tl-sight-card">
+            <div class="tl-sight-head">
+              <div class="tl-sight-left">
+                <div class="tl-sight-label">景点</div>
+                <div class="tl-sight-name">大同古城墙</div>
+              </div>
+              <div class="tl-sight-caret">▴</div>
+            </div>
+            <div class="tl-sight-body">
+              <div class="sight-row">
+                <span class="sight-label">概述</span>
+                <span class="sight-val">明代洪武年间修建，周长7.24km，北方保存最完整的明城墙</span>
+              </div>
+              <div class="sight-row">
+                <span class="sight-label">必打卡</span>
+                <span class="sight-val">永泰门瓮城、西北角乾楼、护城河景观带</span>
+              </div>
+              <div class="badges">
+                <span class="badge badge-green">免费开放</span>
+                <span class="badge badge-gold">四人自行车 30元/时</span>
+                <span class="badge badge-default">一年级：数城门钉</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sight card (closed state) -->
+        <div class="tl-item sight">
+          <span class="tl-time" style="padding-left:4px;display:block;margin-bottom:4px;">16:50 - 17:50</span>
+          <div class="tl-sight-card">
+            <div class="tl-sight-head">
+              <div class="tl-sight-left">
+                <div class="tl-sight-label">景点</div>
+                <div class="tl-sight-name">大同市博物馆</div>
+              </div>
+              <div class="tl-sight-caret">▾</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Regular -->
+        <div class="tl-item">
+          <div class="tl-regular">
+            <span class="tl-time">17:50 之后</span>
+            <div class="tl-title">晚餐 · 返回酒店休息</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOTEL -->
+    <div class="hotel-section">
+      <div class="hotel-label">今日住宿</div>
+      <div class="hotel-card">
+        <div class="hotel-night">5/1</div>
+        <div>
+          <div class="hotel-name">大同古城四星亲子酒店</div>
+          <div class="hotel-desc">永泰门附近 · 含早餐 · 停车位充足</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <div class="nav-pill active">🏯 大同</div>
+    <div class="nav-pill">🗿 云冈</div>
+    <div class="nav-pill">⚔️ 边塞</div>
+    <div class="nav-pill">🏛️ 晋祠</div>
+    <div class="nav-pill">🏠 返程</div>
+  </div>
+
+</div>
+<div class="caption">完整页面设计方案 · 点击终端告诉我你的想法</div>
+</div>
+</body>
+</html>

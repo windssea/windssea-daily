@@ -1,0 +1,72 @@
+<h2>时间线展示方式</h2>
+<p class="subtitle">每天的行程条目如何排列？</p>
+
+<div class="options">
+
+  <div class="option" data-choice="t1" onclick="toggleSelect(this)">
+    <div class="letter">1</div>
+    <div class="content">
+      <h3>垂直时间线 · 强化版</h3>
+      <p>保持现有垂直滚动结构，但景点条目升级为独立卡片样式，有明显视觉层次区分。普通行程条目轻量，景点条目厚重突出。</p>
+      <div style="padding:10px 0 0 20px;border-left:3px solid #d4704a;margin-top:10px;font-size:12px;color:#666;">
+        <div style="margin-bottom:10px;">
+          <div style="color:#aaa;font-size:11px;">08:30</div>
+          <div style="color:#333;font-weight:600;">自驾前往大同 →</div>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:8px 10px;border:1px solid #f0e8e0;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:8px;">
+          <div style="color:#aaa;font-size:11px;">14:40</div>
+          <div style="font-weight:700;color:#2a1810;font-size:13px;">⭐ 大同古城墙</div>
+          <div style="display:flex;gap:4px;margin-top:5px;">
+            <span style="background:#e8f5e9;color:#2e7d32;font-size:10px;padding:1px 7px;border-radius:10px;">免费</span>
+            <span style="background:#fff3e0;color:#e65100;font-size:10px;padding:1px 7px;border-radius:10px;">自行车30元</span>
+          </div>
+        </div>
+        <div style="margin-bottom:6px;">
+          <div style="color:#aaa;font-size:11px;">17:50</div>
+          <div style="color:#333;font-weight:600;">晚餐 · 返回酒店</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="t2" onclick="toggleSelect(this)">
+    <div class="letter">2</div>
+    <div class="content">
+      <h3>分组卡片式</h3>
+      <p>将每天行程按「交通/游览/餐食」分组，用不同颜色标签区分，整体放在一张大卡片里。结构清晰，像日历 App。</p>
+      <div style="background:#fff;border-radius:10px;padding:10px;border:1px solid #eee;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-top:10px;font-size:12px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+          <span style="background:#e3f2fd;color:#1565c0;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;">🚗 交通</span>
+        </div>
+        <div style="color:#555;margin-bottom:8px;padding-left:8px;border-left:2px solid #e3f2fd;">08:30 自驾前往大同 · 约3小时</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+          <span style="background:#fce4ec;color:#c62828;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;">⭐ 游览</span>
+        </div>
+        <div style="color:#555;padding-left:8px;border-left:2px solid #fce4ec;">14:40 大同古城墙<br>16:50 大同市博物馆</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="t3" onclick="toggleSelect(this)">
+    <div class="letter">3</div>
+    <div class="content">
+      <h3>保持现有样式微调</h3>
+      <p>时间线结构不变，重点优化 Hero、日期头部和徽章样式。改动最小，风险最低，主要提升视觉精致度。</p>
+      <div style="padding:10px 0 0 18px;border-left:2px solid #ccc;margin-top:10px;font-size:12px;color:#666;">
+        <div style="margin-bottom:8px;display:flex;gap:8px;align-items:baseline;">
+          <span style="color:#aaa;font-size:11px;min-width:36px;">08:30</span>
+          <span style="color:#333;font-weight:500;">自驾前往大同</span>
+        </div>
+        <div style="margin-bottom:8px;display:flex;gap:8px;align-items:baseline;">
+          <span style="color:#aaa;font-size:11px;min-width:36px;">14:40</span>
+          <span style="color:#2a1810;font-weight:700;">大同古城墙 ▾</span>
+        </div>
+        <div style="margin-bottom:8px;display:flex;gap:8px;align-items:baseline;">
+          <span style="color:#aaa;font-size:11px;min-width:36px;">16:50</span>
+          <span style="color:#2a1810;font-weight:700;">大同市博物馆 ▾</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

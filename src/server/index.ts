@@ -3,6 +3,7 @@ import { Hono } from 'hono'
 import { logger } from 'hono/logger'
 import { cors } from 'hono/cors'
 import { todosRoutes } from './routes/todos'
+import { weatherRoutes } from './routes/weather'
 
 type Env = {
   Bindings: {
@@ -25,7 +26,8 @@ app.get('/api/health', async (c) => {
   }
 })
 
-// Mount todo routes
+// Mount routes
 app.route('/api/todos', todosRoutes)
+app.route('/api/weather', weatherRoutes)
 
 export default app
