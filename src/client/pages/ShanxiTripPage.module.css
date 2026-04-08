@@ -572,26 +572,27 @@
 }
 
 .dayDateCircle {
-  background: var(--accent);
-  color: oklch(97% 0.005 50);
+  background: linear-gradient(145deg, var(--accent), var(--accent-deep));
+  color: #fff;
   border-radius: var(--r-sm);
-  padding: 8px 14px;
+  padding: 6px 12px;
   text-align: center;
   flex-shrink: 0;
-  min-width: 56px;
-  box-shadow: 1px 1px 0 var(--accent-deep);
+  min-width: 52px;
+  box-shadow: 0 4px 14px oklch(58% 0.12 30 / 0.35);
 }
 
 .dayDateM {
-  font-size: 12px;
-  opacity: 0.85;
+  font-size: 11px;
+  opacity: 0.8;
   display: block;
   line-height: 1.2;
 }
 
 .dayDateD {
-  font-size: 28px;
+  font-size: 26px;
   font-family: 'ZCOOL XiaoWei', serif;
+  font-weight: 800;
   line-height: 1;
   display: block;
   margin-top: 2px;
@@ -604,8 +605,8 @@
 
 .dayName {
   font-family: 'Noto Sans SC', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 800;
   line-height: 1.35;
   color: var(--ink);
   text-wrap: balance;
@@ -645,9 +646,10 @@
   left: 6px;
   top: 10px;
   bottom: 10px;
-  width: 1.5px;
-  background: oklch(82% 0.02 45);
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), var(--paper-line), var(--accent));
   border-radius: 1px;
+  opacity: 0.35;
 }
 
 .tlItem {
@@ -659,23 +661,23 @@
   content: '';
   position: absolute;
   left: -19px;
-  top: 12px;
+  top: 14px;
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: var(--paper);
-  border: 1.5px solid var(--paper-line);
+  border: 2px solid oklch(75% 0.04 50);
   transition: border-color 0.25s, background 0.25s, transform 0.25s;
 }
 
 .tlItem.highlight::before {
   background: var(--accent);
   border-color: var(--accent);
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   left: -20px;
-  top: 11px;
-  box-shadow: 0 0 0 3px var(--accent-light);
+  top: 13px;
+  box-shadow: 0 0 0 3px rgba(212, 112, 74, 0.18);
 }
 
 .tlBtn {
