@@ -1131,6 +1131,15 @@
   .tlBtn:not(.tlBtnStatic) {
     transition: none;
   }
+  .heroChip {
+    transition: none;
+  }
+  .sightCardHead {
+    transition: none;
+  }
+  .sightCardBody {
+    animation: none;
+  }
 }
 
 .tlNameText {
