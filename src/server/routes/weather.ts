@@ -99,7 +99,7 @@ async function fetchHistorical(locationId: string, date: string): Promise<DayWea
 
 /** Fetch 7-day forecast, extract a specific date */
 async function fetchForecast(locationId: string, date: string): Promise<DayWeather | null> {
-  const url = `${QWEATHER_BASE}/weather/7d?location=${locationId}&key=${QWEATHER_KEY}&lang=zh`
+  const url = `${QWEATHER_BASE}/weather/30d?location=${locationId}&key=${QWEATHER_KEY}&lang=zh`
   const res = await fetch(url)
   if (!res.ok) return null
 

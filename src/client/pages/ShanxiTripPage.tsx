@@ -233,7 +233,7 @@ const ITINERARY: DayData[] = [
     weather: 'cloudy',
     temp: '15~22°C',
     weatherCity: '南京',
-    weatherDate: '2025-04-30',
+    weatherDate: '2026-04-30',
     entries: [
       {
         id: 'd0-1',
@@ -259,7 +259,7 @@ const ITINERARY: DayData[] = [
     weather: 'sunny',
     temp: '6~21°C',
     weatherCity: '大同',
-    weatherDate: '2025-05-01',
+    weatherDate: '2026-05-01',
     entries: [
       {
         id: 'd1-1',
@@ -330,7 +330,7 @@ const ITINERARY: DayData[] = [
     weather: 'partlyCloudy',
     temp: '5~19°C',
     weatherCity: '大同',
-    weatherDate: '2025-05-02',
+    weatherDate: '2026-05-02',
     entries: [
       {
         id: 'd2-1',
@@ -394,7 +394,7 @@ const ITINERARY: DayData[] = [
     weather: 'windy',
     temp: '4~16°C',
     weatherCity: '忻州',
-    weatherDate: '2025-05-03',
+    weatherDate: '2026-05-03',
     entries: [
       {
         id: 'd3-1',
@@ -473,7 +473,7 @@ const ITINERARY: DayData[] = [
     weather: 'sunny',
     temp: '10~24°C',
     weatherCity: '太原',
-    weatherDate: '2025-05-04',
+    weatherDate: '2026-05-04',
     entries: [
       {
         id: 'd4-1',
@@ -529,7 +529,7 @@ const ITINERARY: DayData[] = [
     weather: 'sunny',
     temp: '11~25°C',
     weatherCity: '太原',
-    weatherDate: '2025-05-05',
+    weatherDate: '2026-05-05',
     entries: [
       {
         id: 'd5-1',
@@ -717,7 +717,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
       <section className={styles.hero}>
         <p className={styles.heroSubDetail}>SHANXI · FAMILY ROAD TRIP · 2025</p>
         <h1 className={styles.heroTitle}>山西五日深度游</h1>
-        <p className={styles.heroSub}>五一亲子自驾 · 2025.4.30 — 5.5 · 南京出发</p>
+        <p className={styles.heroSub}>五一亲子自驾 · 2026.4.30 — 5.5 · 南京出发</p>
         <div className={styles.heroStats}>
           <div className={styles.heroStat}>
             <span className={styles.heroStatN}>5</span>
@@ -1035,7 +1035,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
 
       <footer className={styles.footer}>
         <span className={styles.footerSeal}>晋</span>
-        <p>山西五日亲子自驾 · 2025年五一</p>
+        <p>山西五日亲子自驾 · 2026年五一</p>
         <p className={styles.footerSub}>一路平安 · 满载而归</p>
       </footer>
     </div>
