@@ -516,6 +516,7 @@
   align-items: center;
   gap: 4px;
   background: var(--accent-deep);
+  color: #fff;
   border-radius: var(--r-xs);
   padding: 5px 8px;
   font-size: 12px;
@@ -1102,6 +1103,74 @@
 .tipsSection { padding-bottom: 40px; }
 .footerSub { margin-top: 4px; opacity: 0.6; }
 
+/* ── Delight: Hero title shimmer ──────────── */
+.heroTitle {
+  background-size: 200% 100%;
+  animation: heroShimmer 6s ease-in-out infinite;
+}
+
+@keyframes heroShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ── Delight: Route stop pulse ────────────── */
+.routeStopDot {
+  animation: dotPulse 3s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 2.5px var(--accent-light); }
+  50% { box-shadow: 0 0 0 4px var(--accent-light), 0 0 8px oklch(70% 0.08 132 / 0.25); }
+}
+
+/* ── Delight: Sight card spring expand ────── */
+.tlDetail {
+  transition: grid-template-rows 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Delight: Timeline highlight glow breath */
+.tlItem.highlight::before {
+  animation: glowBreath 2.5s ease-in-out infinite;
+}
+
+@keyframes glowBreath {
+  0%, 100% { box-shadow: 0 0 0 3px oklch(70% 0.08 132 / 0.3); }
+  50% { box-shadow: 0 0 0 5px oklch(70% 0.08 132 / 0.15); }
+}
+
+/* ── Delight: Footer seal hover wobble ────── */
+.footerSeal {
+  cursor: default;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.footerSeal:hover {
+  transform: rotate(-8deg) scale(1.1);
+  opacity: 0.75;
+}
+
+/* ── Delight: Day date circle pop-in ──────── */
+.dayDateCircle {
+  animation: datePopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes datePopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Delight: Sunny icon slow spin ────────── */
+.icon svg {
+  transition: transform 0.6s ease;
+}
+
 /* ── Reduced Motion ─────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .page {
@@ -1147,6 +1216,26 @@
   }
   .sightCardBody {
     animation: none;
+  }
+  .heroTitle {
+    animation: none;
+    background-size: 100% 100%;
+  }
+  .routeStopDot {
+    animation: none;
+  }
+  .tlItem.highlight::before {
+    animation: none;
+  }
+  .footerSeal {
+    animation: none;
+    transition: none;
+  }
+  .dayDateCircle {
+    animation: none;
+  }
+  .icon svg {
+    transition: none;
   }
 }
 
