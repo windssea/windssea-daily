@@ -2,7 +2,7 @@
 .page {
   --ink: oklch(22% 0.02 30);
   --ink-soft: oklch(40% 0.025 35);
-  --ink-muted: oklch(58% 0.02 35);
+  --ink-muted: oklch(50% 0.025 35);
   --paper: oklch(97% 0.012 60);
   --paper-warm: oklch(93% 0.018 65);
   --paper-line: oklch(85% 0.02 60);
@@ -40,7 +40,7 @@
   position: relative;
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
-  padding-bottom: calc(56px + env(safe-area-inset-bottom));
+  padding-bottom: calc(60px + env(safe-area-inset-bottom));
 
   opacity: 0;
   transform: translateY(8px);
@@ -102,6 +102,11 @@
   background: var(--paper-warm);
   color: var(--ink);
   transform: scale(0.93);
+}
+
+.backBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .headerTitle {
@@ -234,7 +239,7 @@
 
 .pill {
   flex-shrink: 0;
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 14px;
   font-size: 12px;
   font-weight: 600;
@@ -247,7 +252,7 @@
   transition: background 0.25s cubic-bezier(0.25, 1, 0.5, 1), color 0.25s cubic-bezier(0.25, 1, 0.5, 1);
   -webkit-tap-highlight-color: transparent;
   letter-spacing: 0.02em;
-  min-height: 36px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   gap: 3px;
@@ -279,6 +284,7 @@
   font-size: 12px;
   letter-spacing: 0.22em;
   color: var(--accent);
+  font-weight: 600;
   margin: 0 0 4px;
 }
 
@@ -362,6 +368,7 @@
   font-size: 11px;
   color: var(--ink-muted);
   line-height: 1.2;
+  font-variant-numeric: tabular-nums;
 }
 
 .routeDash {
@@ -460,6 +467,7 @@
   text-align: center;
   min-width: 44px;
   justify-content: center;
+  font-variant-numeric: tabular-nums;
 }
 
 .hotelNightIcon {
@@ -677,6 +685,7 @@
   color: var(--ink-muted);
   letter-spacing: 0.04em;
   display: block;
+  font-variant-numeric: tabular-nums;
 }
 
 .tlName {
@@ -688,6 +697,7 @@
   justify-content: space-between;
   gap: 8px;
   line-height: 1.45;
+  min-width: 0;
 }
 
 .caret {
@@ -802,7 +812,7 @@
 }
 
 .badge-default {
-  background: oklch(85% 0.02 60);
+  background: var(--paper-line);
   color: var(--ink);
 }
 
@@ -908,10 +918,18 @@
   opacity: 0.7;
   transition: opacity 0.15s;
   -webkit-tap-highlight-color: transparent;
+  padding: 10px;
+  margin: -10px;
+  border-radius: 4px;
 }
 .pinLink:hover,
 .pinLink:active {
   opacity: 1;
+}
+
+.pinLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* ── Inline Hotel Section ───────────────────── */
@@ -921,12 +939,18 @@
 
 .hotelSectionLabel {
   font-size: 12px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--accent);
   font-weight: 700;
   margin-bottom: 8px;
 }
+
+/* ── Utility Classes (replacing inline styles) ── */
+.subTitleGapMd { margin-top: 24px; }
+.subTitleGapLg { margin-top: 28px; }
+.tipsSection { padding-bottom: 40px; }
+.footerSub { margin-top: 4px; opacity: 0.6; }
 
 /* ── Reduced Motion ─────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
@@ -942,6 +966,45 @@
     transition: none;
   }
   .caret {
+    transition: none;
+  }
+  .footerSeal {
+    animation: none;
+  }
+  .pill {
+    transition: none;
+  }
+  .pinLink {
+    transition: none;
+  }
+  .backBtn {
+    transition: none;
+  }
+  .hotelItem {
+    transition: none;
+  }
+  .tlItem::before {
+    transition: none;
+  }
+  .tlBtn:not(.tlBtnStatic) {
+    transition: none;
+  }
+}
+  .tlBody {
+    animation: none;
+  }
+  .tlDetail {
+    transition: none;
+  }
+.tlNameText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.caret {
     transition: none;
   }
   .footerSeal {

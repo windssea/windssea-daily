@@ -580,7 +580,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
           }
         }
       },
-      { rootMargin: '-70px 0px -65% 0px', threshold: 0 }
+      { rootMargin: '-66px 0px -65% 0px', threshold: 0 }
     )
 
     const prepEl = sectionRefs.current['prep']
@@ -678,7 +678,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
           </div>
         </div>
 
-        <h3 className={styles.subTitle} style={{ marginTop: 24 }}>
+        <h3 className={`${styles.subTitle} ${styles.subTitleGapMd}`}>
           <span className={styles.subTitleIcon}><Icon name="ticket" size={18} /></span>
           票务预约指南
         </h3>
@@ -695,7 +695,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
           ))}
         </div>
 
-        <h3 className={styles.subTitle} style={{ marginTop: 28 }}>
+        <h3 className={`${styles.subTitle} ${styles.subTitleGapLg}`}>
           <span className={styles.subTitleIcon}><Icon name="hotel" size={18} /></span>
           酒店安排
         </h3>
@@ -769,10 +769,10 @@ export default function ShanxiTripPage({ onBack }: Props) {
               return (
                 <div key={entry.id} className={`${styles.tlItem} ${entry.isSight ? styles.highlight : ''} ${isOpen ? styles.open : ''}`}>
                   {hasAccordion ? (
-                    <button className={styles.tlBtn} onClick={() => toggleItem(entry.id)}>
+                    <button className={styles.tlBtn} onClick={() => toggleItem(entry.id)} aria-expanded={isOpen} aria-controls={entry.id + '-detail'}>
                       <span className={styles.tlTime}>{entry.time}</span>
                       <span className={styles.tlName}>
-                        {stripEmoji(entry.desc)}
+                        <span className={styles.tlNameText}>{stripEmoji(entry.desc)}</span>
                         {entry.isSight && (
                           <a className={styles.pinLink} href={buildBaiduNavUrl(stripEmoji(entry.desc))} aria-label="导航" onClick={e => e.stopPropagation()}>
                             <Icon name="mapPin" size={14} />
@@ -785,7 +785,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
                     <div className={`${styles.tlBtn} ${styles.tlBtnStatic}`}>
                       <span className={styles.tlTime}>{entry.time}</span>
                       <span className={styles.tlName}>
-                        {stripEmoji(entry.desc)}
+                        <span className={styles.tlNameText}>{stripEmoji(entry.desc)}</span>
                         {entry.isSight && (
                           <a className={styles.pinLink} href={buildBaiduNavUrl(stripEmoji(entry.desc))} aria-label="导航">
                             <Icon name="mapPin" size={14} />
@@ -796,7 +796,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
                   )}
 
                   {hasAccordion && (
-                    <div className={styles.tlDetail}>
+                    <div className={styles.tlDetail} id={entry.id + '-detail'}>
                       <div className={styles.tlInner}>
                         <div className={`${styles.tlBody} ${entry.isSight ? styles.isSight : ''}`}>
                           {entry.body && <div className={styles.tlBodyText}>{entry.body}</div>}
@@ -850,7 +850,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
       ))}
 
       {/* TIPS */}
-      <section className={styles.section} id="tips" style={{ paddingBottom: 40 }}>
+      <section className={`${styles.section} ${styles.tipsSection}`} id="tips">
         <p className={styles.sectionLabel}>出行须知</p>
         <h2 className={styles.sectionTitle}>注意事项</h2>
         <ul className={styles.tipsList}>
@@ -869,7 +869,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
       <footer className={styles.footer}>
         <span className={styles.footerSeal}>晋</span>
         <p>山西五日亲子自驾 · 2025年五一</p>
-        <p style={{ marginTop: 4, opacity: 0.6 }}>一路平安 · 满载而归</p>
+        <p className={styles.footerSub}>一路平安 · 满载而归</p>
       </footer>
     </div>
 
