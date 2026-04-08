@@ -710,12 +710,11 @@ export default function ShanxiTripPage({ onBack }: Props) {
         <button onClick={onBack} className={styles.backBtn} aria-label="返回">
           <Icon name="arrowLeft" size={20} />
         </button>
-        <span className={styles.headerTitle}>山西五日亲子自驾攻略</span>
+        <span className={styles.headerTitle}>山西五日深度游</span>
       </header>
 
       {/* Hero */}
       <section className={styles.hero}>
-        <p className={styles.heroSubDetail}>SHANXI · FAMILY ROAD TRIP · 2025</p>
         <h1 className={styles.heroTitle}>山西五日深度游</h1>
         <p className={styles.heroSub}>五一亲子自驾 · 2026.4.30 — 5.5 · 南京出发</p>
         <div className={styles.heroStats}>

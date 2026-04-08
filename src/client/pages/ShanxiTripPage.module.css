@@ -1,21 +1,21 @@
 /* ── Design Tokens ─────────────────────────────── */
 .page {
-  --ink: oklch(20% 0.02 160);
-  --ink-soft: oklch(38% 0.025 160);
-  --ink-muted: oklch(52% 0.02 160);
-  --paper: oklch(97% 0.006 155);
-  --paper-warm: oklch(94% 0.01 155);
-  --paper-line: oklch(88% 0.012 155);
-  --accent: oklch(50% 0.14 155);
-  --accent-light: oklch(93% 0.04 155);
-  --accent-deep: oklch(38% 0.15 155);
-  --gold: oklch(72% 0.1 75);
-  --gold-light: oklch(95% 0.03 75);
-  --gold-text: oklch(52% 0.1 75);
-  --green: oklch(60% 0.08 155);
-  --green-light: oklch(92% 0.04 155);
-  --red: oklch(52% 0.16 28);
-  --red-light: oklch(92% 0.04 30);
+  --ink: oklch(20% 0.03 75);
+  --ink-soft: oklch(36% 0.04 75);
+  --ink-muted: oklch(50% 0.03 75);
+  --paper: oklch(97% 0.012 85);
+  --paper-warm: oklch(94% 0.022 85);
+  --paper-line: oklch(88% 0.025 85);
+  --accent: oklch(54% 0.13 132);
+  --accent-light: oklch(93% 0.045 132);
+  --accent-deep: oklch(36% 0.16 132);
+  --gold: oklch(72% 0.12 80);
+  --gold-light: oklch(95% 0.04 80);
+  --gold-text: oklch(52% 0.12 80);
+  --green: oklch(58% 0.10 135);
+  --green-light: oklch(92% 0.05 135);
+  --red: oklch(52% 0.14 25);
+  --red-light: oklch(92% 0.04 25);
 
   --r: 12px;
   --r-sm: 8px;
@@ -73,10 +73,10 @@
   gap: 8px;
   padding: 10px 14px;
   padding-top: max(10px, env(safe-area-inset-top));
-  background: rgba(18, 17, 30, 0.93);
+  background: rgba(245, 242, 230, 0.92);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(120, 140, 100, 0.15);
   position: sticky;
   top: 0;
   z-index: 20;
@@ -87,8 +87,8 @@
   height: 36px;
   flex-shrink: 0;
   border: none;
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.7);
+  background: rgba(80, 90, 60, 0.08);
+  color: rgba(60, 55, 40, 0.7);
   cursor: pointer;
   border-radius: 10px;
   display: flex;
@@ -96,11 +96,19 @@
   justify-content: center;
   transition: background 0.15s, color 0.15s, transform 0.15s;
   -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+
+/* 44px touch target around visual 36px button */
+.backBtn::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
 }
 
 .backBtn:active {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: rgba(80, 90, 60, 0.15);
+  color: var(--ink);
   transform: scale(0.93);
 }
 
@@ -113,7 +121,7 @@
   flex: 1;
   font-family: 'ZCOOL XiaoWei', serif;
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--ink);
   line-height: 1.3;
   white-space: nowrap;
   overflow: hidden;
@@ -125,7 +133,7 @@
   position: relative;
   padding: 28px 20px 0;
   overflow: hidden;
-  background: linear-gradient(160deg, #12111e 0%, #1e1630 45%, #2c1a3e 100%);
+  background: linear-gradient(160deg, #1e2a1a 0%, #2a3a22 50%, #354828 100%);
   color: #fff;
 }
 
@@ -134,8 +142,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 60% at 85% 15%, rgba(80, 200, 155, 0.16) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 45% at 8% 90%, rgba(50, 140, 210, 0.14) 0%, transparent 60%);
+    radial-gradient(ellipse 70% 60% at 85% 15%, rgba(140, 190, 80, 0.16) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 45% at 8% 90%, rgba(100, 160, 200, 0.14) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -155,7 +163,7 @@
   margin: 0 0 8px;
   letter-spacing: 0.02em;
   text-wrap: balance;
-  background: linear-gradient(135deg, #ffffff 0%, #c2eedd 55%, #5cbf96 100%);
+  background: linear-gradient(135deg, #faf5e4 0%, #c5d8a8 55%, #6a9e50 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -164,15 +172,14 @@
 .heroSub {
   position: relative;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0 0 4px;
+  color: rgba(255, 255, 255, 0.72);
   letter-spacing: 0.08em;
 }
 
 .heroSubDetail {
   position: relative;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.5);
   margin: 0 0 18px;
   letter-spacing: 0.15em;
 }
@@ -200,7 +207,7 @@
   font-variant-numeric: tabular-nums;
   display: block;
   line-height: 1;
-  color: #6dcfac;
+  color: #a0cc72;
 }
 
 .heroStatL {
@@ -248,9 +255,10 @@
 }
 
 .heroChipActive {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
+  background: oklch(82% 0.08 132);
+  border-color: oklch(82% 0.08 132);
+  color: oklch(22% 0.06 132);
+  font-weight: 700;
 }
 
 .heroChip:active:not(.heroChipActive) {
@@ -266,11 +274,11 @@
   width: 100%;
   max-width: 480px;
   z-index: 20;
-  background: rgba(12, 11, 20, 0.97);
+  background: rgba(245, 242, 230, 0.92);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.22);
+  border-top: 1px solid rgba(120, 140, 100, 0.15);
+  box-shadow: 0 -2px 16px rgba(80, 100, 60, 0.1);
   padding: 8px;
   padding-bottom: calc(8px + env(safe-area-inset-bottom));
   display: flex;
@@ -291,8 +299,8 @@
   font-size: 12px;
   font-weight: 600;
   font-family: inherit;
-  background: rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.4);
+  background: rgba(100, 120, 80, 0.08);
+  color: rgba(60, 55, 40, 0.55);
   border: none;
   cursor: pointer;
   white-space: nowrap;
@@ -306,12 +314,14 @@
 }
 
 .pill.active {
-  background: var(--accent);
-  color: #fff;
+  background: oklch(82% 0.08 132);
+  color: oklch(22% 0.06 132);
+  font-weight: 700;
+  box-shadow: 0 1px 6px oklch(54% 0.13 132 / 0.2);
 }
 
 .pill:active:not(.active) {
-  background: rgba(255,255,255,0.15);
+  background: rgba(100, 120, 80, 0.15);
 }
 
 .pill:focus-visible {
@@ -372,7 +382,7 @@
 .routeMap {
   background: var(--paper-warm);
   border-radius: var(--r);
-  border: 1px solid oklch(90% 0.015 60);
+  border: 1px solid oklch(90% 0.03 100);
   padding: 16px 12px;
 }
 
@@ -494,7 +504,7 @@
   gap: 12px;
   align-items: flex-start;
   padding: 12px 14px;
-  background: #fff;
+  background: var(--paper);
   border-radius: 10px;
   border: 1px solid var(--paper-line);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
@@ -505,8 +515,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  background: var(--ink);
-  color: oklch(97% 0.005 50);
+  background: var(--accent-deep);
   border-radius: var(--r-xs);
   padding: 5px 8px;
   font-size: 12px;
@@ -573,14 +582,14 @@
 }
 
 .dayDateCircle {
-  background: linear-gradient(145deg, var(--accent), var(--accent-deep));
+  background: var(--accent-deep);
   color: #fff;
   border-radius: var(--r-sm);
   padding: 6px 12px;
   text-align: center;
   flex-shrink: 0;
   min-width: 52px;
-  box-shadow: 0 4px 14px oklch(50% 0.14 155 / 0.3);
+  box-shadow: 0 4px 14px oklch(54% 0.13 132 / 0.3);
 }
 
 .dayDateM {
@@ -667,7 +676,7 @@
   height: 7px;
   border-radius: 50%;
   background: var(--paper);
-  border: 2px solid oklch(75% 0.04 50);
+  border: 2px solid oklch(75% 0.04 100);
   transition: border-color 0.25s, background 0.25s, transform 0.25s;
 }
 
@@ -678,7 +687,7 @@
   height: 10px;
   left: -20px;
   top: 13px;
-  box-shadow: 0 0 0 3px rgba(80, 180, 140, 0.2);
+  box-shadow: 0 0 0 3px oklch(70% 0.08 132 / 0.3);
 }
 
 .tlBtn {
@@ -806,7 +815,7 @@
 
 .tlBody.isSight {
   border-left-color: var(--accent);
-  background: oklch(96% 0.014 40);
+  background: oklch(96% 0.02 130);
 }
 
 /* ── Sight Card (replaces tlBody.isSight) ───── */
@@ -821,10 +830,10 @@
 }
 
 .sightCard {
-  background: #fff;
+  background: var(--paper);
   border-radius: 12px;
-  border: 1px solid rgba(80, 180, 140, 0.15);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(80, 180, 140, 0.06);
+  border: 1px solid oklch(85% 0.04 132);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07), 0 0 0 1px oklch(90% 0.03 132);
   margin: 0 0 8px -4px;
   overflow: hidden;
 }
@@ -846,11 +855,11 @@
 }
 
 .sightCardHead:hover {
-  background: rgba(80, 180, 140, 0.04);
+  background: oklch(90% 0.03 132);
 }
 
 .sightCardHead:active {
-  background: rgba(80, 180, 140, 0.08);
+  background: oklch(85% 0.05 132);
 }
 
 .sightCardHead:focus-visible {
@@ -892,9 +901,9 @@
 }
 
 .sightCardBody {
-  border-top: 1px solid oklch(92% 0.02 50);
+  border-top: 1px solid oklch(92% 0.03 100);
   padding: 10px 14px 12px;
-  background: linear-gradient(to bottom, rgba(80, 180, 140, 0.04), transparent);
+  background: linear-gradient(to bottom, oklch(92% 0.03 132), transparent);
   animation: tlBodyIn 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
