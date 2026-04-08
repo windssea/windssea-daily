@@ -571,6 +571,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px 14px;
+  font-variant-numeric: tabular-nums;
 }
 
 .dayMetaItem {
@@ -600,6 +601,7 @@
   width: 1.5px;
   background: oklch(82% 0.02 45);
   border-radius: 1px;
+}
 
 .tlItem {
   position: relative;
@@ -990,30 +992,11 @@
     transition: none;
   }
 }
-  .tlBody {
-    animation: none;
-  }
-  .tlDetail {
-    transition: none;
-  }
+
 .tlNameText {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   flex: 1;
-}
-
-.caret {
-    transition: none;
-  }
-  .footerSeal {
-    animation: none;
-  }
-  .pill {
-    transition: none;
-  }
-  .pinLink {
-    transition: none;
-  }
 }
