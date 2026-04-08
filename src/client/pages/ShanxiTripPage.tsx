@@ -736,6 +736,17 @@ export default function ShanxiTripPage({ onBack }: Props) {
             <span className={styles.heroStatL}>人</span>
           </div>
         </div>
+        <div className={styles.heroChips}>
+          {DAYS.map(d => (
+            <button
+              key={d.id}
+              className={`${styles.heroChip} ${activeDay === d.id ? styles.heroChipActive : ''}`}
+              onClick={() => scrollToDay(d.id)}
+            >
+              {d.emoji} {d.label}
+            </button>
+          ))}
+        </div>
       </section>
 
       {/* ROUTE */}
