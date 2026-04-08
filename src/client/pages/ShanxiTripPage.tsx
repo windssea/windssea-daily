@@ -164,6 +164,142 @@ function Icon({ name, size = 16, className = '' }: { name: string; size?: number
 
 const stripEmoji = (s: string) => s.replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F]+\s*/u, '')
 
+/* ── SandDrift: Occasional wind-blown sand overlay ── */
+// Grains blow from top-right toward bottom-left with sinusoidal wobble
+function SandDrift() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    if (!canvasRef.current) return
+    const canvas = canvasRef.current as HTMLCanvasElement
+    const ctx = canvas.getContext('2d')!
+
+    function resize() {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    interface Grain {
+      x: number; y: number        // current position
+      vx: number; vy: number      // velocity (px/frame @ 60fps)
+      size: number                 // base radius
+      maxAlpha: number
+      born: number                 // timestamp ms
+      duration: number             // lifetime ms
+      phase: number                // sinusoidal wobble phase offset
+      waveAmp: number              // wobble amplitude (px)
+      waveFreq: number             // wobble frequency (rad/ms)
+    }
+
+    const grains: Grain[] = []
+    let lastGust = -Infinity
+    let nextGustIn = 2500
+
+    function spawnGust(now: number) {
+      // Spawn near the top-right region, drift down-left ~135° screen angle
+      const originX = canvas.width * 0.55 + Math.random() * canvas.width * 0.55
+      const originY = -10 + Math.random() * canvas.height * 0.22
+      const count = 10 + Math.floor(Math.random() * 10)
+      // Base direction: left + down  (vx < 0, vy > 0)
+      const baseAngleRad = Math.PI * (0.72 + Math.random() * 0.12) // ~130–151°
+      const baseSpeed = 0.9 + Math.random() * 0.7
+
+      for (let i = 0; i < count; i++) {
+        const speed = baseSpeed * (0.65 + Math.random() * 0.7)
+        const angleJitter = baseAngleRad + (Math.random() - 0.5) * 0.22
+        grains.push({
+          // stagger start positions along the stream
+          x: originX + (Math.random() - 0.5) * 80,
+          y: originY + (Math.random() - 0.5) * 50,
+          vx: Math.cos(angleJitter) * speed,
+          vy: Math.sin(angleJitter) * speed,
+          size: 0.7 + Math.random() * 1.6,
+          maxAlpha: 0.11 + Math.random() * 0.14,
+          // stagger born time so particles stream in, not all at once
+          born: now - Math.random() * 600,
+          duration: 4500 + Math.random() * 3000,
+          phase: Math.random() * Math.PI * 2,
+          waveAmp: 3 + Math.random() * 5,
+          waveFreq: 0.0018 + Math.random() * 0.0022,
+        })
+      }
+    }
+
+    let raf: number
+    function tick(now: number) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      if (now - lastGust > nextGustIn) {
+        spawnGust(now)
+        lastGust = now
+        nextGustIn = 9000 + Math.random() * 13000  // 9–22s between gusts
+      }
+
+      for (let i = grains.length - 1; i >= 0; i--) {
+        const g = grains[i]
+        const elapsed = now - g.born
+        const t = elapsed / g.duration
+        if (t >= 1 || t < 0) { if (t >= 1) grains.splice(i, 1); continue }
+
+        // soft ease-in / ease-out
+        const fade = t < 0.18 ? t / 0.18 : t > 0.78 ? (1 - t) / 0.22 : 1
+
+        // perpendicular wobble for flowing feel
+        const speed = Math.sqrt(g.vx * g.vx + g.vy * g.vy)
+        const nx = -g.vy / speed  // perpendicular unit vector
+        const ny =  g.vx / speed
+        const wave = g.waveAmp * Math.sin(g.phase + elapsed * g.waveFreq)
+
+        const drawX = g.x + nx * wave
+        const drawY = g.y + ny * wave
+
+        g.x += g.vx
+        g.y += g.vy
+
+        const angle = Math.atan2(g.vy, g.vx)
+        const alpha = fade * g.maxAlpha
+
+        ctx.save()
+        ctx.globalAlpha = alpha
+        // soft golden glow
+        ctx.shadowBlur = 2.5
+        ctx.shadowColor = `rgba(220, 165, 40, ${alpha * 0.6})`
+        // elongated ellipse aligned with travel direction
+        ctx.fillStyle = 'rgb(218, 170, 52)'
+        ctx.beginPath()
+        ctx.ellipse(drawX, drawY, g.size * 3.0, g.size * 0.65, angle, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.restore()
+      }
+
+      raf = requestAnimationFrame(tick)
+    }
+
+    raf = requestAnimationFrame(tick)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', resize)
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      style={{
+        position: 'fixed',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+        zIndex: 9998,
+      }}
+    />
+  )
+}
+
 /** Map QWeather Chinese textDay to our icon name */
 function weatherTextToIcon(text: string): string {
   if (!text) return 'cloudy'
@@ -643,7 +779,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
     setActiveDay(dayId)
     const el = sectionRefs.current[dayId]
     if (el) {
-      const topOffset = 66 // Header height only (tabs are now bottom nav)
+      const topOffset = 0 // no sticky header — floating button doesn't affect layout
       const elementPosition = el.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.pageYOffset - topOffset
       window.scrollTo({
@@ -674,7 +810,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
           }
         }
       },
-      { rootMargin: '-66px 0px -65% 0px', threshold: 0 }
+      { rootMargin: '0px 0px -65% 0px', threshold: 0 }
     )
 
     const prepEl = sectionRefs.current['prep']
@@ -704,20 +840,13 @@ export default function ShanxiTripPage({ onBack }: Props) {
 
   return (
     <>
+    <SandDrift />
+    {/* Floating back button — must be outside .page because .page has
+        transform applied, which breaks position:fixed for children */}
+    <button onClick={onBack} className={styles.backBtn} aria-label="返回">
+      <Icon name="arrowLeft" size={20} />
+    </button>
     <div className={`${styles.page} ${visible ? styles.visible : ''}`}>
-      {/* Wind-blown sand particles */}
-      <div className={styles.sandLayer} aria-hidden="true">
-        {Array.from({ length: 12 }, (_, i) => (
-          <span key={i} className={styles.sand} style={{ '--i': i } as React.CSSProperties} />
-        ))}
-      </div>
-      {/* Sticky Header */}
-      <header className={styles.header}>
-        <button onClick={onBack} className={styles.backBtn} aria-label="返回">
-          <Icon name="arrowLeft" size={20} />
-        </button>
-        <span className={styles.headerTitle}>山西五日深度游</span>
-      </header>
 
       {/* Hero */}
       <section className={styles.hero}>

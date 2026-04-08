@@ -1,0 +1,57 @@
+/* ── Page ──────────────────────────────────── */
+.page {
+  position: relative;
+  height: 100dvh;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* ── Floating Back Button ──────────────────── */
+.backBtn {
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  left: 12px;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  color: #3d2b1f;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.12s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.backBtn:active {
+  transform: scale(0.9);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.backBtn:focus-visible {
+  outline: 2px solid #c47c5a;
+  outline-offset: 2px;
+}
+
+/* ── iframe (fullscreen) ───────────────────── */
+/* The iframe is intentionally 20px wider than the container so the
+   native cross-origin scrollbar (which cannot be styled) is pushed
+   off-screen. The parent's overflow:hidden clips it invisibly. */
+.iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + 20px);
+  height: 100%;
+  border: none;
+  background: #fff;
+  /* Firefox can restyle iframes' own scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
