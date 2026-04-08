@@ -895,61 +895,97 @@ export default function ShanxiTripPage({ onBack }: Props) {
           <div className={styles.timeline}>
             {day.entries.map((entry) => {
               const isOpen = !!openItems[entry.id]
-              const hasAccordion = !!(entry.body || (entry.detailsList && entry.detailsList.length > 0))
+              const isSightWithDetail = entry.isSight && !!(entry.detailsList && entry.detailsList.length > 0)
+              const hasRegularAccordion = !entry.isSight && !!entry.body
 
               return (
-                <div key={entry.id} className={`${styles.tlItem} ${entry.isSight ? styles.highlight : ''} ${isOpen ? styles.open : ''}`}>
-                  {hasAccordion ? (
-                    <button className={styles.tlBtn} onClick={() => toggleItem(entry.id)} aria-expanded={isOpen} aria-controls={entry.id + '-detail'}>
-                      <span className={styles.tlTime}>{entry.time}</span>
-                      <span className={styles.tlName}>
-                        <span className={styles.tlNameText}>{stripEmoji(entry.desc)}</span>
-                        {entry.isSight && (
-                          <a className={styles.pinLink} href={buildBaiduNavUrl(stripEmoji(entry.desc))} aria-label="导航" onClick={e => e.stopPropagation()}>
-                            <Icon name="mapPin" size={14} />
-                          </a>
-                        )}
-                        <svg className={styles.caret} viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      </span>
-                    </button>
+                <div
+                  key={entry.id}
+                  className={`${styles.tlItem} ${entry.isSight ? styles.highlight : ''} ${isOpen ? styles.open : ''}`}
+                >
+                  {isSightWithDetail ? (
+                    <>
+                      <span className={styles.sightTimeAbove}>{entry.time}</span>
+                      <div className={styles.sightCard}>
+                        <button
+                          className={styles.sightCardHead}
+                          onClick={() => toggleItem(entry.id)}
+                          aria-expanded={isOpen}
+                          aria-controls={entry.id + '-detail'}
+                        >
+                          <div className={styles.sightCardLeft}>
+                            <span className={styles.sightCardLabel}>景点</span>
+                            <div className={styles.sightCardName}>
+                              {stripEmoji(entry.desc)}
+                            </div>
+                          </div>
+                          <div className={styles.sightCardActions}>
+                            <a
+                              className={styles.pinLink}
+                              href={buildBaiduNavUrl(stripEmoji(entry.desc))}
+                              aria-label="导航"
+                              onClick={e => e.stopPropagation()}
+                            >
+                              <Icon name="mapPin" size={14} />
+                            </a>
+                            <svg className={styles.caret} viewBox="0 0 16 16" fill="none">
+                              <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          </div>
+                        </button>
+                        <div className={styles.tlDetail} id={entry.id + '-detail'}>
+                          <div className={styles.tlInner}>
+                            <div className={styles.sightCardBody}>
+                              {entry.detailsList?.map((dt, i) => (
+                                <div key={i} className={styles.sightRow}>
+                                  <span className={styles.sightLabel}>{dt.label}</span>
+                                  <span className={styles.sightValue}>{dt.value}</span>
+                                </div>
+                              ))}
+                              {entry.badges && entry.badges.length > 0 && (
+                                <div className={styles.badgeRow}>
+                                  {entry.badges.map((b, i) => (
+                                    <span key={i} className={`${styles.badge} ${styles['badge-' + (b.type || 'default')]}`}>
+                                      {b.text}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : hasRegularAccordion ? (
+                    <>
+                      <button
+                        className={styles.tlBtn}
+                        onClick={() => toggleItem(entry.id)}
+                        aria-expanded={isOpen}
+                        aria-controls={entry.id + '-detail'}
+                      >
+                        <span className={styles.tlTime}>{entry.time}</span>
+                        <span className={styles.tlName}>
+                          <span className={styles.tlNameText}>{stripEmoji(entry.desc)}</span>
+                          <svg className={styles.caret} viewBox="0 0 16 16" fill="none">
+                            <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </span>
+                      </button>
+                      <div className={styles.tlDetail} id={entry.id + '-detail'}>
+                        <div className={styles.tlInner}>
+                          <div className={styles.tlBody}>
+                            <div className={styles.tlBodyText}>{entry.body}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
                   ) : (
                     <div className={`${styles.tlBtn} ${styles.tlBtnStatic}`}>
                       <span className={styles.tlTime}>{entry.time}</span>
                       <span className={styles.tlName}>
                         <span className={styles.tlNameText}>{stripEmoji(entry.desc)}</span>
-                        {entry.isSight && (
-                          <a className={styles.pinLink} href={buildBaiduNavUrl(stripEmoji(entry.desc))} aria-label="导航">
-                            <Icon name="mapPin" size={14} />
-                          </a>
-                        )}
                       </span>
-                    </div>
-                  )}
-
-                  {hasAccordion && (
-                    <div className={styles.tlDetail} id={entry.id + '-detail'}>
-                      <div className={styles.tlInner}>
-                        <div className={`${styles.tlBody} ${entry.isSight ? styles.isSight : ''}`}>
-                          {entry.body && <div className={styles.tlBodyText}>{entry.body}</div>}
-                          
-                          {entry.detailsList && entry.detailsList.map((dt, i) => (
-                            <div key={i} className={styles.sightRow}>
-                              <span className={styles.sightLabel}>{dt.label}</span>
-                              <span className={styles.sightValue}>{dt.value}</span>
-                            </div>
-                          ))}
-
-                          {entry.badges && entry.badges.length > 0 && (
-                            <div className={styles.badgeRow}>
-                              {entry.badges.map((b, i) => (
-                                <span key={i} className={`${styles.badge} ${styles['badge-' + (b.type || 'default')]}`}>
-                                  {b.text}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
                     </div>
                   )}
                 </div>
