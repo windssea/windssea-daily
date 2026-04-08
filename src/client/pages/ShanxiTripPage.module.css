@@ -180,33 +180,81 @@
 .heroStats {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1px;
-  background: oklch(0% 0 0 / 0.08);
-  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
   overflow: hidden;
+  margin-bottom: 20px;
 }
 
 .heroStat {
-  background: oklch(0% 0 0 / 0.1);
-  padding: 14px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 4px;
   text-align: center;
 }
 
 .heroStatN {
-  font-size: 24px;
+  font-size: 20px;
   font-family: 'ZCOOL XiaoWei', serif;
   font-variant-numeric: tabular-nums;
   display: block;
   line-height: 1;
+  color: #e8956a;
 }
 
 .heroStatL {
-  font-size: 12px;
-  opacity: 0.7;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
   display: block;
   margin-top: 4px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
+}
+
+/* ── Hero Chips ─────────────────────────────── */
+.heroChips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin: 0 -20px;
+  padding: 0 20px 16px;
+  position: relative;
+}
+
+.heroChips::-webkit-scrollbar {
+  display: none;
+}
+
+.heroChip {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.65);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.heroChipActive {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.heroChip:active:not(.heroChipActive) {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* ── Bottom Pill Navigation ─────────────────── */
