@@ -1,14 +1,14 @@
 /* ── Design Tokens ─────────────────────────────── */
 .page {
-  --ink: oklch(22% 0.02 30);
-  --ink-soft: oklch(40% 0.025 35);
-  --ink-muted: oklch(50% 0.025 35);
-  --paper: oklch(97% 0.012 60);
-  --paper-warm: oklch(93% 0.018 65);
-  --paper-line: oklch(85% 0.02 60);
-  --accent: oklch(58% 0.12 30);
-  --accent-light: oklch(92% 0.04 30);
-  --accent-deep: oklch(45% 0.14 28);
+  --ink: oklch(20% 0.02 160);
+  --ink-soft: oklch(38% 0.025 160);
+  --ink-muted: oklch(52% 0.02 160);
+  --paper: oklch(97% 0.006 155);
+  --paper-warm: oklch(94% 0.01 155);
+  --paper-line: oklch(88% 0.012 155);
+  --accent: oklch(50% 0.14 155);
+  --accent-light: oklch(93% 0.04 155);
+  --accent-deep: oklch(38% 0.15 155);
   --gold: oklch(72% 0.1 75);
   --gold-light: oklch(95% 0.03 75);
   --gold-text: oklch(52% 0.1 75);
@@ -134,8 +134,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 60% at 85% 15%, rgba(212, 112, 74, 0.2) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 45% at 8% 90%, rgba(80, 50, 160, 0.15) 0%, transparent 60%);
+    radial-gradient(ellipse 70% 60% at 85% 15%, rgba(80, 200, 155, 0.16) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 45% at 8% 90%, rgba(50, 140, 210, 0.14) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -155,7 +155,7 @@
   margin: 0 0 8px;
   letter-spacing: 0.02em;
   text-wrap: balance;
-  background: linear-gradient(135deg, #ffffff 0%, #f5c4a0 55%, #e8956a 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #c2eedd 55%, #5cbf96 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -200,7 +200,7 @@
   font-variant-numeric: tabular-nums;
   display: block;
   line-height: 1;
-  color: #e8956a;
+  color: #6dcfac;
 }
 
 .heroStatL {
@@ -315,14 +315,13 @@
 }
 
 .pill:focus-visible {
-  outline: 2px solid #c47c5a;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 /* ── Sections ───────────────────────────────── */
 .section {
   padding: 28px 20px;
-  border-bottom: 1px solid var(--paper-line);
   scroll-margin-top: 66px;
   scroll-margin-bottom: 60px;
 }
@@ -581,7 +580,7 @@
   text-align: center;
   flex-shrink: 0;
   min-width: 52px;
-  box-shadow: 0 4px 14px oklch(58% 0.12 30 / 0.35);
+  box-shadow: 0 4px 14px oklch(50% 0.14 155 / 0.3);
 }
 
 .dayDateM {
@@ -679,7 +678,7 @@
   height: 10px;
   left: -20px;
   top: 13px;
-  box-shadow: 0 0 0 3px rgba(212, 112, 74, 0.18);
+  box-shadow: 0 0 0 3px rgba(80, 180, 140, 0.2);
 }
 
 .tlBtn {
@@ -824,8 +823,8 @@
 .sightCard {
   background: #fff;
   border-radius: 12px;
-  border: 1px solid rgba(212, 112, 74, 0.15);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(212, 112, 74, 0.05);
+  border: 1px solid rgba(80, 180, 140, 0.15);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(80, 180, 140, 0.06);
   margin: 0 0 8px -4px;
   overflow: hidden;
 }
@@ -847,11 +846,11 @@
 }
 
 .sightCardHead:hover {
-  background: rgba(212, 112, 74, 0.03);
+  background: rgba(80, 180, 140, 0.04);
 }
 
 .sightCardHead:active {
-  background: rgba(212, 112, 74, 0.06);
+  background: rgba(80, 180, 140, 0.08);
 }
 
 .sightCardHead:focus-visible {
@@ -895,7 +894,7 @@
 .sightCardBody {
   border-top: 1px solid oklch(92% 0.02 50);
   padding: 10px 14px 12px;
-  background: linear-gradient(to bottom, rgba(212, 112, 74, 0.03), transparent);
+  background: linear-gradient(to bottom, rgba(80, 180, 140, 0.04), transparent);
   animation: tlBodyIn 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
