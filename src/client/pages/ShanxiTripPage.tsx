@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import styles from './ShanxiTripPage.module.css'
+import { api } from '../lib/api'
 
 interface Props {
   onBack: () => void
@@ -123,6 +124,29 @@ const ICONS: Record<string, React.ReactNode> = {
       <circle cx="12" cy="9" r="2.5"/>
     </Ic>
   ),
+  sunny: (
+    <Ic>
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </Ic>
+  ),
+  cloudy: (
+    <Ic>
+      <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/>
+    </Ic>
+  ),
+  partlyCloudy: (
+    <Ic>
+      <path d="M12.5 6.5L11 8l1.5 1.5M14 2v2M21 9h-2"/>
+      <circle cx="14" cy="9" r="3"/>
+      <path d="M17 15H7a4 4 0 01-.4-7.98A5 5 0 0117 12a3 3 0 010 3z"/>
+    </Ic>
+  ),
+  windy: (
+    <Ic>
+      <path d="M9.59 4.59A2 2 0 1111 8H2M12.59 19.41A2 2 0 1014 16H2M17.73 7.73A2.5 2.5 0 1119.5 12H2"/>
+    </Ic>
+  ),
 }
 
 function Icon({ name, size = 16, className = '' }: { name: string; size?: number; className?: string }) {
@@ -139,6 +163,18 @@ function Icon({ name, size = 16, className = '' }: { name: string; size?: number
 /* ── Helper ──────────────────────────────────── */
 
 const stripEmoji = (s: string) => s.replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F]+\s*/u, '')
+
+/** Map QWeather Chinese textDay to our icon name */
+function weatherTextToIcon(text: string): string {
+  if (!text) return 'cloudy'
+  if (text.includes('晴')) return 'sunny'
+  if (text.includes('多云') || text.includes('少云')) return 'partlyCloudy'
+  if (text.includes('阴')) return 'cloudy'
+  if (text.includes('雨')) return 'cloudy'  // reuse cloudy icon for rain
+  if (text.includes('雪')) return 'cloudy'  // reuse cloudy icon for snow
+  if (text.includes('风') || text.includes('沙') || text.includes('雾') || text.includes('霾')) return 'windy'
+  return 'cloudy'
+}
 
 const CIRCLED_NUMBERS = ['①','②','③','④','⑤','⑥']
 
@@ -180,6 +216,10 @@ interface DayData {
   distance?: string
   hotel?: string
   train?: string
+  weather?: string   // icon name (sunny/cloudy/etc) — static fallback
+  temp?: string       // temp text — static fallback
+  weatherCity?: string // city name for weather API lookup
+  weatherDate?: string // YYYY-MM-DD for weather API lookup
   entries: TimelineEntry[]
 }
 
@@ -190,6 +230,10 @@ const ITINERARY: DayData[] = [
     dayDate: '30',
     title: '夜间出发\n宿火车软卧',
     train: 'Z196次软卧包厢',
+    weather: 'cloudy',
+    temp: '15~22°C',
+    weatherCity: '南京',
+    weatherDate: '2025-04-30',
     entries: [
       {
         id: 'd0-1',
@@ -212,6 +256,10 @@ const ITINERARY: DayData[] = [
     title: '太原→大同\n古城休闲体验日',
     distance: '约280km',
     hotel: '大同古城',
+    weather: 'sunny',
+    temp: '6~21°C',
+    weatherCity: '大同',
+    weatherDate: '2025-05-01',
     entries: [
       {
         id: 'd1-1',
@@ -279,6 +327,10 @@ const ITINERARY: DayData[] = [
     title: '云冈石窟→悬空寺\n世界遗产研学日',
     distance: '约160km',
     hotel: '应县',
+    weather: 'partlyCloudy',
+    temp: '5~19°C',
+    weatherCity: '大同',
+    weatherDate: '2025-05-02',
     entries: [
       {
         id: 'd2-1',
@@ -339,6 +391,10 @@ const ITINERARY: DayData[] = [
     title: '木塔→雁门关→忻州\n边塞文化日',
     distance: '约270km',
     hotel: '太原南站',
+    weather: 'windy',
+    temp: '4~16°C',
+    weatherCity: '忻州',
+    weatherDate: '2025-05-03',
     entries: [
       {
         id: 'd3-1',
@@ -414,6 +470,10 @@ const ITINERARY: DayData[] = [
     title: '晋祠→山西博物院\n历史文化收官日',
     distance: '约50km',
     hotel: '续住太原',
+    weather: 'sunny',
+    temp: '10~24°C',
+    weatherCity: '太原',
+    weatherDate: '2025-05-04',
     entries: [
       {
         id: 'd4-1',
@@ -466,6 +526,10 @@ const ITINERARY: DayData[] = [
     dayDate: '5',
     title: '太原→南京\n轻松返程日',
     train: 'G467次 5.8h',
+    weather: 'sunny',
+    temp: '11~25°C',
+    weatherCity: '太原',
+    weatherDate: '2025-05-05',
     entries: [
       {
         id: 'd5-1',
@@ -534,6 +598,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
   const [visible, setVisible] = useState(false)
   const [activeDay, setActiveDay] = useState('prep')
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
+  const [weatherMap, setWeatherMap] = useState<Record<string, { icon: string; temp: string }>>({})
 
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const isScrolling = useRef(false)
@@ -542,6 +607,35 @@ export default function ShanxiTripPage({ onBack }: Props) {
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 60)
     return () => clearTimeout(t)
+  }, [])
+
+  // Fetch weather data from API on mount
+  useEffect(() => {
+    const items = ITINERARY
+      .filter(d => d.weatherCity && d.weatherDate)
+      .map(d => ({ city: d.weatherCity!, date: d.weatherDate! }))
+
+    if (items.length === 0) return
+
+    api.batchWeather(items)
+      .then(res => {
+        const map: Record<string, { icon: string; temp: string }> = {}
+        for (const day of ITINERARY) {
+          if (!day.weatherCity || !day.weatherDate) continue
+          const key = `${day.weatherCity}:${day.weatherDate}`
+          const w = res.results[key]
+          if (w) {
+            map[day.id] = {
+              icon: weatherTextToIcon(w.textDay),
+              temp: `${w.tempLow}~${w.tempHigh}°C`,
+            }
+          }
+        }
+        setWeatherMap(map)
+      })
+      .catch(() => {
+        // Silently fall back to static data
+      })
   }, [])
 
   const scrollToDay = useCallback((dayId: string) => {
@@ -621,9 +715,27 @@ export default function ShanxiTripPage({ onBack }: Props) {
 
       {/* Hero */}
       <section className={styles.hero}>
+        <p className={styles.heroSubDetail}>SHANXI · FAMILY ROAD TRIP · 2025</p>
         <h1 className={styles.heroTitle}>山西五日深度游</h1>
-        <p className={styles.heroSub}>五一亲子自驾 · 2025.4.30 — 5.5</p>
-        <p className={styles.heroSubDetail}>南京出发 · 晋北环线</p>
+        <p className={styles.heroSub}>五一亲子自驾 · 2025.4.30 — 5.5 · 南京出发</p>
+        <div className={styles.heroStats}>
+          <div className={styles.heroStat}>
+            <span className={styles.heroStatN}>5</span>
+            <span className={styles.heroStatL}>天</span>
+          </div>
+          <div className={styles.heroStat}>
+            <span className={styles.heroStatN}>8</span>
+            <span className={styles.heroStatL}>景点</span>
+          </div>
+          <div className={styles.heroStat}>
+            <span className={styles.heroStatN}>760</span>
+            <span className={styles.heroStatL}>公里</span>
+          </div>
+          <div className={styles.heroStat}>
+            <span className={styles.heroStatN}>4</span>
+            <span className={styles.heroStatL}>人</span>
+          </div>
+        </div>
       </section>
 
       {/* ROUTE */}
@@ -755,6 +867,14 @@ export default function ShanxiTripPage({ onBack }: Props) {
                   <span className={styles.dayMetaItem}>
                     <span className={styles.dayMetaIcon}><Icon name="hotel" size={14} /></span>
                     {day.hotel}
+                  </span>
+                )}
+                {(weatherMap[day.id]?.icon || day.weather) && (
+                  <span className={styles.dayMetaItem}>
+                    <span className={styles.dayMetaIcon}>
+                      <Icon name={weatherMap[day.id]?.icon || day.weather!} size={14} />
+                    </span>
+                    {weatherMap[day.id]?.temp || day.temp}
                   </span>
                 )}
               </div>
