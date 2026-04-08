@@ -705,6 +705,12 @@ export default function ShanxiTripPage({ onBack }: Props) {
   return (
     <>
     <div className={`${styles.page} ${visible ? styles.visible : ''}`}>
+      {/* Wind-blown sand particles */}
+      <div className={styles.sandLayer} aria-hidden="true">
+        {Array.from({ length: 12 }, (_, i) => (
+          <span key={i} className={styles.sand} style={{ '--i': i } as React.CSSProperties} />
+        ))}
+      </div>
       {/* Sticky Header */}
       <header className={styles.header}>
         <button onClick={onBack} className={styles.backBtn} aria-label="返回">
