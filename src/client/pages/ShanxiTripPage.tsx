@@ -702,14 +702,14 @@ const ITINERARY: DayData[] = [
 ]
 
 const RESERVATIONS = [
-  { name: '云冈石窟', channel: '官方公众号', advance: '1天', price: '成人120元·儿童半价' },
-  { name: '悬空寺', channel: '官方平台', advance: '7天', price: '首道15元·登临100元' },
-  { name: '应县木塔', channel: '官方公众号', advance: '1天', price: '成人50元·儿童半价' },
-  { name: '雁门关', channel: '官方公众号', advance: '1天', price: '成人90元·电瓶车10元' },
+  { name: '云冈石窟', channel: '官方公众号', advance: '7天', price: '成人120元·儿童半价' },
+  { name: '悬空寺', channel: '官方平台', advance: '7天', price: '(7:20放票)首道15元·登临100元' },
+  { name: '应县木塔', channel: '官方公众号', advance: '随时', price: '成人50元·儿童半价' },
+  { name: '雁门关', channel: '官方公众号', advance: '随时', price: '成人90元·电瓶车10元' },
   { name: '忻州古城', channel: '免预约', advance: '—', price: '免费' },
-  { name: '晋祠博物馆', channel: '官方公众号', advance: '1天', price: '成人80元·儿童半价' },
+  { name: '晋祠博物馆', channel: '官方公众号', advance: '随时', price: '成人80元·儿童半价' },
   { name: '山西博物院', channel: '官方公众号', advance: '3天', price: '免费(7:00放票)' },
-  { name: '大同市博物馆', channel: '免预约', advance: '—', price: '免费' },
+  { name: '大同市博物馆', channel: '官方公众号', advance: '7天', price: '免费' },
 ]
 
 const HOTELS: HotelData[] = [
