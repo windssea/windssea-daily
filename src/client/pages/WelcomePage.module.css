@@ -1,436 +1,386 @@
 /* ═══════════════════════════════════════════════════════════
-   WelcomePage — Professional App-Style Homepage
-   Tokens scoped to .page (NOT :root — CSS Modules don't scope it)
+   WelcomePage — Quiet Luxury (Warm Indigo-Slate)
+   Refined to exact .impeccable.md specifications
    ═══════════════════════════════════════════════════════════ */
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
+
 .page {
-  /* ── Color Tokens ── */
-  --bg:              #0e0e10;
-  --bg-elevated:     #1c1c1e;
-  --bg-card:         #1c1c1e;
-  --bg-card-hover:   #252528;
-  --bg-featured:     rgba(255, 159, 10, 0.12);
-  --bg-featured-h:   rgba(255, 159, 10, 0.20);
-  --border:          rgba(255, 255, 255, 0.06);
-  --border-hover:    rgba(255, 255, 255, 0.12);
-  --border-featured: rgba(255, 159, 10, 0.18);
-  --text:            #f5f5f7;
-  --text-sec:        #98989d;
-  --text-tert:       #636366;
-  --accent:          #ff9f0a;
-  --accent-deep:     #ff6723;
-  --accent-bg:       rgba(255, 159, 10, 0.15);
-  --focus-ring:      rgba(255, 159, 10, 0.5);
-  /* Semantic tokens */
-  --success:         #34c759;
-  --success-bg:      rgba(52, 199, 89, 0.12);
-  --destructive:     #ff453a;
-  --destructive-bg:  rgba(255, 69, 58, 0.12);
+  /* ── Ultra-refined Palette ── */
+  --bg:              #f0f2f8;         /* High-end cool frost */
+  --bg-card:         #ffffff;         /* Pure porcelain */
+  --bg-card-hover:   #fcfdfd;
+  
+  --border:          rgba(26, 29, 46, 0.05); /* Barely there */
+  --border-hover:    rgba(26, 29, 46, 0.1);
 
-  /* ── Spacing Tokens (8pt grid) ── */
-  --sp-1: 4px;
-  --sp-2: 8px;
-  --sp-3: 12px;
-  --sp-4: 16px;
-  --sp-5: 20px;
-  --sp-6: 24px;
-  --sp-8: 32px;
-  --sp-10: 40px;
-  --sp-12: 48px;
+  --text:            #1a1d2e;         /* Deep indigo (no pure black) */
+  --text-sec:        #555a73;         /* Muted indigo */
+  --text-tert:       #8c92ad;         /* Soft ghost indigo */
 
-  /* ── Radius ── */
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  /* Point Accent */
+  --accent:          #3b5bdb;         /* Electric Deep Blue */
+  --accent-faint:    rgba(59, 91, 219, 0.06);
+  --accent-soft:     rgba(59, 91, 219, 0.12);
 
-  /* ── Layout ── */
+  /* Delicate accents */
+  --orange:          #e8590c;
+  --orange-faint:    rgba(232, 89, 12, 0.08);
+  --green:           #2b8a3e;
+  --green-faint:     rgba(43, 138, 62, 0.08);
+
+  /* Spacing */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 28px; --sp-8: 40px; --sp-10: 64px;
+
+  /* Modern large radii */
+  --r-sm:  12px;
+  --r-md:  20px;
+  --r-lg:  28px;
+
+  /* Layout */
   min-height: 100dvh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   background: var(--bg);
-  font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC',
-    'Noto Sans SC', sans-serif;
-  padding: var(--sp-6) var(--sp-5);
-  padding-top: calc(env(safe-area-inset-top, 0px) + var(--sp-6));
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--sp-6));
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
+  font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  padding: var(--sp-6) var(--sp-5);
+  padding-top: calc(env(safe-area-inset-top, 0px) + var(--sp-8));
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--sp-8));
   -webkit-overflow-scrolling: touch;
 }
 
-/* ── Ambient Glow ──────────────────────────── */
-.ambientGlow {
-  position: fixed;
-  top: -120px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(
-    circle,
-    rgba(255, 159, 10, 0.10) 0%,
-    rgba(255, 103, 35, 0.04) 40%,
-    transparent 70%
-  );
-  border-radius: 50%;
+/* ── Aurora Mesh Background & Texture (BOLDER) ── */
+.page::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
   pointer-events: none;
-  opacity: 0;
-  animation: glowReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  background: 
+    radial-gradient(circle at 10% -10%, rgba(67, 97, 238, 0.4) 0%, transparent 60%),
+    radial-gradient(circle at 100% 110%, rgba(247, 103, 7, 0.3) 0%, transparent 65%),
+    radial-gradient(circle at 80% 20%, rgba(32, 201, 151, 0.25) 0%, transparent 50%);
+  animation: auroraBreath 12s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+  filter: blur(40px); /* Blend the powerful colors smoothly */
 }
 
-@keyframes glowReveal {
-  0%   { opacity: 0; transform: translateX(-50%) scale(0.5); }
-  100% { opacity: 1; transform: translateX(-50%) scale(1); }
+@keyframes auroraBreath {
+  0%   { opacity: 0.8; transform: scale(1) translate(0, 0); }
+  100% { opacity: 1; transform: scale(1.1) translate(-2%, 2%); }
 }
 
-/* ── Shell (max-width container) ────────────── */
+/* ── Shell ── */
 .shell {
   width: 100%;
-  max-width: 420px;
-  position: relative;
+  max-width: 440px;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ════════════════════════════════════════════
-   Header
+   Header: Understated & Magazine-like
    ════════════════════════════════════════════ */
 .header {
   display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  margin-bottom: var(--sp-2);
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--sp-8);
   opacity: 0;
-  transform: translateY(16px);
-  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
-}
-
-.avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 2px 12px rgba(255, 159, 10, 0.25);
-}
-
-.avatarLetter {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--bg);
-  letter-spacing: -0.02em;
-  line-height: 1;
+  transform: translateY(12px);
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .headerText {
-  flex: 1;
-  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .dateLine {
-  font-size: 11px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
   color: var(--text-tert);
-  letter-spacing: 0.10em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  margin: 0 0 2px;
-  font-weight: 500;
+  margin: 0;
+  font-weight: 700;
 }
 
 .greetTitle {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 38px;
+  font-weight: 800;
+  /* Hyper-bold gradient */
+  background: linear-gradient(135deg, #1a1d2e 0%, #4361ee 50%, #f76707 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.05em;
+  margin: 2px 0 0;
+  line-height: 1.1;
+}
+
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--text);
-  letter-spacing: -0.02em;
-  margin: 0;
-  line-height: 1.2;
-}
-
-.timeIcon {
-  width: 20px;
-  height: 20px;
-  color: var(--text-sec);
-  flex-shrink: 0;
-}
-
-.timeIcon svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* ── Subtitle ─────────────────────────────── */
-.subtitle {
-  font-size: 13px;
-  color: var(--text-sec);
-  margin: 0 0 var(--sp-8);
-  opacity: 0;
-  transform: translateY(12px);
-  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+  font-size: 18px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  box-shadow: 0 4px 16px rgba(26, 29, 46, 0.04);
+  border: 1px solid var(--border);
 }
 
 /* ════════════════════════════════════════════
    Sections
    ════════════════════════════════════════════ */
-.section {
-  margin-bottom: var(--sp-6);
-}
+.section { margin-bottom: var(--sp-6); }
 
 .sectionHeader {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: var(--sp-3);
+  margin-bottom: var(--sp-4);
+  padding: 0 4px;
   opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+  transform: translateY(8px);
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
 }
 
 .sectionTitle {
+  font-family: 'Outfit', sans-serif;
   font-size: 13px;
-  font-weight: 600;
-  color: var(--text-sec);
-  letter-spacing: 0.02em;
+  font-weight: 800;
+  color: var(--text-tert);
+  letter-spacing: 0.15em;
   margin: 0;
   text-transform: uppercase;
 }
 
-.sectionCount {
-  font-size: 11px;
-  color: var(--text-tert);
-  font-weight: 500;
-}
-
 /* ════════════════════════════════════════════
-   Grid
-   ════════════════════════════════════════════ */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--sp-3);
-}
-
-/* ════════════════════════════════════════════
-   Cards (shared)
+   Shared Card (Glassmorphism & Bold Shadow)
    ════════════════════════════════════════════ */
 .card {
-  border-radius: var(--radius-md);
-  padding: var(--sp-4);
+  border-radius: var(--r-lg);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 128px;
   cursor: pointer;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.2s ease,
-              background 0.2s ease,
-              box-shadow 0.2s ease;
+  /* Glass border and heavy blur for bold aesthetic */
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  width: 100%;
+  text-align: left;
+  box-shadow: 
+    0 16px 40px rgba(26, 29, 46, 0.06),
+    0 4px 12px rgba(26, 29, 46, 0.02),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  transition: 
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.4s ease, border-color 0.4s ease;
   -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  user-select: none;
   outline: none;
-  position: relative;
-
-  /* Entrance */
   opacity: 0;
-  transform: translateY(16px);
-  animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.card:focus-visible {
-  box-shadow: 0 0 0 3px var(--focus-ring);
+  transform: translateY(20px);
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
 }
 
 @media (hover: hover) {
   .card:hover {
-    border-color: var(--border-hover);
-    background: var(--bg-card-hover);
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 
+      0 24px 60px rgba(67, 97, 238, 0.12),
+      0 8px 16px rgba(26, 29, 46, 0.04),
+      inset 0 1px 1px #fff;
+    transform: translateY(-4px) scale(1.01);
   }
 }
 
 .card:active {
-  transform: scale(0.97) !important;
+  transform: scale(0.98) !important;
   transition-duration: 0.1s;
 }
 
-/* ── Card Icon (unified for all card variants) ── */
-.cardIconWrap {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-sm);
+/* ════════════════════════════════════════════
+   Widget Daily (Compact Elegance -> Glass Hero)
+   ════════════════════════════════════════════ */
+.widgetDaily {
+  padding: var(--sp-5);
+  min-height: auto;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  /* Specific override for hero to pop even more */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.35) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.widgetHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+
+.iconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: auto;
-  flex-shrink: 0;
+  background: var(--accent-faint);
+  color: var(--accent);
 }
 
-.cardIcon {
-  width: 20px;
-  height: 20px;
+.iconElement {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.5;
 }
 
-.cardBody {
-  margin-top: auto;
-}
-
-.cardLabel {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
-  margin: 0 0 1px;
-  letter-spacing: -0.01em;
-}
-
-.cardDesc {
+.widgetBadge {
+  font-family: 'Outfit', sans-serif;
   font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.widgetBody {
+  margin-top: var(--sp-5);
+  position: relative;
+  z-index: 1;
+}
+
+.widgetTitle {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.widgetSub {
+  font-size: 14px;
+  font-weight: 500;
   color: var(--text-sec);
   margin: 0;
   letter-spacing: 0.01em;
 }
 
-.cardChevron {
+.widgetArrow {
+  position: absolute;
+  bottom: var(--sp-5);
+  right: var(--sp-5);
   width: 20px;
   height: 20px;
   color: var(--text-tert);
-  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
 }
 
-.cardBadge {
-  position: absolute;
-  top: var(--sp-3);
-  right: var(--sp-3);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+.widgetDaily:hover .widgetArrow {
+  transform: translateX(4px);
   color: var(--accent);
-  background: var(--accent-bg);
-  padding: 2px 6px;
-  border-radius: 4px;
 }
 
 /* ════════════════════════════════════════════
-   Card Variants
+   Trips List (Replaces empty Grid)
    ════════════════════════════════════════════ */
-
-/* ── Featured (今日待办) ── */
-.cardFeatured {
-  background: var(--bg-featured);
-  border-color: var(--border-featured);
-  animation-delay: 0.45s;
+.tripList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
 }
 
-.cardFeatured .cardIconWrap {
-  background: rgba(255, 159, 10, 0.15);
-  color: var(--accent);
-}
-
-@media (hover: hover) {
-  .cardFeatured:hover {
-    background: var(--bg-featured-h);
-    border-color: rgba(255, 159, 10, 0.28);
-    box-shadow: 0 4px 20px rgba(255, 159, 10, 0.12);
-  }
-}
-
-.cardFeatured:active {
-  background: rgba(255, 159, 10, 0.25);
-}
-
-/* ── Secondary (山西旅游) ── */
-.cardSecondary {
-  animation-delay: 0.53s;
-}
-
-.cardSecondary .cardIconWrap {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-sec);
-}
-
-@media (hover: hover) {
-  .cardSecondary:hover .cardIconWrap {
-    background: rgba(255, 255, 255, 0.10);
-    color: var(--text);
-  }
-}
-
-/* ── Wide (黄山旅游) ── */
-.cardWide {
-  grid-column: 1 / -1;
+.tripCard {
   flex-direction: row;
   align-items: center;
-  gap: var(--sp-4);
-  padding: var(--sp-4);
-  min-height: 128px;
-  animation-delay: 0.61s;
+  padding: var(--sp-4) var(--sp-5);
+  min-height: 96px;
+  justify-content: flex-start;
+  animation-delay: 0.3s;
+}
+.tripCard:nth-child(2) { animation-delay: 0.4s; }
+
+.tripHeader {
+  margin-right: var(--sp-4);
 }
 
-.cardWide .cardIconWrap {
-  margin-bottom: 0;
+.tripCard .iconWrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
 }
 
-.cardWide .cardBody {
-  margin-top: 0;
+.tripCard .iconElement {
+  width: 24px;
+  height: 24px;
+}
+
+.iconWrapOrange { background: var(--orange-faint); color: var(--orange); }
+.iconWrapGreen  { background: var(--green-faint); color: var(--green); }
+
+.tripBody {
   flex: 1;
-  min-width: 0;
+  text-align: left;
 }
 
-.cardGreen .cardIconWrap {
-  background: linear-gradient(135deg, var(--success-bg), rgba(48, 176, 68, 0.08));
-  color: var(--success);
+.tripLabel {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 2px;
+  letter-spacing: -0.01em;
 }
 
-@media (hover: hover) {
-  .cardGreen:hover .cardIconWrap {
-    background: linear-gradient(135deg, rgba(52, 199, 89, 0.18), rgba(48, 176, 68, 0.12));
-  }
+.tripDesc {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  color: var(--text-tert);
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-/* ════════════════════════════════════════════
-   Home Indicator
-   ════════════════════════════════════════════ */
-.indicator {
-  margin-top: var(--sp-10);
-  text-align: center;
-  opacity: 0;
-  animation: fadeIn 0.5s ease 0.8s forwards;
+.tripArrow {
+  width: 20px;
+  height: 20px;
+  color: var(--text-tert);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+  margin-left: var(--sp-3);
 }
 
-.indicatorBar {
-  width: 120px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 2px;
-  margin: 0 auto;
+.tripCard:hover .tripArrow {
+  transform: translateX(4px);
+  color: var(--accent);
 }
 
 /* ════════════════════════════════════════════
    Animations
    ════════════════════════════════════════════ */
 @keyframes fadeUp {
-  0%   { opacity: 0; transform: translateY(18px); }
+  0%   { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fadeIn {
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-/* ════════════════════════════════════════════
-   Reduced Motion
-   ════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-  .ambientGlow,
-  .header,
-  .subtitle,
-  .sectionHeader,
-  .card,
-  .indicator {
+  .header, .sectionHeader, .card {
     animation: none;
     opacity: 1;
     transform: none;

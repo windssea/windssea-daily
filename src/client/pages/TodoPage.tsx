@@ -47,6 +47,26 @@ function IconX({ className }: { className?: string }) {
   )
 }
 
+function IconCoffee({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+      <line x1="6" y1="1" x2="6" y2="4" />
+      <line x1="10" y1="1" x2="10" y2="4" />
+      <line x1="14" y1="1" x2="14" y2="4" />
+    </svg>
+  )
+}
+
+function IconArrowUp({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg>
+  )
+}
+
 /* ── Helpers ──────────────────────────────────────────────── */
 
 function formatDate(d: Date): string {
@@ -210,6 +230,9 @@ function TodoPage({ onBack }: Props) {
           </div>
         ) : todos.length === 0 ? (
           <div className={styles.empty}>
+            <div className={styles.emptyIconWrap}>
+              <IconCoffee className={styles.emptyIcon} />
+            </div>
             <p className={styles.emptyText}>今天还没有待办</p>
             <p className={styles.emptyHint}>在下方写下第一件事吧</p>
           </div>
@@ -238,20 +261,20 @@ function TodoPage({ onBack }: Props) {
         )}
       </div>
 
-      {/* ── Input area ── */}
+      {/* ── Input area (Dynamic Island style) ── */}
       <div className={styles.inputArea}>
-        <div className={styles.inputRow}>
+        <div className={styles.inputIsland}>
           <textarea
             ref={textareaRef}
             value={newTitle}
             onChange={handleTextareaInput}
             onKeyDown={handleKeyDown}
-            placeholder="写下待办事项… (Enter 添加, Shift+Enter 换行)"
+            placeholder="写点什么..."
             className={styles.textarea}
             rows={1}
           />
-          <button onClick={addTodo} className={styles.addBtn} disabled={!newTitle.trim()}>
-            记下
+          <button onClick={addTodo} className={styles.addBtn} disabled={!newTitle.trim()} aria-label="添加">
+            <IconArrowUp className={styles.arrowUpIcon} />
           </button>
         </div>
       </div>

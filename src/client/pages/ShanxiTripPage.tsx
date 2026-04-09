@@ -194,82 +194,83 @@ function SandDrift() {
     }
 
     const grains: Grain[] = []
-    let lastGust = -Infinity
-    let nextGustIn = 2500
 
-    function spawnGust(now: number) {
-      // Spawn near the top-right region, drift down-left ~135° screen angle
-      const originX = canvas.width * 0.55 + Math.random() * canvas.width * 0.55
-      const originY = -10 + Math.random() * canvas.height * 0.22
-      const count = 10 + Math.floor(Math.random() * 10)
-      // Base direction: left + down  (vx < 0, vy > 0)
-      const baseAngleRad = Math.PI * (0.72 + Math.random() * 0.12) // ~130–151°
-      const baseSpeed = 0.9 + Math.random() * 0.7
+    function spawnGrain(now: number) {
+      const originX = canvas.width * 0.3 + Math.random() * canvas.width * 1.2
+      const originY = -20 + Math.random() * canvas.height * 0.3
+      const baseAngleRad = Math.PI * (0.75 + Math.random() * 0.15)
+      
+      // Speed varying from slow to moderate
+      const speed = 0.5 + Math.random() * 0.6
 
-      for (let i = 0; i < count; i++) {
-        const speed = baseSpeed * (0.65 + Math.random() * 0.7)
-        const angleJitter = baseAngleRad + (Math.random() - 0.5) * 0.22
-        grains.push({
-          // stagger start positions along the stream
-          x: originX + (Math.random() - 0.5) * 80,
-          y: originY + (Math.random() - 0.5) * 50,
-          vx: Math.cos(angleJitter) * speed,
-          vy: Math.sin(angleJitter) * speed,
-          size: 0.7 + Math.random() * 1.6,
-          maxAlpha: 0.11 + Math.random() * 0.14,
-          // stagger born time so particles stream in, not all at once
-          born: now - Math.random() * 600,
-          duration: 4500 + Math.random() * 3000,
-          phase: Math.random() * Math.PI * 2,
-          waveAmp: 3 + Math.random() * 5,
-          waveFreq: 0.0018 + Math.random() * 0.0022,
-        })
-      }
+      grains.push({
+        x: originX,
+        y: originY,
+        vx: Math.cos(baseAngleRad) * speed,
+        vy: Math.sin(baseAngleRad) * speed,
+        // Increased size so it's visible, but not massive (0.6 ~ 1.5 radius base)
+        size: 0.6 + Math.random() * 0.9,
+        maxAlpha: 0.2 + Math.random() * 0.5, 
+        born: now,
+        duration: 8000 + Math.random() * 6000,
+        phase: Math.random() * Math.PI * 2,
+        waveAmp: 10 + Math.random() * 20, // Huge amplitude for wind swirls
+        waveFreq: 0.0006 + Math.random() * 0.0008, 
+      })
     }
 
     let raf: number
     function tick(now: number) {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      if (now - lastGust > nextGustIn) {
-        spawnGust(now)
-        lastGust = now
-        nextGustIn = 9000 + Math.random() * 13000  // 9–22s between gusts
+      // Continuous emission
+      const toSpawn = 2 + Math.floor(Math.random() * 3)
+      for (let i = 0; i < toSpawn; i++) {
+        spawnGrain(now)
       }
 
       for (let i = grains.length - 1; i >= 0; i--) {
         const g = grains[i]
         const elapsed = now - g.born
         const t = elapsed / g.duration
-        if (t >= 1 || t < 0) { if (t >= 1) grains.splice(i, 1); continue }
+        if (t >= 1 || t < 0) { grains.splice(i, 1); continue }
 
-        // soft ease-in / ease-out
-        const fade = t < 0.18 ? t / 0.18 : t > 0.78 ? (1 - t) / 0.22 : 1
+        // smooth fade
+        const fade = t < 0.1 ? t / 0.1 : t > 0.8 ? (1 - t) / 0.2 : 1
 
-        // perpendicular wobble for flowing feel
-        const speed = Math.sqrt(g.vx * g.vx + g.vy * g.vy)
-        const nx = -g.vy / speed  // perpendicular unit vector
-        const ny =  g.vx / speed
-        const wave = g.waveAmp * Math.sin(g.phase + elapsed * g.waveFreq)
+        // ── Chaotic Wind Turbulence Math ──
+        // Instead of a simple sterile sine wave, we combine 3 frequencies to create
+        // unpredictable, swirling wind bursts (Chaos Theory / Perlin approximation)
+        const tFactor = elapsed * g.waveFreq
+        const turbulenceX = Math.sin(g.phase + tFactor) 
+                          + 0.5 * Math.sin(g.phase * 2.3 + tFactor * 2.7) 
+                          + 0.2 * Math.sin(g.phase * 5.1 + tFactor * 4.3)
+        
+        const turbulenceY = Math.cos(g.phase + tFactor * 0.8) 
+                          + 0.4 * Math.cos(g.phase * 2.1 + tFactor * 3.1)
 
-        const drawX = g.x + nx * wave
-        const drawY = g.y + ny * wave
+        const drawX = g.x + g.waveAmp * turbulenceX
+        const drawY = g.y + (g.waveAmp * 0.6) * turbulenceY
 
+        // Add a gentle global pull to the base velocity over time
         g.x += g.vx
-        g.y += g.vy
+        g.y += g.vy + 0.05 // Gravity/wind shear dropping it slightly faster over time
 
-        const angle = Math.atan2(g.vy, g.vx)
         const alpha = fade * g.maxAlpha
+
+        // Calculate dynamic angle based on its turbulent path to make the sand streak angle match its curve
+        const angle = Math.atan2(g.vy + (g.waveAmp * 0.6 * turbulenceY * 0.01), g.vx + (g.waveAmp * turbulenceX * 0.01))
 
         ctx.save()
         ctx.globalAlpha = alpha
-        // soft golden glow
-        ctx.shadowBlur = 2.5
-        ctx.shadowColor = `rgba(220, 165, 40, ${alpha * 0.6})`
-        // elongated ellipse aligned with travel direction
-        ctx.fillStyle = 'rgb(218, 170, 52)'
+        ctx.fillStyle = 'rgba(235, 185, 75, 1)'
+        ctx.shadowBlur = 1
+        ctx.shadowColor = `rgba(220, 165, 40, ${alpha * 0.8})`
+        
         ctx.beginPath()
-        ctx.ellipse(drawX, drawY, g.size * 3.0, g.size * 0.65, angle, 0, Math.PI * 2)
+        // Extremely fine lines (Length: ~1.8 to 4.5px, Width: ~0.4 to ~0.7px)
+        // Thin enough to be dust, long enough to be visible speed streaks
+        ctx.ellipse(drawX, drawY, g.size * 1.5, g.size * 0.35, angle, 0, Math.PI * 2)
         ctx.fill()
         ctx.restore()
       }
