@@ -1,52 +1,91 @@
-/* ── Page (tokens scoped here — NOT :root, CSS Modules don't scope :root) ── */
-.page {
-  /* Design tokens */
-  --bg:            #1c1c1e;
-  --bg-elevated:   #2c2c2e;
-  --bg-card:       rgba(255, 255, 255, 0.06);
-  --bg-card-border:rgba(255, 255, 255, 0.06);
-  --text:          #f5f5f7;
-  --text-sec:      #8e8e93;
-  --text-tert:     #98989d; /* 5.93:1 on #1c1c1e — WCAG AA pass */
-  --accent:        #ff9f0a;
-  --accent-deep:   #ff6723;
-  --accent-bg:     rgba(255, 159, 10, 0.2);
-  --accent-border: rgba(255, 159, 10, 0.15);
-  --focus-ring:    rgba(255, 159, 10, 0.5);
+/* ═══════════════════════════════════════════════════════════
+   WelcomePage — Professional App-Style Homepage
+   Tokens scoped to .page (NOT :root — CSS Modules don't scope it)
+   ═══════════════════════════════════════════════════════════ */
 
-  /* Layout */
+.page {
+  /* ── Color Tokens ── */
+  --bg:              #0e0e10;
+  --bg-elevated:     #1c1c1e;
+  --bg-card:         #1c1c1e;
+  --bg-card-hover:   #252528;
+  --bg-featured:     rgba(255, 159, 10, 0.12);
+  --bg-featured-h:   rgba(255, 159, 10, 0.20);
+  --border:          rgba(255, 255, 255, 0.06);
+  --border-hover:    rgba(255, 255, 255, 0.12);
+  --border-featured: rgba(255, 159, 10, 0.18);
+  --text:            #f5f5f7;
+  --text-sec:        #98989d;
+  --text-tert:       #636366;
+  --accent:          #ff9f0a;
+  --accent-deep:     #ff6723;
+  --accent-bg:       rgba(255, 159, 10, 0.15);
+  --focus-ring:      rgba(255, 159, 10, 0.5);
+  /* Semantic tokens */
+  --success:         #34c759;
+  --success-bg:      rgba(52, 199, 89, 0.12);
+  --destructive:     #ff453a;
+  --destructive-bg:  rgba(255, 69, 58, 0.12);
+
+  /* ── Spacing Tokens (8pt grid) ── */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+
+  /* ── Radius ── */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  /* ── Layout ── */
   min-height: 100dvh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: var(--bg);
-  font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Noto Sans SC', sans-serif;
-  padding: 24px 20px;
+  font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC',
+    'Noto Sans SC', sans-serif;
+  padding: var(--sp-6) var(--sp-5);
+  padding-top: calc(env(safe-area-inset-top, 0px) + var(--sp-6));
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--sp-6));
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* ── Brand Glow ────────────────────────────── */
-.glow {
-  position: absolute;
-  top: -80px;
+/* ── Ambient Glow ──────────────────────────── */
+.ambientGlow {
+  position: fixed;
+  top: -120px;
   left: 50%;
   transform: translateX(-50%);
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(circle, rgba(255, 159, 10, 0.18) 0%, transparent 70%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 159, 10, 0.10) 0%,
+    rgba(255, 103, 35, 0.04) 40%,
+    transparent 70%
+  );
   border-radius: 50%;
-  opacity: 0;
-  animation: glowIn 1s ease-out 0.1s forwards;
   pointer-events: none;
+  opacity: 0;
+  animation: glowReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
 }
 
-@keyframes glowIn {
-  0%   { opacity: 0; transform: translateX(-50%) scale(0.6); }
+@keyframes glowReveal {
+  0%   { opacity: 0; transform: translateX(-50%) scale(0.5); }
   100% { opacity: 1; transform: translateX(-50%) scale(1); }
 }
 
-/* ── Shell (max-width container) ───────────── */
+/* ── Shell (max-width container) ────────────── */
 .shell {
   width: 100%;
   max-width: 420px;
@@ -54,173 +93,344 @@
   z-index: 1;
 }
 
-/* ── Greeting Section ──────────────────────── */
-.greeting {
-  margin-bottom: 32px;
+/* ════════════════════════════════════════════
+   Header
+   ════════════════════════════════════════════ */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
   opacity: 0;
   transform: translateY(16px);
-  animation: fadeUp 0.6s ease-out 0.3s forwards;
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 12px rgba(255, 159, 10, 0.25);
+}
+
+.avatarLetter {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--bg);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.headerText {
+  flex: 1;
+  min-width: 0;
 }
 
 .dateLine {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-tert);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
-  margin: 0 0 4px;
+  margin: 0 0 2px;
   font-weight: 500;
 }
 
 .greetTitle {
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text);
   letter-spacing: -0.02em;
-  margin: 0 0 4px;
-  line-height: 1.15;
-}
-
-.greetSub {
-  font-size: 14px;
-  color: var(--text-sec);
   margin: 0;
+  line-height: 1.2;
 }
 
-/* ── Grid Tiles ────────────────────────────── */
+.timeIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-sec);
+  flex-shrink: 0;
+}
+
+.timeIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Subtitle ─────────────────────────────── */
+.subtitle {
+  font-size: 13px;
+  color: var(--text-sec);
+  margin: 0 0 var(--sp-8);
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+}
+
+/* ════════════════════════════════════════════
+   Sections
+   ════════════════════════════════════════════ */
+.section {
+  margin-bottom: var(--sp-6);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--sp-3);
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+
+.sectionTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-sec);
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.sectionCount {
+  font-size: 11px;
+  color: var(--text-tert);
+  font-weight: 500;
+}
+
+/* ════════════════════════════════════════════
+   Grid
+   ════════════════════════════════════════════ */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: var(--sp-3);
 }
 
-.tile {
-  border-radius: 16px;
-  padding: 16px;
+/* ════════════════════════════════════════════
+   Cards (shared)
+   ════════════════════════════════════════════ */
+.card {
+  border-radius: var(--radius-md);
+  padding: var(--sp-4);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 120px;
+  min-height: 128px;
   cursor: pointer;
-  border: 1px solid var(--bg-card-border);
+  border: 1px solid var(--border);
   background: var(--bg-card);
-  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-  /* Entrance: start hidden, animation fills to visible */
-  opacity: 0;
-  animation: fadeUp 0.5s ease-out forwards;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              background 0.2s ease,
+              box-shadow 0.2s ease;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   user-select: none;
   outline: none;
+  position: relative;
+
+  /* Entrance */
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.tile:focus-visible {
+.card:focus-visible {
   box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
-/* Hover only on pointer devices — prevents sticky-hover double-tap on touch */
 @media (hover: hover) {
-  .tile:hover {
-    border-color: rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.09);
-  }
-  .tileFeatured:hover {
-    background: linear-gradient(135deg, rgba(255,159,10,0.28), rgba(255,103,35,0.16));
-    border-color: var(--accent-border);
+  .card:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
   }
 }
 
-.tile:active {
+.card:active {
   transform: scale(0.97) !important;
+  transition-duration: 0.1s;
 }
 
-/* Featured tile — 待办 */
-.tileFeatured {
-  background: linear-gradient(135deg, var(--accent-bg), rgba(255, 103, 35, 0.12));
-  border-color: var(--accent-border);
-  animation-delay: 0.5s;
-}
-
-.tileFeatured:active {
-  background: linear-gradient(135deg, var(--accent-bg), var(--accent-bg));
-}
-
-/* Secondary tiles */
-.tileSecondary {
-  animation-delay: 0.58s;
-}
-
-/* Wide tile —黄山 */
-.tileWide {
-  grid-column: 1 / -1;
-  flex-direction: row;
+/* ── Card Icon (unified for all card variants) ── */
+.cardIconWrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  display: flex;
   align-items: center;
-  gap: 12px;
-  min-height: auto;
-  padding: 16px;
-  animation-delay: 0.66s;
-}
-
-.tileIcon {
-  font-size: 28px;
-  line-height: 1;
+  justify-content: center;
   margin-bottom: auto;
+  flex-shrink: 0;
 }
 
-.tileWide .tileIcon {
-  margin-bottom: 0;
-  font-size: 24px;
+.cardIcon {
+  width: 20px;
+  height: 20px;
 }
 
-.tileLabel {
-  font-size: 14px;
+.cardBody {
+  margin-top: auto;
+}
+
+.cardLabel {
+  font-size: 15px;
   font-weight: 600;
   color: var(--text);
-  margin: 0 0 2px;
+  margin: 0 0 1px;
+  letter-spacing: -0.01em;
 }
 
-.tileDesc {
+.cardDesc {
   font-size: 11px;
   color: var(--text-sec);
   margin: 0;
+  letter-spacing: 0.01em;
 }
 
-.tileArrow {
+.cardChevron {
+  width: 20px;
+  height: 20px;
   color: var(--text-tert);
-  font-size: 16px;
-  margin-left: auto;
-  transform: rotate(-45deg);
+  flex-shrink: 0;
 }
 
-.tileContent {
+.cardBadge {
+  position: absolute;
+  top: var(--sp-3);
+  right: var(--sp-3);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: var(--accent-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ════════════════════════════════════════════
+   Card Variants
+   ════════════════════════════════════════════ */
+
+/* ── Featured (今日待办) ── */
+.cardFeatured {
+  background: var(--bg-featured);
+  border-color: var(--border-featured);
+  animation-delay: 0.45s;
+}
+
+.cardFeatured .cardIconWrap {
+  background: rgba(255, 159, 10, 0.15);
+  color: var(--accent);
+}
+
+@media (hover: hover) {
+  .cardFeatured:hover {
+    background: var(--bg-featured-h);
+    border-color: rgba(255, 159, 10, 0.28);
+    box-shadow: 0 4px 20px rgba(255, 159, 10, 0.12);
+  }
+}
+
+.cardFeatured:active {
+  background: rgba(255, 159, 10, 0.25);
+}
+
+/* ── Secondary (山西旅游) ── */
+.cardSecondary {
+  animation-delay: 0.53s;
+}
+
+.cardSecondary .cardIconWrap {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-sec);
+}
+
+@media (hover: hover) {
+  .cardSecondary:hover .cardIconWrap {
+    background: rgba(255, 255, 255, 0.10);
+    color: var(--text);
+  }
+}
+
+/* ── Wide (黄山旅游) ── */
+.cardWide {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+  min-height: 128px;
+  animation-delay: 0.61s;
+}
+
+.cardWide .cardIconWrap {
+  margin-bottom: 0;
+}
+
+.cardWide .cardBody {
+  margin-top: 0;
   flex: 1;
+  min-width: 0;
 }
 
-/* ── Home Indicator ────────────────────────── */
+.cardGreen .cardIconWrap {
+  background: linear-gradient(135deg, var(--success-bg), rgba(48, 176, 68, 0.08));
+  color: var(--success);
+}
+
+@media (hover: hover) {
+  .cardGreen:hover .cardIconWrap {
+    background: linear-gradient(135deg, rgba(52, 199, 89, 0.18), rgba(48, 176, 68, 0.12));
+  }
+}
+
+/* ════════════════════════════════════════════
+   Home Indicator
+   ════════════════════════════════════════════ */
 .indicator {
-  margin-top: 40px;
+  margin-top: var(--sp-10);
   text-align: center;
+  opacity: 0;
+  animation: fadeIn 0.5s ease 0.8s forwards;
 }
 
 .indicatorBar {
   width: 120px;
   height: 4px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 2px;
   margin: 0 auto;
 }
 
-/* ── Shared Animation ──────────────────────── */
+/* ════════════════════════════════════════════
+   Animations
+   ════════════════════════════════════════════ */
 @keyframes fadeUp {
-  0%   { opacity: 0; transform: translateY(20px); }
+  0%   { opacity: 0; transform: translateY(18px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Reduced Motion ────────────────────────── */
+@keyframes fadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* ════════════════════════════════════════════
+   Reduced Motion
+   ════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-  .glow,
-  .greeting,
-  .tile {
+  .ambientGlow,
+  .header,
+  .subtitle,
+  .sectionHeader,
+  .card,
+  .indicator {
     animation: none;
     opacity: 1;
     transform: none;

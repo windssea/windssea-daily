@@ -1,43 +1,78 @@
-/* ── Page ─────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   TodoPage — Dark App-Style Theme (matches WelcomePage)
+   Tokens scoped to .page (NOT :root — CSS Modules don't scope it)
+   ═══════════════════════════════════════════════════════════ */
+
 .page {
+  /* ── Color Tokens (synced with WelcomePage) ── */
+  --bg:              #0e0e10;
+  --bg-elevated:     #1c1c1e;
+  --bg-card:         #1c1c1e;
+  --bg-card-hover:   #252528;
+  --border:          rgba(255, 255, 255, 0.06);
+  --border-hover:    rgba(255, 255, 255, 0.12);
+  --text:            #f5f5f7;
+  --text-sec:        #98989d;
+  --text-tert:       #636366;
+  --accent:          #ff9f0a;
+  --accent-deep:     #ff6723;
+  --accent-bg:       rgba(255, 159, 10, 0.15);
+  --focus-ring:      rgba(255, 159, 10, 0.5);
+
+  /* ── Spacing Tokens (8pt grid) ── */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  /* Semantic tokens */
+  --success:         #34c759;
+  --success-bg:     rgba(52, 199, 89, 0.12);
+  --destructive:    #ff453a;
+  --destructive-bg: rgba(255, 69, 58, 0.12);
+
+  /* ── Radius ── */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+
+  /* ── Layout ── */
   max-width: 480px;
   margin: 0 auto;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  font-family: 'Noto Sans SC', sans-serif;
-  color: #3d2b1f;
-  background: #fdf6e9;
-  animation: fadeIn 0.5s ease;
-
-  /* Notebook ruled lines */
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 47px,
-    #eee0c8 47px,
-    #eee0c8 48px
-  );
+  font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC',
+    'Noto Sans SC', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-overflow-scrolling: touch;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-/* ── Header ───────────────────────────────── */
+/* ════════════════════════════════════════════
+   Header
+   ════════════════════════════════════════════ */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  padding-top: max(12px, env(safe-area-inset-top));
-  background: #fdf6e9;
-  border-bottom: 2px solid #e8d5b7;
+  padding: var(--sp-3) var(--sp-4);
+  padding-top: max(var(--sp-3), env(safe-area-inset-top));
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 10;
-  gap: 8px;
+  gap: var(--sp-2);
 }
 
 .backBtn {
@@ -46,25 +81,41 @@
   flex-shrink: 0;
   border: none;
   background: none;
-  font-size: 20px;
-  color: #9e7f65;
+  color: var(--text-sec);
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s ease, color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.iconBtn {
+  width: 20px;
+  height: 20px;
+}
+
+.backBtn:hover {
+  background: var(--bg-elevated);
+  color: var(--text);
 }
 
 .backBtn:active {
-  background: #f7edd8;
-  color: #3d2b1f;
+  background: var(--bg-card-hover);
+  color: var(--text);
 }
 
+.backBtn:focus-visible {
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  outline: none;
+}
+
+/* ── Date Navigation ── */
 .dateNav {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--sp-1);
   flex: 1;
   justify-content: center;
 }
@@ -74,19 +125,33 @@
   height: 44px;
   border: none;
   background: none;
-  font-size: 22px;
-  color: #b89a7a;
+  color: var(--text-sec);
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s;
-  line-height: 1;
+  transition: background 0.15s ease, color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.iconChevron {
+  width: 20px;
+  height: 20px;
+}
+
+.navBtn:hover {
+  background: var(--bg-elevated);
+  color: var(--text);
 }
 
 .navBtn:active {
-  background: #f7edd8;
+  background: var(--bg-card-hover);
+}
+
+.navBtn:focus-visible {
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  outline: none;
 }
 
 .dateBlock {
@@ -101,14 +166,15 @@
   font-family: 'ZCOOL XiaoWei', serif;
   font-size: 20px;
   font-weight: 400;
-  color: #3d2b1f;
+  color: var(--text);
   line-height: 1.2;
 }
 
 .weekText {
-  font-size: 12px;
-  color: #b89a7a;
+  font-size: 11px;
+  color: var(--text-tert);
   letter-spacing: 0.05em;
+  font-weight: 500;
 }
 
 .headerRight {
@@ -120,50 +186,65 @@
 
 .todayBtn {
   font-size: 12px;
-  color: #c47c5a;
-  background: none;
-  border: 1px solid #e8d5b7;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 1px solid rgba(255, 159, 10, 0.20);
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-family: 'Noto Sans SC', sans-serif;
-  transition: background 0.15s, border-color 0.15s;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  transition: background 0.15s ease, border-color 0.15s ease;
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.todayBtn:hover {
+  background: rgba(255, 159, 10, 0.22);
+  border-color: rgba(255, 159, 10, 0.30);
 }
 
 .todayBtn:active {
-  background: #f7edd8;
-  border-color: #c47c5a;
+  background: rgba(255, 159, 10, 0.30);
 }
 
-/* ── Progress bar ─────────────────────────── */
+.todayBtn:focus-visible {
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  outline: none;
+}
+
+/* ════════════════════════════════════════════
+   Progress Bar
+   ════════════════════════════════════════════ */
 .progressWrap {
   position: relative;
   height: 3px;
-  background: #f0e0c8;
-  overflow: visible;
+  background: var(--bg-elevated);
 }
 
 .progressBar {
   height: 100%;
-  background: #7a9e7e;
-  transition: width 0.4s ease;
+  background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 0 2px 2px 0;
 }
 
 .progressLabel {
   position: absolute;
-  right: 16px;
-  top: 6px;
-  font-size: 12px;
-  color: #b89a7a;
+  right: var(--sp-4);
+  top: 10px;
+  font-size: 11px;
+  color: var(--text-tert);
   letter-spacing: 0.02em;
+  font-weight: 500;
 }
 
-/* ── List ─────────────────────────────────── */
+/* ════════════════════════════════════════════
+   Todo List
+   ════════════════════════════════════════════ */
 .listWrap {
   flex: 1;
-  padding: 16px 16px 8px;
+  padding: var(--sp-4) var(--sp-4) var(--sp-2);
 }
 
 .list {
@@ -177,10 +258,10 @@
 .item {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid #eee0c8;
-  transition: opacity 0.2s;
+  gap: var(--sp-3);
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--border);
+  transition: opacity 0.2s ease;
 }
 
 .item:last-child {
@@ -188,24 +269,25 @@
 }
 
 .itemDone {
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
-/* Custom checkbox */
+/* ── Checkbox ── */
 .check {
   width: 22px;
   height: 22px;
   flex-shrink: 0;
-  border: 1.5px solid #c8a882;
-  border-radius: 3px;
+  border: 1.5px solid var(--text-tert);
+  border-radius: 6px;
   background: transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.2s ease, border-color 0.2s ease;
   margin-top: 1px;
   position: relative;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* 44px touch target around visual 22px checkbox */
@@ -216,59 +298,87 @@
 }
 
 .check.checked {
-  background: #7a9e7e;
-  border-color: #7a9e7e;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
-.checkMark {
-  font-size: 13px;
-  color: #fdf6e9;
-  line-height: 1;
+.check:hover:not(.checked) {
+  border-color: var(--text-sec);
 }
 
+.check:focus-visible {
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  outline: none;
+}
+
+.checkIcon {
+  width: 14px;
+  height: 14px;
+  color: #fff;
+}
+
+/* ── Item text ── */
 .itemText {
   flex: 1;
   font-size: 15px;
   line-height: 1.6;
   word-break: break-word;
-  color: #3d2b1f;
+  color: var(--text);
   white-space: pre-wrap;
 }
 
 .itemDone .itemText {
   text-decoration: line-through;
-  text-decoration-color: #9e7f65;
+  text-decoration-color: var(--text-tert);
 }
 
+/* ── Delete button ── */
 .deleteBtn {
   width: 44px;
   height: 44px;
   flex-shrink: 0;
   border: none;
   background: none;
-  font-size: 18px;
-  color: #d4bfa8;
+  color: var(--text-tert);
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.15s, background 0.15s;
+  transition: color 0.15s ease, background 0.15s ease;
   margin-top: -9px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.deleteIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.deleteBtn:hover {
+  color: var(--destructive);
+  background: var(--destructive-bg);
 }
 
 .deleteBtn:active {
-  color: #c47c5a;
-  background: #f7edd8;
+  color: var(--destructive);
+  background: rgba(255, 69, 58, 0.20);
 }
 
-/* ── Empty state ──────────────────────────── */
+.deleteBtn:focus-visible {
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  outline: none;
+}
+
+/* ════════════════════════════════════════════
+   Empty / Loading State
+   ════════════════════════════════════════════ */
 .empty {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 64px 24px 32px;
+  padding: 64px var(--sp-6) 32px;
   gap: 6px;
 }
 
@@ -276,13 +386,13 @@
   margin: 0;
   font-family: 'ZCOOL XiaoWei', serif;
   font-size: 20px;
-  color: #c8a882;
+  color: var(--text-sec);
 }
 
 .emptyHint {
   margin: 0;
   font-size: 13px;
-  color: #b89a7a;
+  color: var(--text-tert);
 }
 
 /* Loading dots */
@@ -291,7 +401,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #c8a882;
+  background: var(--text-tert);
   margin: 0 3px;
   animation: pulse 1.2s ease-in-out infinite;
 }
@@ -304,26 +414,22 @@
   40% { opacity: 1; transform: scale(1); }
 }
 
-/* ── Input area ───────────────────────────── */
+/* ════════════════════════════════════════════
+   Input Area
+   ════════════════════════════════════════════ */
 .inputArea {
-  background: #fdf6e9;
-  border-top: 2px solid #e8d5b7;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
   padding: 0 0 env(safe-area-inset-bottom, 0px);
   position: sticky;
   bottom: 0;
 }
 
-.inputRule {
-  height: 3px;
-  background: #c47c5a;
-  opacity: 0.35;
-}
-
 .inputRow {
   display: flex;
   align-items: flex-end;
-  gap: 10px;
-  padding: 12px 16px 14px;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4) 14px;
 }
 
 .textarea {
@@ -331,55 +437,78 @@
   min-height: 44px;
   max-height: 160px;
   padding: 10px 14px;
-  border: 1.5px solid #e8d5b7;
-  border-radius: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   font-size: 15px;
-  font-family: 'Noto Sans SC', sans-serif;
-  color: #3d2b1f;
-  background: #fdf6e9;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--bg-elevated);
   outline: none;
   resize: none;
   line-height: 1.6;
-  transition: border-color 0.15s;
+  transition: border-color 0.2s ease, background 0.2s ease;
   overflow-y: hidden;
 }
 
 .textarea:focus {
-  border-color: #c47c5a;
-  background: #fff8f0;
+  border-color: var(--accent);
+  background: rgba(28, 28, 30, 0.8);
 }
 
 .textarea::placeholder {
-  color: #c8a882;
+  color: var(--text-tert);
   font-size: 13px;
 }
 
 .addBtn {
   height: 44px;
-  padding: 0 18px;
+  padding: 0 20px;
   border: none;
-  border-radius: 4px;
-  background: #c47c5a;
-  color: #fdf6e9;
-  font-family: 'Noto Sans SC', sans-serif;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--bg);
+  font-family: inherit;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
+  transition: background 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
   white-space: nowrap;
   flex-shrink: 0;
-  box-shadow: 0 2px 0 #a05e3e;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .addBtn:disabled {
-  background: #e8d5b7;
-  box-shadow: none;
+  background: var(--text-tert);
   cursor: not-allowed;
-  color: #b89a7a;
+  color: var(--bg);
+  opacity: 0.4;
+}
+
+.addBtn:hover:not(:disabled) {
+  background: var(--accent-deep);
 }
 
 .addBtn:active:not(:disabled) {
-  background: #a05e3e;
-  transform: translateY(2px);
-  box-shadow: none;
+  transform: scale(0.96);
+}
+
+.addBtn:focus-visible {
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  outline: none;
+}
+
+/* ════════════════════════════════════════════
+   Reduced Motion
+   ════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    animation: none;
+  }
+  .progressBar {
+    transition: none;
+  }
+  .emptyDot {
+    animation: none;
+    opacity: 0.5;
+  }
 }

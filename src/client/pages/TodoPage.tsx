@@ -3,6 +3,52 @@ import { api } from '../lib/api'
 import type { Todo } from '../../shared/types'
 import styles from './TodoPage.module.css'
 
+/* ── Inline SVG Icon Components ─────────────────────────── */
+
+function IconArrowLeft({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M19 12H5" />
+      <path d="M12 19l-7-7 7-7" />
+    </svg>
+  )
+}
+
+function IconChevronLeft({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+  )
+}
+
+function IconChevronRight({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 18l6-6-6-6" />
+    </svg>
+  )
+}
+
+function IconCheck({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 12l5 5L20 7" />
+    </svg>
+  )
+}
+
+function IconX({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 6L6 18" />
+      <path d="M6 6l12 12" />
+    </svg>
+  )
+}
+
+/* ── Helpers ──────────────────────────────────────────────── */
+
 function formatDate(d: Date): string {
   const y = d.getFullYear()
   const m = String(d.getMonth() + 1).padStart(2, '0')
@@ -16,6 +62,8 @@ function formatDisplayDate(d: Date) {
   const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
   return { date: `${month}月${day}日`, week: weekDays[d.getDay()] }
 }
+
+/* ── Component ────────────────────────────────────────────── */
 
 interface Props {
   onBack: () => void
@@ -111,19 +159,23 @@ function TodoPage({ onBack }: Props) {
 
   return (
     <div className={styles.page}>
-      {/* Header */}
+      {/* ── Header ── */}
       <header className={styles.header}>
         <button onClick={onBack} className={styles.backBtn} aria-label="返回">
-          ←
+          <IconArrowLeft className={styles.iconBtn} />
         </button>
 
         <div className={styles.dateNav}>
-          <button onClick={() => changeDate(-1)} className={styles.navBtn} aria-label="前一天">‹</button>
+          <button onClick={() => changeDate(-1)} className={styles.navBtn} aria-label="前一天">
+            <IconChevronLeft className={styles.iconChevron} />
+          </button>
           <div className={styles.dateBlock}>
             <span className={styles.dateText}>{displayDate}</span>
             <span className={styles.weekText}>{displayWeek}</span>
           </div>
-          <button onClick={() => changeDate(1)} className={styles.navBtn} aria-label="后一天">›</button>
+          <button onClick={() => changeDate(1)} className={styles.navBtn} aria-label="后一天">
+            <IconChevronRight className={styles.iconChevron} />
+          </button>
         </div>
 
         <div className={styles.headerRight}>
@@ -135,7 +187,7 @@ function TodoPage({ onBack }: Props) {
         </div>
       </header>
 
-      {/* Progress bar */}
+      {/* ── Progress bar ── */}
       {totalCount > 0 && (
         <div className={styles.progressWrap}>
           <div
@@ -143,12 +195,12 @@ function TodoPage({ onBack }: Props) {
             style={{ width: `${(completedCount / totalCount) * 100}%` }}
           />
           <span className={styles.progressLabel}>
-            {completedCount === totalCount ? '全部完成 ✓' : `${completedCount} / ${totalCount} 完成`}
+            {completedCount === totalCount ? '全部完成' : `${completedCount} / ${totalCount} 完成`}
           </span>
         </div>
       )}
 
-      {/* Todo list */}
+      {/* ── Todo list ── */}
       <div className={styles.listWrap}>
         {loading ? (
           <div className={styles.empty}>
@@ -170,7 +222,7 @@ function TodoPage({ onBack }: Props) {
                   onClick={() => toggleTodo(todo)}
                   aria-label={todo.completed ? '标记未完成' : '标记完成'}
                 >
-                  {todo.completed && <span className={styles.checkMark}>✓</span>}
+                  {todo.completed && <IconCheck className={styles.checkIcon} />}
                 </button>
                 <span className={styles.itemText}>{todo.title}</span>
                 <button
@@ -178,7 +230,7 @@ function TodoPage({ onBack }: Props) {
                   className={styles.deleteBtn}
                   aria-label="删除"
                 >
-                  ×
+                  <IconX className={styles.deleteIcon} />
                 </button>
               </li>
             ))}
@@ -186,9 +238,8 @@ function TodoPage({ onBack }: Props) {
         )}
       </div>
 
-      {/* Input area */}
+      {/* ── Input area ── */}
       <div className={styles.inputArea}>
-        <div className={styles.inputRule} />
         <div className={styles.inputRow}>
           <textarea
             ref={textareaRef}
