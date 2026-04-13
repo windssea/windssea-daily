@@ -392,7 +392,7 @@ const ITINERARY: DayData[] = [
     dayDate: '1',
     title: '太原→大同\n古城休闲体验日',
     distance: '约280km',
-    hotel: '大同古城',
+    hotel: '大同平城智选假日酒店',
     weather: 'sunny',
     temp: '6~21°C',
     weatherCity: '大同',
@@ -413,8 +413,8 @@ const ITINERARY: DayData[] = [
       {
         id: 'd1-3',
         time: '11:30 - 14:30',
-        desc: '入住 · 午餐 · 午休',
-        body: '入住大同古城附近酒店，午餐品尝大同什锦铜火锅、烧麦、刀削面（清汤不辣）。12:30-14:30强制午休，避开五一正午高温。'
+        desc: '入住大同平城智选假日酒店 · 午餐 · 午休',
+        body: '入住永泰门附近的智选假日酒店，午餐品尝大同什锦铜火锅、烧麦、刀削面（清汤不辣）。12:30-14:30强制午休，避开五一正午高温。'
       },
       {
         id: 'd1-4',
@@ -463,7 +463,7 @@ const ITINERARY: DayData[] = [
     dayDate: '2',
     title: '云冈石窟→悬空寺\n世界遗产研学日',
     distance: '约160km',
-    hotel: '应县',
+    hotel: '汉庭酒店(应县木塔店)',
     weather: 'partlyCloudy',
     temp: '5~19°C',
     weatherCity: '大同',
@@ -516,8 +516,8 @@ const ITINERARY: DayData[] = [
       {
         id: 'd2-5',
         time: '16:00 - 17:00',
-        desc: '自驾应县 · 入住休息',
-        body: '全程70km，1小时车程，17点前抵达，不赶夜路。晚餐：应县免辣凉粉、炖土鸡、黄米糕。'
+        desc: '自驾前往应县 · 入住汉庭酒店',
+        body: '全程70km，1小时车程，17点前抵达应县木塔附近的汉庭酒店，不赶夜路。晚餐：应县免辣凉粉、炖土鸡、黄米糕。'
       }
     ],
   },
@@ -527,7 +527,7 @@ const ITINERARY: DayData[] = [
     dayDate: '3',
     title: '木塔→雁门关→忻州\n边塞文化日',
     distance: '约270km',
-    hotel: '太原南站',
+    hotel: '太原南站亚朵X酒店',
     weather: 'windy',
     temp: '4~16°C',
     weatherCity: '忻州',
@@ -595,8 +595,8 @@ const ITINERARY: DayData[] = [
       {
         id: 'd3-6',
         time: '16:30 - 17:50',
-        desc: '自驾太原 · 办理入住',
-        body: '全程100km，1.2小时车程，抵达太原南站附近酒店。晚餐钟楼街：认一力蒸饺、老鼠窟元宵、六味斋酱肉。'
+        desc: '自驾太原 · 入住亚朵X酒店',
+        body: '全程100km，1.2小时车程，抵达太原南站学府街亚朵X酒店。晚餐钟楼街：认一力蒸饺、老鼠窟元宵、六味斋酱肉。'
       }
     ],
   },
@@ -606,7 +606,7 @@ const ITINERARY: DayData[] = [
     dayDate: '4',
     title: '晋祠→山西博物院\n历史文化收官日',
     distance: '约50km',
-    hotel: '续住太原',
+    hotel: '太原南站亚朵X酒店(续住)',
     weather: 'sunny',
     temp: '10~24°C',
     weatherCity: '太原',
@@ -630,8 +630,8 @@ const ITINERARY: DayData[] = [
       {
         id: 'd4-2',
         time: '11:40 - 14:55',
-        desc: '晋祠周边午餐 · 酒店午休',
-        body: '农家菜、山西特色面食，清淡可口。12:55回酒店午休，避开午后高温与客流高峰。'
+        desc: '晋祠周边午餐 · 亚朵X酒店午休',
+        body: '农家菜、山西特色面食，清淡可口。12:55回亚朵X酒店午休，避开午后高温与客流高峰。'
       },
       {
         id: 'd4-3',
@@ -672,7 +672,7 @@ const ITINERARY: DayData[] = [
         id: 'd5-1',
         time: '08:30 - 09:00',
         desc: '早餐 · 办理退房',
-        body: '整理所有行李，装车后办理退房手续。'
+        body: '整理所有行李，装车后办理亚朵X酒店退房手续。'
       },
       {
         id: 'd5-2',
@@ -714,10 +714,10 @@ const RESERVATIONS = [
 ]
 
 const HOTELS: HotelData[] = [
-  { dayId: 'd1', night: '5/1', name: '大同古城四星亲子酒店', desc: '永泰门附近，大同平城智选假日酒店，大同平城西环路亚朵酒店，大同假日酒店 Holiday Inn，大同平城希尔顿惠庭酒店' },
-  { dayId: 'd2', night: '5/2', name: '应县县城连锁酒店', desc: '近应县木塔，柏悦臻选酒店，万豪府东臻选酒店(应县木塔景区店)' },
-  { dayId: 'd3', night: '5/3', name: '太原南站周边高端酒店', desc: '方便还车与返程，太原南站万豪万枫酒店，太原万达龙城大街亚朵酒店，太原南站学府街亚朵X酒店，太原南站晋阳街亚朵S酒店' },
-  { dayId: 'd4', night: '5/4', name: '太原南站周边高端酒店', desc: '续住第二晚' },
+  { dayId: 'd1', night: '5/1', name: '大同平城智选假日酒店', desc: '永泰门附近' },
+  { dayId: 'd2', night: '5/2', name: '汉庭酒店(朔州应县木塔店)', desc: '近应县木塔' },
+  { dayId: 'd3', night: '5/3', name: '太原南站学府街亚朵X酒店', desc: '方便还车与返程' },
+  { dayId: 'd4', night: '5/4', name: '太原南站学府街亚朵X酒店', desc: '续住第二晚' },
 ]
 
 const TIPS = [
@@ -965,7 +965,17 @@ export default function ShanxiTripPage({ onBack }: Props) {
                 {h.night}
               </div>
               <div className={styles.hotelInfo}>
-                <div className={styles.hotelName}>{h.name}</div>
+                <div className={styles.hotelName}>
+                  {h.name}
+                  <a
+                    className={styles.pinLink}
+                    href={buildBaiduNavUrl(h.name)}
+                    aria-label="导航到酒店"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    <Icon name="mapPin" size={14} />
+                  </a>
+                </div>
                 <div className={styles.hotelDesc}>{h.desc}</div>
               </div>
             </div>
@@ -1133,19 +1143,29 @@ export default function ShanxiTripPage({ onBack }: Props) {
             const hotel = HOTELS.find(h => h.dayId === day.id)
             if (!hotel) return null
             return (
-              <div className={styles.hotelSection}>
-                <div className={styles.hotelSectionLabel}>今日住宿</div>
-                <div className={styles.hotelItem}>
-                  <div className={styles.hotelNight}>
-                    <span className={styles.hotelNightIcon}><Icon name="hotel" size={13} /></span>
-                    {hotel.night}
-                  </div>
-                  <div className={styles.hotelInfo}>
-                    <div className={styles.hotelName}>{hotel.name}</div>
-                    <div className={styles.hotelDesc}>{hotel.desc}</div>
-                  </div>
-                </div>
-              </div>
+               <div className={styles.hotelSection}>
+                 <div className={styles.hotelSectionLabel}>今日住宿</div>
+                 <div className={styles.hotelItem}>
+                   <div className={styles.hotelNight}>
+                     <span className={styles.hotelNightIcon}><Icon name="hotel" size={13} /></span>
+                     {hotel.night}
+                   </div>
+                   <div className={styles.hotelInfo}>
+                     <div className={styles.hotelName}>
+                       {hotel.name}
+                       <a
+                         className={styles.pinLink}
+                         href={buildBaiduNavUrl(hotel.name)}
+                         aria-label="导航到酒店"
+                         onClick={e => e.stopPropagation()}
+                       >
+                         <Icon name="mapPin" size={14} />
+                       </a>
+                     </div>
+                     <div className={styles.hotelDesc}>{hotel.desc}</div>
+                   </div>
+                 </div>
+               </div>
             )
           })()}
         </section>
