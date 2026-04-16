@@ -32,6 +32,9 @@ const VISITED_CITIES: City[] = [
   { name: '黄山', coords: [118.337765, 29.714655], visitDate: '' },
   { name: '宏村', coords: [118.083229, 29.904628], visitDate: '' },
   { name: '桃花潭', coords: [118.356052, 30.256987], visitDate: '' },
+  { name: '丽江', coords: [100.233026, 26.872108], visitDate: '' },
+  { name: '香港', coords: [114.173355, 22.320048], visitDate: '' },
+  { name: '澳门', coords: [113.549129, 22.198745], visitDate: '' },
 ]
 
 function infoContent(city: City): string {
