@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import * as AMapLoader from '@amap/amap-jsapi-loader'
+import AMapLoader from '@amap/amap-jsapi-loader'
 import styles from './TravelMapPage.module.css'
 
 interface Props {
@@ -41,12 +41,14 @@ function TravelMapPage({ onBack }: Props) {
     }
 
     let map: any = null
+    let cancelled = false
 
     AMapLoader.load({
       key: '4a5d859ceb11047c18fa7bb7d6b5267e',
       version: '2.0',
     }).then((AMap) => {
-      map = new AMap.Map(mapElRef.current, {
+      if (cancelled) return
+      map = new AMap.Map(mapElRef.current!, {
         zoom: 5,
         center: [116, 36],
       })
@@ -72,9 +74,13 @@ function TravelMapPage({ onBack }: Props) {
 
         map.add(marker)
       })
+    }).catch((err: unknown) => {
+      if (cancelled) return
+      console.error('AMap load failed:', err)
     })
 
     return () => {
+      cancelled = true
       map?.destroy()
     }
   }, [])
