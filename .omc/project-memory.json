@@ -1,0 +1,223 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1776304475083,
+  "projectRoot": "D:\\dev\\windssea\\windssea-daily",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "react",
+        "version": "19.2.4",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.4",
+        "category": "frontend"
+      },
+      {
+        "name": "vite",
+        "version": "8.0.3",
+        "category": "build"
+      }
+    ],
+    "packageManager": "pnpm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "pnpm build",
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": "pnpm dev",
+    "scripts": {
+      "dev": "concurrently -n api,client -c blue,green \"pnpm dev:api\" \"pnpm dev:client\"",
+      "dev:api": "wrangler dev",
+      "dev:client": "vite",
+      "build": "vite build",
+      "preview": "vite build && wrangler dev",
+      "deploy": "wrangler deploy",
+      "db:migrate:local": "wrangler d1 migrations apply DB --local",
+      "db:migrate:remote": "wrangler d1 migrations apply DB --remote"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "src"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "-Force": {
+      "path": "-Force",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1776304475028,
+      "keyFiles": []
+    },
+    "dist": {
+      "path": "dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 0,
+      "lastAccessed": 1776304475029,
+      "keyFiles": []
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 0,
+      "lastAccessed": 1776304475058,
+      "keyFiles": []
+    },
+    "migrations": {
+      "path": "migrations",
+      "purpose": "Database migrations",
+      "fileCount": 1,
+      "lastAccessed": 1776304475059,
+      "keyFiles": [
+        "0001_init.sql"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1776304475059,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "src\\client\\pages\\WelcomePage.tsx",
+      "accessCount": 13,
+      "lastAccessed": 1776308385337,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\pages\\TravelMapPage.tsx",
+      "accessCount": 10,
+      "lastAccessed": 1776308381304,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\App.tsx",
+      "accessCount": 8,
+      "lastAccessed": 1776308061792,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\pages\\WelcomePage.module.css",
+      "accessCount": 4,
+      "lastAccessed": 1776308065617,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\pages\\TravelMapPage.module.css",
+      "accessCount": 3,
+      "lastAccessed": 1776307630180,
+      "type": "file"
+    },
+    {
+      "path": "docs\\superpowers\\plans\\2026-04-16-travel-map.md",
+      "accessCount": 3,
+      "lastAccessed": 1776307980499,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 2,
+      "lastAccessed": 1776308010849,
+      "type": "directory"
+    },
+    {
+      "path": "src\\client\\pages\\ShanxiTripPage.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776304748679,
+      "type": "file"
+    },
+    {
+      "path": "C:\\Users\\windssea\\.claude\\skills\\brainstorming\\visual-companion.md",
+      "accessCount": 1,
+      "lastAccessed": 1776304796224,
+      "type": "file"
+    },
+    {
+      "path": ".superpowers\\brainstorm\\1790-1776304816\\content\\layout.html",
+      "accessCount": 1,
+      "lastAccessed": 1776304868039,
+      "type": "file"
+    },
+    {
+      "path": ".superpowers\\brainstorm\\1790-1776304816\\content\\map-style.html",
+      "accessCount": 1,
+      "lastAccessed": 1776304955228,
+      "type": "file"
+    },
+    {
+      "path": ".superpowers\\brainstorm\\1790-1776304816\\content\\final-mockup.html",
+      "accessCount": 1,
+      "lastAccessed": 1776305239279,
+      "type": "file"
+    },
+    {
+      "path": "docs\\superpowers\\specs\\2026-04-16-travel-map-design.md",
+      "accessCount": 1,
+      "lastAccessed": 1776305371215,
+      "type": "file"
+    },
+    {
+      "path": "C:\\Users\\windssea\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\5.0.7\\skills\\subagent-driven-development\\implementer-prompt.md",
+      "accessCount": 1,
+      "lastAccessed": 1776307213873,
+      "type": "file"
+    },
+    {
+      "path": "C:\\Users\\windssea\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\5.0.7\\skills\\subagent-driven-development\\spec-reviewer-prompt.md",
+      "accessCount": 1,
+      "lastAccessed": 1776307213895,
+      "type": "file"
+    },
+    {
+      "path": "C:\\Users\\windssea\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\5.0.7\\skills\\subagent-driven-development\\code-quality-reviewer-prompt.md",
+      "accessCount": 1,
+      "lastAccessed": 1776307213912,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 1,
+      "lastAccessed": 1776307402371,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

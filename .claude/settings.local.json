@@ -9,7 +9,13 @@
       "Bash(npx tsc:*)",
       "Bash(echo \"exit:$?\")",
       "Bash(git -C \"D:/dev/windssea/windssea-daily\" add src/client/pages/ShanxiTripPage.module.css)",
-      "Bash(git -C D:/dev/windssea/windssea-daily commit -m ':*)"
+      "Bash(git -C D:/dev/windssea/windssea-daily commit -m ':*)",
+      "Bash(C:/Users/windssea/.claude/skills/brainstorming/scripts/start-server.sh *)",
+      "Bash(pnpm add *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(pnpm build *)",
+      "Bash(ls D:/dev/windssea/windssea-daily/*.json)"
     ]
   }
 }

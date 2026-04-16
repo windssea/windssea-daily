@@ -1,0 +1,49 @@
+<h2>地图风格</h2>
+<p class="subtitle">选择地图底图风格，匹配整体页面气质</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>深色夜间风格</h3>
+      <p>暗色底图，与现有页面（山西行程等）的深色主题保持一致。图钉用亮色高德默认蓝或自定义绿色。</p>
+      <div style="margin-top:8px;border-radius:6px;overflow:hidden;height:120px;background:linear-gradient(135deg,#0a1628 0%,#0d2137 50%,#0a1628 100%);display:flex;align-items:center;justify-content:center;position:relative">
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 20px,rgba(255,255,255,.02) 20px,rgba(255,255,255,.02) 21px),repeating-linear-gradient(90deg,transparent,transparent 20px,rgba(255,255,255,.02) 20px,rgba(255,255,255,.02) 21px)"></div>
+        <div style="font-size:22px;position:absolute;top:30%;left:35%">📍</div>
+        <div style="font-size:22px;position:absolute;top:20%;left:60%">📍</div>
+        <div style="font-size:22px;position:absolute;top:55%;left:50%">📍</div>
+        <div style="color:rgba(100,200,255,.3);font-size:11px">深色底图</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>标准地图（白天模式）</h3>
+      <p>高德默认标准底图，清晰显示地名、道路，适合地理定位感强的浏览体验。</p>
+      <div style="margin-top:8px;border-radius:6px;overflow:hidden;height:120px;background:linear-gradient(135deg,#e8f4e8 0%,#d4e8d4 50%,#c8dfc8 100%);display:flex;align-items:center;justify-content:center;position:relative">
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 20px,rgba(0,0,0,.04) 20px,rgba(0,0,0,.04) 21px),repeating-linear-gradient(90deg,transparent,transparent 20px,rgba(0,0,0,.04) 20px,rgba(0,0,0,.04) 21px)"></div>
+        <div style="font-size:22px;position:absolute;top:30%;left:35%">📍</div>
+        <div style="font-size:22px;position:absolute;top:20%;left:60%">📍</div>
+        <div style="font-size:22px;position:absolute;top:55%;left:50%">📍</div>
+        <div style="color:rgba(0,100,0,.3);font-size:11px">标准底图</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>卫星图</h3>
+      <p>高德卫星底图，视觉冲击力强，图钉在真实地形上展示，更有探索感。</p>
+      <div style="margin-top:8px;border-radius:6px;overflow:hidden;height:120px;background:linear-gradient(135deg,#1a2a10 0%,#2a4a1a 30%,#1a3a20 60%,#0a2010 100%);display:flex;align-items:center;justify-content:center;position:relative">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(60,120,40,.3) 0%,transparent 50%),radial-gradient(ellipse at 70% 60%,rgba(40,80,60,.3) 0%,transparent 50%)"></div>
+        <div style="font-size:22px;position:absolute;top:30%;left:35%">📍</div>
+        <div style="font-size:22px;position:absolute;top:20%;left:60%">📍</div>
+        <div style="font-size:22px;position:absolute;top:55%;left:50%">📍</div>
+        <div style="color:rgba(200,255,100,.3);font-size:11px">卫星底图</div>
+      </div>
+    </div>
+  </div>
+</div>

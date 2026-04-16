@@ -1,0 +1,65 @@
+<h2>旅行地图 — 页面布局</h2>
+<p class="subtitle">地图区域和城市列表如何排布？</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>全屏地图</h3>
+      <p>地图占满整个页面，城市标记直接在地图上展示，点击图钉弹出城市名称。简洁沉浸。</p>
+      <div style="margin-top:10px;border:1px solid #444;border-radius:6px;overflow:hidden">
+        <div style="background:#1a2a1a;height:160px;display:flex;align-items:center;justify-content:center;color:#6b9;font-size:13px;position:relative">
+          <span style="opacity:.5">🗺 全屏地图</span>
+          <div style="position:absolute;top:40%;left:45%;font-size:20px">📍</div>
+          <div style="position:absolute;top:30%;left:30%;font-size:20px">📍</div>
+          <div style="position:absolute;top:55%;left:60%;font-size:20px">📍</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>地图 + 侧边城市列表</h3>
+      <p>左侧（或底部）显示已去过的城市列表，右侧是地图。点击列表项地图自动跳转到对应城市。</p>
+      <div style="margin-top:10px;border:1px solid #444;border-radius:6px;overflow:hidden;display:flex;height:160px">
+        <div style="background:#111;width:110px;padding:8px;font-size:11px;color:#888;border-right:1px solid #333">
+          <div style="color:#6b9;margin-bottom:6px;font-size:10px">已去城市</div>
+          <div style="padding:3px 4px;background:#1a2a1a;border-radius:3px;margin-bottom:4px">📍 北京</div>
+          <div style="padding:3px 4px;margin-bottom:4px">📍 上海</div>
+          <div style="padding:3px 4px;margin-bottom:4px">📍 南京</div>
+          <div style="padding:3px 4px;margin-bottom:4px">📍 厦门</div>
+        </div>
+        <div style="background:#1a2a1a;flex:1;display:flex;align-items:center;justify-content:center;color:#6b9;font-size:13px;position:relative">
+          <span style="opacity:.5">🗺 地图</span>
+          <div style="position:absolute;top:35%;left:50%;font-size:18px">📍</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>地图 + 底部统计卡片</h3>
+      <p>全屏地图为主，底部悬浮一个小卡片展示「已去 X 个城市」统计和城市 tag 列表，轻量不遮挡地图。</p>
+      <div style="margin-top:10px;border:1px solid #444;border-radius:6px;overflow:hidden;position:relative;height:160px">
+        <div style="background:#1a2a1a;height:100%;display:flex;align-items:center;justify-content:center;color:#6b9;font-size:13px;position:relative">
+          <span style="opacity:.5">🗺 地图</span>
+          <div style="position:absolute;top:30%;left:40%;font-size:18px">📍</div>
+          <div style="position:absolute;top:45%;left:60%;font-size:18px">📍</div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(10,20,10,.92);padding:8px 12px;border-top:1px solid #2a4a2a">
+          <div style="font-size:10px;color:#6b9;margin-bottom:4px">已去 7 个城市</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font-size:10px;background:#1a3a1a;border:1px solid #2a5a2a;padding:2px 6px;border-radius:10px;color:#8bc">北京</span>
+            <span style="font-size:10px;background:#1a3a1a;border:1px solid #2a5a2a;padding:2px 6px;border-radius:10px;color:#8bc">上海</span>
+            <span style="font-size:10px;background:#1a3a1a;border:1px solid #2a5a2a;padding:2px 6px;border-radius:10px;color:#8bc">南京</span>
+            <span style="font-size:10px;background:#1a3a1a;border:1px solid #2a5a2a;padding:2px 6px;border-radius:10px;color:#8bc">+4</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
