@@ -64,24 +64,47 @@ function TravelMapPage({ onBack }: Props) {
     }).then((AMap) => {
       if (cancelled) return
       map = new AMap.Map(mapElRef.current!, {
-        zoom: 5,
+        zoom: 4,
         center: [116, 36],
+        showIndoorMap: false,
+        pitchEnable: false,
+        rotateEnable: false,
       })
 
       let openWindow: any = null
 
+      // 点击地图空白处关闭 InfoWindow
+      map.on('click', () => {
+        if (openWindow) {
+          openWindow.close()
+          openWindow = null
+        }
+      })
+
       VISITED_CITIES.forEach((city) => {
+        // 自定义图钉：44×44 触摸区 + 24×32 SVG 图钉，移动端易点
+        const markerContent = `
+          <div style="width:44px;height:44px;display:flex;align-items:flex-end;justify-content:center;cursor:pointer">
+            <svg width="24" height="32" viewBox="0 0 24 32" fill="#FF5A5F" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 20 12 20S24 21 24 12C24 5.373 18.627 0 12 0z"/>
+              <circle cx="12" cy="12" r="5" fill="white"/>
+            </svg>
+          </div>`
+
         const marker = new AMap.Marker({
           position: new AMap.LngLat(city.coords[0], city.coords[1]),
           title: city.name,
+          content: markerContent,
+          offset: new AMap.Pixel(-22, -44),
         })
 
         const infoWindow = new AMap.InfoWindow({
           content: infoContent(city),
-          offset: new AMap.Pixel(0, -30),
+          offset: new AMap.Pixel(0, -48),
         })
 
-        marker.on('click', () => {
+        marker.on('click', (e: any) => {
+          e.stopPropagation?.()
           if (openWindow) openWindow.close()
           infoWindow.open(map, marker.getPosition())
           openWindow = infoWindow
