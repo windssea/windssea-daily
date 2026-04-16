@@ -18,11 +18,15 @@ function App() {
 
   const navigate = useCallback((next: Page) => {
     setPage(next)
+    // Use pushState instead of location.hash to avoid the browser attempting
+    // to scroll to an element with the hash id, which causes a viewport
+    // layout shift on mobile (address bar toggle) and swallows the first tap.
     history.pushState(null, '', next === 'welcome' ? location.pathname : `#${next}`)
   }, [])
 
   useEffect(() => {
     const onPopState = () => setPage(getPageFromHash())
+    // popstate fires on browser back/forward (pushState doesn't fire hashchange)
     window.addEventListener('popstate', onPopState)
     return () => window.removeEventListener('popstate', onPopState)
   }, [])
