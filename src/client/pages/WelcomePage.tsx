@@ -5,6 +5,7 @@ interface Props {
   onEnter: () => void
   onShanxiTrip: () => void
   onHuangshanTrip: () => void
+  onTravelMap: () => void
 }
 
 /* ── SVG Icons (Thinner strokes for elegance) ── */
@@ -45,6 +46,15 @@ function IconArrowRight({ className }: { className?: string }) {
   )
 }
 
+function IconMap({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  )
+}
+
 /* ── Hooks ──────────────────────────────────────────────── */
 
 function useGreeting() {
@@ -69,7 +79,7 @@ function useDateLabel() {
 
 /* ── Component ──────────────────────────────────────────── */
 
-function WelcomePage({ onEnter, onShanxiTrip, onHuangshanTrip }: Props) {
+function WelcomePage({ onEnter, onShanxiTrip, onHuangshanTrip, onTravelMap }: Props) {
   const greeting = useGreeting()
   const dateLabel = useDateLabel()
 
@@ -146,6 +156,23 @@ function WelcomePage({ onEnter, onShanxiTrip, onHuangshanTrip }: Props) {
               <div className={styles.tripBody}>
                 <p className={styles.tripLabel}>黄山之旅</p>
                 <p className={styles.tripDesc}>4 DAYS ESCAPE</p>
+              </div>
+              <IconArrowRight className={styles.tripArrow} />
+            </button>
+
+            <button
+              className={`${styles.card} ${styles.tripCard}`}
+              onClick={onTravelMap}
+              aria-label="查看旅行地图"
+            >
+              <div className={styles.tripHeader}>
+                <div className={`${styles.iconWrap}`}>
+                  <IconMap className={styles.iconElement} />
+                </div>
+              </div>
+              <div className={styles.tripBody}>
+                <p className={styles.tripLabel}>旅行地图</p>
+                <p className={styles.tripDesc}>7 CITIES VISITED</p>
               </div>
               <IconArrowRight className={styles.tripArrow} />
             </button>
