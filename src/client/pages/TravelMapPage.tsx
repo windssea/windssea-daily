@@ -20,6 +20,14 @@ const VISITED_CITIES: City[] = [
   { name: '溧阳', coords: [119.484211, 31.416911], visitDate: '' },
   { name: '泉州', coords: [118.589421, 24.908853], visitDate: '' },
   { name: '厦门', coords: [118.089425, 24.479833], visitDate: '' },
+  { name: '宿迁', coords: [118.275162, 33.963008], visitDate: '' },
+  { name: '连云港', coords: [119.221611, 34.596653], visitDate: '' },
+  { name: '高淳', coords: [118.876451, 31.327424], visitDate: '' },
+  { name: '昆明', coords: [102.832891, 24.880095], visitDate: '' },
+  { name: '大理', coords: [100.267638, 25.606486], visitDate: '' },
+  { name: '杭州', coords: [120.153576, 30.287459], visitDate: '' },
+  { name: '盱眙', coords: [118.544895, 33.011971], visitDate: '' },
+  { name: '南通', coords: [120.864608, 32.016212], visitDate: '' },
 ]
 
 function infoContent(city: City): string {
