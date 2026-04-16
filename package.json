@@ -15,6 +15,7 @@
   },
   "packageManager": "pnpm@10.33.0",
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "hono": "^4.12.9",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
