@@ -172,7 +172,7 @@ function WelcomePage({ onEnter, onShanxiTrip, onHuangshanTrip, onTravelMap }: Pr
               </div>
               <div className={styles.tripBody}>
                 <p className={styles.tripLabel}>旅行地图</p>
-                <p className={styles.tripDesc}>15 CITIES VISITED</p>
+                <p className={styles.tripDesc}>19 CITIES VISITED</p>
               </div>
               <IconArrowRight className={styles.tripArrow} />
             </button>

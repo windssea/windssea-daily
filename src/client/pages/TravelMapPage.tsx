@@ -28,6 +28,10 @@ const VISITED_CITIES: City[] = [
   { name: '杭州', coords: [120.153576, 30.287459], visitDate: '' },
   { name: '盱眙', coords: [118.544895, 33.011971], visitDate: '' },
   { name: '南通', coords: [120.864608, 32.016212], visitDate: '' },
+  { name: '马鞍山', coords: [118.507906, 31.689362], visitDate: '' },
+  { name: '黄山', coords: [118.337765, 29.714655], visitDate: '' },
+  { name: '宏村', coords: [118.083229, 29.904628], visitDate: '' },
+  { name: '桃花潭', coords: [118.356052, 30.256987], visitDate: '' },
 ]
 
 function infoContent(city: City): string {
