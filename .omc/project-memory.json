@@ -117,6 +117,12 @@
   },
   "hotPaths": [
     {
+      "path": "src\\client\\pages\\QuzhouTripPage.tsx",
+      "accessCount": 21,
+      "lastAccessed": 1776404020416,
+      "type": "file"
+    },
+    {
       "path": "src\\client\\pages\\WelcomePage.tsx",
       "accessCount": 19,
       "lastAccessed": 1776391354089,
@@ -132,12 +138,6 @@
       "path": "src\\client\\App.tsx",
       "accessCount": 12,
       "lastAccessed": 1776391328267,
-      "type": "file"
-    },
-    {
-      "path": "src\\client\\pages\\QuzhouTripPage.tsx",
-      "accessCount": 9,
-      "lastAccessed": 1776402223284,
       "type": "file"
     },
     {

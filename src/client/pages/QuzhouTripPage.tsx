@@ -106,8 +106,9 @@ function BambooLeaves() {
     window.addEventListener('resize', resize)
 
     const LEAF_COLORS = ['#4a9860', '#3d8850', '#5aac70', '#6ab865', '#409055', '#52a868']
+    const PETAL_COLORS = ['rgba(255,182,193,1)', 'rgba(255,158,178,1)', 'rgba(255,200,212,1)', 'rgba(250,172,188,1)', 'rgba(255,220,228,1)']
 
-    interface Leaf {
+    interface Particle {
       x: number; y: number
       len: number; wid: number
       rotation: number; rotSpeed: number
@@ -115,14 +116,16 @@ function BambooLeaves() {
       color: string
       maxAlpha: number
       born: number; life: number
+      type: 'leaf' | 'petal'
     }
 
-    const leaves: Leaf[] = []
-    let lastSpawn = 0
+    const particles: Particle[] = []
+    let lastLeafSpawn = 0
+    let lastPetalSpawn = 0
 
     function spawnLeaf(now: number) {
       const len = 13 + Math.random() * 10
-      leaves.push({
+      particles.push({
         x: -10 + Math.random() * (canvas.width + 20),
         y: -len,
         len,
@@ -135,29 +138,55 @@ function BambooLeaves() {
         maxAlpha: 0.5 + Math.random() * 0.35,
         born: now,
         life: 10000 + Math.random() * 8000,
+        type: 'leaf',
       })
     }
 
-    function drawLeaf(l: Leaf, alpha: number) {
+    function spawnPetal(now: number) {
+      const len = 7 + Math.random() * 5
+      particles.push({
+        x: -10 + Math.random() * (canvas.width + 20),
+        y: -len,
+        len,
+        wid: len * 0.4,
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.038,
+        vx: -1.0 + Math.random() * 1.4,
+        vy: 0.3 + Math.random() * 0.45,
+        color: PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)],
+        maxAlpha: 0.55 + Math.random() * 0.28,
+        born: now,
+        life: 12000 + Math.random() * 9000,
+        type: 'petal',
+      })
+    }
+
+    function drawParticle(p: Particle, alpha: number) {
       ctx.save()
-      ctx.translate(l.x, l.y)
-      ctx.rotate(l.rotation)
+      ctx.translate(p.x, p.y)
+      ctx.rotate(p.rotation)
       ctx.globalAlpha = alpha
-      ctx.fillStyle = l.color
-      const hl = l.len / 2
-      const hw = l.wid / 2
-      ctx.beginPath()
-      ctx.moveTo(0, -hl)
-      ctx.bezierCurveTo(hw, -hl * 0.38, hw, hl * 0.38, 0, hl)
-      ctx.bezierCurveTo(-hw, hl * 0.38, -hw, -hl * 0.38, 0, -hl)
-      ctx.fill()
-      // midrib vein
-      ctx.strokeStyle = 'rgba(20, 65, 30, 0.28)'
-      ctx.lineWidth = 0.4
-      ctx.beginPath()
-      ctx.moveTo(0, -hl * 0.8)
-      ctx.lineTo(0, hl * 0.8)
-      ctx.stroke()
+      if (p.type === 'leaf') {
+        ctx.fillStyle = p.color
+        const hl = p.len / 2
+        const hw = p.wid / 2
+        ctx.beginPath()
+        ctx.moveTo(0, -hl)
+        ctx.bezierCurveTo(hw, -hl * 0.38, hw, hl * 0.38, 0, hl)
+        ctx.bezierCurveTo(-hw, hl * 0.38, -hw, -hl * 0.38, 0, -hl)
+        ctx.fill()
+        ctx.strokeStyle = 'rgba(20, 65, 30, 0.28)'
+        ctx.lineWidth = 0.4
+        ctx.beginPath()
+        ctx.moveTo(0, -p.len * 0.4)
+        ctx.lineTo(0, p.len * 0.4)
+        ctx.stroke()
+      } else {
+        ctx.fillStyle = p.color
+        ctx.beginPath()
+        ctx.ellipse(0, 0, p.len / 2, p.wid / 2, 0, 0, Math.PI * 2)
+        ctx.fill()
+      }
       ctx.restore()
     }
 
@@ -165,21 +194,25 @@ function BambooLeaves() {
     function tick(now: number) {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      if (now - lastSpawn > 450 + Math.random() * 500) {
+      if (now - lastLeafSpawn > 450 + Math.random() * 500) {
         spawnLeaf(now)
-        lastSpawn = now
+        lastLeafSpawn = now
+      }
+      if (now - lastPetalSpawn > 680 + Math.random() * 720) {
+        spawnPetal(now)
+        lastPetalSpawn = now
       }
 
-      for (let i = leaves.length - 1; i >= 0; i--) {
-        const l = leaves[i]
-        const elapsed = now - l.born
-        const t = elapsed / l.life
-        if (t >= 1 || l.y > canvas.height + 20) { leaves.splice(i, 1); continue }
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i]
+        const elapsed = now - p.born
+        const t = elapsed / p.life
+        if (t >= 1 || p.y > canvas.height + 20) { particles.splice(i, 1); continue }
         const fade = t < 0.12 ? t / 0.12 : t > 0.82 ? (1 - t) / 0.18 : 1
-        l.x += l.vx + Math.sin(elapsed * 0.0011 + l.rotation) * 0.35
-        l.y += l.vy
-        l.rotation += l.rotSpeed
-        drawLeaf(l, fade * l.maxAlpha)
+        p.x += p.vx + Math.sin(elapsed * 0.0011 + p.rotation) * (p.type === 'petal' ? 0.5 : 0.35)
+        p.y += p.vy
+        p.rotation += p.rotSpeed
+        drawParticle(p, fade * p.maxAlpha)
       }
       raf = requestAnimationFrame(tick)
     }
@@ -197,7 +230,7 @@ function BambooLeaves() {
   )
 }
 
-/* ── MountainScape: 云雾远山 + 三爿石 SVG ── */
+/* ── MountainScape: 云雾远山 + 三爿石 + 徽派建筑 + 桃树 + 河舟 ── */
 function MountainScape() {
   return (
     <svg
@@ -207,113 +240,342 @@ function MountainScape() {
       aria-hidden="true"
       style={{ display: 'block', width: '100%', height: 'auto' }}
     >
-      {/* Far mountains — hazy distant blue */}
+      <defs>
+        <linearGradient id="qzRiver" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#c2e4f5" stopOpacity="0.92"/>
+          <stop offset="55%" stopColor="#a4d2ec" stopOpacity="0.86"/>
+          <stop offset="100%" stopColor="#88bfe6" stopOpacity="0.80"/>
+        </linearGradient>
+        <linearGradient id="qzSkyRefl" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#1a4d7e" stopOpacity="0.16"/>
+          <stop offset="100%" stopColor="#3080c0" stopOpacity="0.04"/>
+        </linearGradient>
+      </defs>
+
+      {/* ── Far mountains (hazy blue) ── */}
       <path
         d="M0 132 C35 102, 72 118, 105 100 C138 83, 165 112, 205 97 C244 82, 272 108, 312 94 C352 80, 390 104, 424 90 C450 80, 468 95, 480 108 L480 200 L0 200Z"
         fill="rgba(155, 198, 218, 0.38)"
       />
 
-      {/* Mid mountains — muted green */}
+      {/* ── Mid mountains (muted green) ── */}
       <path
         d="M0 152 C28 130, 58 142, 85 127 C112 112, 138 134, 172 120 C206 106, 232 130, 262 118 C292 106, 318 126, 350 114 C382 102, 420 122, 455 112 C468 108, 476 116, 480 122 L480 200 L0 200Z"
         fill="rgba(68, 136, 98, 0.42)"
       />
 
-      {/* Mist bands at mid-distance */}
+      {/* ── Mist bands ── */}
       <ellipse cx="240" cy="140" rx="145" ry="11" fill="rgba(255,255,255,0.30)"/>
       <ellipse cx="75"  cy="150" rx="75"  ry="8"  fill="rgba(255,255,255,0.24)"/>
       <ellipse cx="405" cy="144" rx="88"  ry="9"  fill="rgba(255,255,255,0.26)"/>
 
-      {/* ══ 三爿石 (Three Stone Pillars of 江郎山) ══ */}
-      {/* Mountain saddle connecting pillars */}
+      {/* ══════════════════════════════════════════
+          徽派建筑 LEFT — 宽院落，白墙青瓦，圆洞门
+          ══════════════════════════════════════════ */}
+      <g opacity="0.88">
+        {/* ─ Back building (visible above front roof) ─ */}
+        <rect x="14" y="133" width="130" height="17" fill="#f2f0ec" stroke="none"/>
+        <path d="M8 133 Q79 121 150 133" fill="#546872" stroke="none"/>
+        <line x1="14" y1="132.5" x2="144" y2="132.5" stroke="#3a4e58" strokeWidth="0.5"/>
+        {/* Back 马头墙 L — 2 steps */}
+        <path d="M14 133 L14 129 L18 125 L18 129 L22 129 L22 124 L26 120 L26 124 L26 133" fill="#f2f0ec" stroke="#8a9ea8" strokeWidth="0.4"/>
+        <path d="M22 124 L26 120 L30 124Z" fill="#546872"/>
+        <path d="M18 129 L22 125 L26 129Z" fill="#546872"/>
+        {/* Back 马头墙 R — 2 steps */}
+        <path d="M144 133 L144 129 L140 125 L140 129 L136 129 L136 124 L132 120 L132 124 L132 133" fill="#f2f0ec" stroke="#8a9ea8" strokeWidth="0.4"/>
+        <path d="M136 124 L132 120 L128 124Z" fill="#546872"/>
+        <path d="M140 129 L136 125 L132 129Z" fill="#546872"/>
+
+        {/* ─ Main compound wall ─ */}
+        <rect x="0" y="148" width="158" height="24" fill="#f7f5f1" stroke="none"/>
+        {/* Section divider line */}
+        <line x1="82" y1="148" x2="82" y2="172" stroke="rgba(140,158,168,0.20)" strokeWidth="0.8"/>
+
+        {/* 圆洞门 moon gate (left section) */}
+        <circle cx="42" cy="162" r="11.5" fill="#e0dbd0" stroke="#96a8b2" strokeWidth="0.9"/>
+        <circle cx="42" cy="162" r="9.8"  fill="rgba(30,58,78,0.14)" stroke="none"/>
+        <rect x="35" y="171.5" width="14" height="1.2" fill="#c2bba8" stroke="none"/>
+
+        {/* Dark window openings (right section, no lattice) */}
+        <rect x="100" y="156" width="18" height="9" rx="0.5" fill="rgba(38,58,72,0.20)" stroke="#96a8b2" strokeWidth="0.35"/>
+        <rect x="124" y="156" width="18" height="9" rx="0.5" fill="rgba(38,58,72,0.20)" stroke="#96a8b2" strokeWidth="0.35"/>
+
+        {/* ─ Front roof — two sections ─ */}
+        <path d="M-5 148 Q40 135 83 148" fill="#5c6e78" stroke="none"/>
+        <line x1="0"  y1="147.5" x2="82" y2="147.5" stroke="#3a4e58" strokeWidth="0.55"/>
+        <line x1="-3" y1="149.5" x2="83" y2="149.5" stroke="#7a8e98" strokeWidth="0.28"/>
+        <path d="M81 148 Q120 136 163 148" fill="#627c86" stroke="none"/>
+        <line x1="82"  y1="147.5" x2="158" y2="147.5" stroke="#3a4e58" strokeWidth="0.55"/>
+        <line x1="80"  y1="149.5" x2="160" y2="149.5" stroke="#7a8e98" strokeWidth="0.28"/>
+
+        {/* ─ 马头墙 far-left — 3 steps ─ */}
+        <path d="M0 148 L0 143 L5 139 L5 143 L10 143 L10 137 L15 133 L15 137 L20 137 L20 131 L25 127 L25 131 L25 148" fill="#f7f5f1" stroke="#8a9ea8" strokeWidth="0.48"/>
+        <path d="M20 131 L25 127 L30 131Z" fill="#5c6e78"/>
+        <path d="M10 137 L15 133 L20 137Z" fill="#5c6e78"/>
+        <path d="M5  143 L10 139 L15 143Z" fill="#5c6e78"/>
+
+        {/* ─ 马头墙 mid-section divider ─ */}
+        <path d="M79 148 L79 143 L82 140 L85 143 L85 148" fill="#f7f5f1" stroke="#8a9ea8" strokeWidth="0.4"/>
+        <path d="M79 143 L82 140 L85 143Z" fill="#5c6e78"/>
+
+        {/* ─ 马头墙 far-right — 3 steps ─ */}
+        <path d="M158 148 L158 143 L153 139 L153 143 L148 143 L148 137 L143 133 L143 137 L138 137 L138 131 L133 127 L133 131 L133 148" fill="#f7f5f1" stroke="#8a9ea8" strokeWidth="0.48"/>
+        <path d="M138 131 L133 127 L128 131Z" fill="#627c86"/>
+        <path d="M148 137 L143 133 L138 137Z" fill="#627c86"/>
+        <path d="M153 143 L148 139 L143 143Z" fill="#627c86"/>
+
+        {/* ─ Compound outer wall stub ─ */}
+        <rect x="0" y="164" width="5" height="8" fill="#eae6dc" stroke="#96a8b2" strokeWidth="0.3"/>
+        <path d="M-2 164 Q2 161 6 164" fill="#5c6e78" stroke="none"/>
+      </g>
+
+      {/* ══════════════════════════════════════════
+          徽派建筑 RIGHT — 宽院落，白墙青瓦，圆洞门
+          ══════════════════════════════════════════ */}
+      <g opacity="0.86">
+        {/* ─ Back building ─ */}
+        <rect x="330" y="133" width="130" height="17" fill="#f2f0ec" stroke="none"/>
+        <path d="M324 133 Q395 121 466 133" fill="#546872" stroke="none"/>
+        <line x1="330" y1="132.5" x2="460" y2="132.5" stroke="#3a4e58" strokeWidth="0.5"/>
+        {/* Back 马头墙 L */}
+        <path d="M330 133 L330 129 L334 125 L334 129 L338 129 L338 124 L342 120 L342 124 L342 133" fill="#f2f0ec" stroke="#8a9ea8" strokeWidth="0.4"/>
+        <path d="M338 124 L342 120 L346 124Z" fill="#546872"/>
+        <path d="M334 129 L338 125 L342 129Z" fill="#546872"/>
+        {/* Back 马头墙 R */}
+        <path d="M460 133 L460 129 L456 125 L456 129 L452 129 L452 124 L448 120 L448 124 L448 133" fill="#f2f0ec" stroke="#8a9ea8" strokeWidth="0.4"/>
+        <path d="M452 124 L448 120 L444 124Z" fill="#546872"/>
+        <path d="M456 129 L452 125 L448 129Z" fill="#546872"/>
+
+        {/* ─ Main compound wall ─ */}
+        <rect x="318" y="148" width="162" height="24" fill="#f7f5f1" stroke="none"/>
+        <line x1="398" y1="148" x2="398" y2="172" stroke="rgba(140,158,168,0.20)" strokeWidth="0.8"/>
+
+        {/* Dark window openings (left section) */}
+        <rect x="332" y="156" width="18" height="9" rx="0.5" fill="rgba(38,58,72,0.20)" stroke="#96a8b2" strokeWidth="0.35"/>
+        <rect x="356" y="156" width="18" height="9" rx="0.5" fill="rgba(38,58,72,0.20)" stroke="#96a8b2" strokeWidth="0.35"/>
+
+        {/* 圆洞门 moon gate (right section) */}
+        <circle cx="436" cy="162" r="11.5" fill="#e0dbd0" stroke="#96a8b2" strokeWidth="0.9"/>
+        <circle cx="436" cy="162" r="9.8"  fill="rgba(30,58,78,0.14)" stroke="none"/>
+        <rect x="429" y="171.5" width="14" height="1.2" fill="#c2bba8" stroke="none"/>
+
+        {/* ─ Front roof — two sections ─ */}
+        <path d="M315 148 Q356 136 400 148" fill="#627c86" stroke="none"/>
+        <line x1="318" y1="147.5" x2="398" y2="147.5" stroke="#3a4e58" strokeWidth="0.55"/>
+        <line x1="316" y1="149.5" x2="399" y2="149.5" stroke="#7a8e98" strokeWidth="0.28"/>
+        <path d="M397 148 Q440 135 485 148" fill="#5c6e78" stroke="none"/>
+        <line x1="398" y1="147.5" x2="480" y2="147.5" stroke="#3a4e58" strokeWidth="0.55"/>
+        <line x1="397" y1="149.5" x2="482" y2="149.5" stroke="#7a8e98" strokeWidth="0.28"/>
+
+        {/* ─ 马头墙 far-left — 3 steps ─ */}
+        <path d="M318 148 L318 143 L323 139 L323 143 L328 143 L328 137 L333 133 L333 137 L338 137 L338 131 L343 127 L343 131 L343 148" fill="#f7f5f1" stroke="#8a9ea8" strokeWidth="0.48"/>
+        <path d="M338 131 L343 127 L348 131Z" fill="#627c86"/>
+        <path d="M328 137 L333 133 L338 137Z" fill="#627c86"/>
+        <path d="M323 143 L328 139 L333 143Z" fill="#627c86"/>
+
+        {/* ─ 马头墙 mid-section divider ─ */}
+        <path d="M395 148 L395 143 L398 140 L401 143 L401 148" fill="#f7f5f1" stroke="#8a9ea8" strokeWidth="0.4"/>
+        <path d="M395 143 L398 140 L401 143Z" fill="#5c6e78"/>
+
+        {/* ─ 马头墙 far-right — 3 steps ─ */}
+        <path d="M480 148 L480 143 L475 139 L475 143 L470 143 L470 137 L465 133 L465 137 L460 137 L460 131 L455 127 L455 131 L455 148" fill="#f7f5f1" stroke="#8a9ea8" strokeWidth="0.48"/>
+        <path d="M460 131 L455 127 L450 131Z" fill="#5c6e78"/>
+        <path d="M470 137 L465 133 L460 137Z" fill="#5c6e78"/>
+        <path d="M475 143 L470 139 L465 143Z" fill="#5c6e78"/>
+
+        {/* ─ Compound outer wall stub ─ */}
+        <rect x="475" y="164" width="5" height="8" fill="#eae6dc" stroke="#96a8b2" strokeWidth="0.3"/>
+        <path d="M474 164 Q478 161 482 164" fill="#5c6e78" stroke="none"/>
+      </g>
+
+      {/* ══ 三爿石 ══ */}
       <path
         d="M178 164 C190 150, 202 154, 215 157 C221 154, 229 151, 237 155 C245 151, 257 154, 270 157 C282 154, 296 150, 310 160 L310 176 L178 176Z"
         fill="#1e3c2e"
       />
-
-      {/* Left pillar — 郎峰 (tallest) */}
-      <path
-        d="M199 163 L199 98 L200 74 L202 54 L203 40 L205 32 L207 35 L209 48 L211 70 L213 98 L215 163Z"
-        fill="#1c3828"
-      />
-      {/* Sun-lit right face */}
-      <path
-        d="M206 35 L207 35 L209 48 L211 70 L213 98 L213 163 L210 163 L210 98 L208 70 L207 50Z"
-        fill="rgba(110, 175, 130, 0.22)"
-      />
-      {/* Crack detail */}
+      {/* 郎峰 */}
+      <path d="M199 163 L199 98 L200 74 L202 54 L203 40 L205 32 L207 35 L209 48 L211 70 L213 98 L215 163Z" fill="#1c3828"/>
+      <path d="M206 35 L207 35 L209 48 L211 70 L213 98 L213 163 L210 163 L210 98 L208 70 L207 50Z" fill="rgba(110,175,130,0.22)"/>
       <path d="M203 58 Q205 82 203 118" stroke="rgba(12,26,18,0.35)" strokeWidth="0.7" fill="none"/>
-
-      {/* Middle pillar — 亚峰 */}
-      <path
-        d="M222 163 L222 106 L223 82 L225 64 L226 52 L228 47 L230 51 L232 64 L234 84 L236 106 L238 163Z"
-        fill="#183222"
-      />
-      <path
-        d="M228 49 L230 51 L232 64 L234 84 L236 106 L236 163 L233 163 L233 106 L231 84 L229 65Z"
-        fill="rgba(110, 175, 130, 0.20)"
-      />
+      {/* 亚峰 */}
+      <path d="M222 163 L222 106 L223 82 L225 64 L226 52 L228 47 L230 51 L232 64 L234 84 L236 106 L238 163Z" fill="#183222"/>
+      <path d="M228 49 L230 51 L232 64 L234 84 L236 106 L236 163 L233 163 L233 106 L231 84 L229 65Z" fill="rgba(110,175,130,0.20)"/>
       <path d="M225 68 Q227 98 225 132" stroke="rgba(12,26,18,0.30)" strokeWidth="0.6" fill="none"/>
-
-      {/* Right pillar — 灵峰 (slightly wider) */}
-      <path
-        d="M245 163 L245 116 L246 93 L248 75 L251 62 L254 58 L257 62 L260 74 L262 92 L264 116 L267 163Z"
-        fill="#142c1e"
-      />
-      <path
-        d="M254 60 L257 62 L260 74 L262 92 L264 116 L267 163 L264 163 L264 116 L261 92 L258 75Z"
-        fill="rgba(110, 175, 130, 0.18)"
-      />
+      {/* 灵峰 */}
+      <path d="M245 163 L245 116 L246 93 L248 75 L251 62 L254 58 L257 62 L260 74 L262 92 L264 116 L267 163Z" fill="#142c1e"/>
+      <path d="M254 60 L257 62 L260 74 L262 92 L264 116 L267 163 L264 163 L264 116 L261 92 L258 75Z" fill="rgba(110,175,130,0.18)"/>
 
       {/* Mist veil in front of pillars */}
-      <ellipse cx="232" cy="152" rx="62"  ry="7"  fill="rgba(255,255,255,0.38)"/>
-      <ellipse cx="185" cy="160" rx="38"  ry="5"  fill="rgba(255,255,255,0.28)"/>
-      <ellipse cx="285" cy="158" rx="42"  ry="5"  fill="rgba(255,255,255,0.24)"/>
+      <ellipse cx="232" cy="152" rx="62" ry="7"  fill="rgba(255,255,255,0.38)"/>
+      <ellipse cx="185" cy="160" rx="38" ry="5"  fill="rgba(255,255,255,0.28)"/>
+      <ellipse cx="285" cy="158" rx="42" ry="5"  fill="rgba(255,255,255,0.24)"/>
 
-      {/* Left bamboo grove */}
+      {/* ══════════════════════════════════════════
+          桃树 LEFT — 桃花盛开 (larger)
+          ══════════════════════════════════════════ */}
+      <g opacity="0.93">
+        {/* Main trunk */}
+        <path d="M38 174 Q41 160 37 147" stroke="#6a4828" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
+        {/* Primary branches */}
+        <path d="M37 147 Q28 139 22 133" stroke="#6a4828" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+        <path d="M37 147 Q42 140 50 134" stroke="#6a4828" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+        <path d="M37 155 Q25 149 18 144" stroke="#6a4828" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+        <path d="M37 155 Q48 150 55 146" stroke="#6a4828" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+        {/* Secondary branches */}
+        <path d="M22 133 Q17 128 14 124" stroke="#6a4828" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+        <path d="M22 133 Q20 127 18 122" stroke="#6a4828" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+        <path d="M50 134 Q54 129 58 125" stroke="#6a4828" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+        <path d="M50 134 Q52 128 56 123" stroke="#6a4828" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+        <path d="M18 144 Q12 140 8 136" stroke="#6a4828" strokeWidth="0.8" fill="none" strokeLinecap="round"/>
+        <path d="M55 146 Q61 142 65 138" stroke="#6a4828" strokeWidth="0.8" fill="none" strokeLinecap="round"/>
+        {/* Blossom clusters — branch tips */}
+        <circle cx="14" cy="123" r="6.5" fill="rgba(255,172,188,0.82)"/>
+        <circle cx="19" cy="120" r="5.5" fill="rgba(255,150,172,0.78)"/>
+        <circle cx="10" cy="127" r="5.0" fill="rgba(255,198,212,0.76)"/>
+        <circle cx="16" cy="117" r="4.5" fill="rgba(255,162,182,0.72)"/>
+        <circle cx="58" cy="124" r="6.5" fill="rgba(255,172,188,0.82)"/>
+        <circle cx="53" cy="121" r="5.5" fill="rgba(255,150,172,0.78)"/>
+        <circle cx="62" cy="128" r="5.0" fill="rgba(255,198,212,0.76)"/>
+        <circle cx="56" cy="117" r="4.5" fill="rgba(255,162,182,0.72)"/>
+        {/* Mid branch blossoms */}
+        <circle cx="8" cy="135" r="5.5" fill="rgba(255,175,192,0.76)"/>
+        <circle cx="13" cy="132" r="4.8" fill="rgba(255,155,176,0.72)"/>
+        <circle cx="65" cy="137" r="5.5" fill="rgba(255,175,192,0.76)"/>
+        <circle cx="60" cy="134" r="4.8" fill="rgba(255,155,176,0.72)"/>
+        {/* Scattered fill blossoms */}
+        <circle cx="22" cy="131" r="5.0" fill="rgba(255,182,198,0.70)"/>
+        <circle cx="50" cy="132" r="5.0" fill="rgba(255,182,198,0.70)"/>
+        <circle cx="35" cy="143" r="4.5" fill="rgba(255,198,212,0.62)"/>
+        <circle cx="27" cy="146" r="4.0" fill="rgba(255,215,228,0.58)"/>
+        <circle cx="46" cy="147" r="4.0" fill="rgba(255,215,228,0.58)"/>
+        <circle cx="18" cy="140" r="3.5" fill="rgba(255,215,228,0.54)"/>
+        <circle cx="55" cy="141" r="3.5" fill="rgba(255,215,228,0.54)"/>
+      </g>
+
+      {/* ══════════════════════════════════════════
+          桃树 RIGHT — 桃花盛开 (larger)
+          ══════════════════════════════════════════ */}
+      <g opacity="0.91">
+        <path d="M442 174 Q439 160 443 147" stroke="#6a4828" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
+        <path d="M443 147 Q452 139 458 133" stroke="#6a4828" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+        <path d="M443 147 Q438 140 430 134" stroke="#6a4828" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+        <path d="M443 155 Q455 149 462 144" stroke="#6a4828" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+        <path d="M443 155 Q432 150 425 146" stroke="#6a4828" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+        <path d="M458 133 Q463 128 466 124" stroke="#6a4828" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+        <path d="M458 133 Q460 127 462 122" stroke="#6a4828" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+        <path d="M430 134 Q426 129 422 125" stroke="#6a4828" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+        <path d="M430 134 Q428 128 424 123" stroke="#6a4828" strokeWidth="0.9" fill="none" strokeLinecap="round"/>
+        <path d="M462 144 Q468 140 472 136" stroke="#6a4828" strokeWidth="0.8" fill="none" strokeLinecap="round"/>
+        <path d="M425 146 Q419 142 415 138" stroke="#6a4828" strokeWidth="0.8" fill="none" strokeLinecap="round"/>
+        {/* Blossom clusters */}
+        <circle cx="466" cy="123" r="6.5" fill="rgba(255,172,188,0.82)"/>
+        <circle cx="461" cy="120" r="5.5" fill="rgba(255,150,172,0.78)"/>
+        <circle cx="470" cy="127" r="5.0" fill="rgba(255,198,212,0.76)"/>
+        <circle cx="464" cy="117" r="4.5" fill="rgba(255,162,182,0.72)"/>
+        <circle cx="422" cy="124" r="6.5" fill="rgba(255,172,188,0.82)"/>
+        <circle cx="427" cy="121" r="5.5" fill="rgba(255,150,172,0.78)"/>
+        <circle cx="418" cy="128" r="5.0" fill="rgba(255,198,212,0.76)"/>
+        <circle cx="424" cy="117" r="4.5" fill="rgba(255,162,182,0.72)"/>
+        <circle cx="472" cy="135" r="5.5" fill="rgba(255,175,192,0.76)"/>
+        <circle cx="467" cy="132" r="4.8" fill="rgba(255,155,176,0.72)"/>
+        <circle cx="415" cy="137" r="5.5" fill="rgba(255,175,192,0.76)"/>
+        <circle cx="420" cy="134" r="4.8" fill="rgba(255,155,176,0.72)"/>
+        <circle cx="458" cy="131" r="5.0" fill="rgba(255,182,198,0.70)"/>
+        <circle cx="430" cy="132" r="5.0" fill="rgba(255,182,198,0.70)"/>
+        <circle cx="445" cy="143" r="4.5" fill="rgba(255,198,212,0.62)"/>
+        <circle cx="453" cy="146" r="4.0" fill="rgba(255,215,228,0.58)"/>
+        <circle cx="434" cy="147" r="4.0" fill="rgba(255,215,228,0.58)"/>
+        <circle cx="462" cy="141" r="3.5" fill="rgba(255,215,228,0.54)"/>
+        <circle cx="425" cy="142" r="3.5" fill="rgba(255,215,228,0.54)"/>
+      </g>
+
+      {/* ── Left bamboo grove ── */}
       <g>
-        {/* Stem 1 */}
         <line x1="26" y1="200" x2="20" y2="126" stroke="#3e8258" strokeWidth="2.6" strokeLinecap="round"/>
         <ellipse cx="20.5" cy="148" rx="4"   ry="2"   fill="none" stroke="#3e8258" strokeWidth="1"/>
         <ellipse cx="20.5" cy="165" rx="4"   ry="2"   fill="none" stroke="#3e8258" strokeWidth="1"/>
         <ellipse cx="10"   cy="140" rx="13"  ry="3.2" transform="rotate(-34 10 140)"  fill="#50a068" opacity="0.75"/>
         <ellipse cx="28"   cy="134" rx="11"  ry="2.8" transform="rotate(24 28 134)"   fill="#50a068" opacity="0.75"/>
         <ellipse cx="8"    cy="155" rx="9"   ry="2.4" transform="rotate(-27 8 155)"   fill="#469a5e" opacity="0.65"/>
-
-        {/* Stem 2 */}
         <line x1="48" y1="200" x2="44" y2="136" stroke="#3a8252" strokeWidth="2.1" strokeLinecap="round"/>
         <ellipse cx="44.5" cy="156" rx="3.5" ry="1.8" fill="none" stroke="#3a8252" strokeWidth="0.9"/>
         <ellipse cx="37"   cy="150" rx="10"  ry="2.6" transform="rotate(-30 37 150)"  fill="#4c9862" opacity="0.70"/>
         <ellipse cx="50"   cy="143" rx="9"   ry="2.2" transform="rotate(19 50 143)"   fill="#4c9862" opacity="0.70"/>
-
-        {/* Stem 3 (background) */}
         <line x1="10" y1="200" x2="6"  y2="142" stroke="#326a48" strokeWidth="1.6" strokeLinecap="round" opacity="0.65"/>
         <ellipse cx="2"    cy="156" rx="8"   ry="2"   transform="rotate(-33 2 156)"   fill="#408255" opacity="0.60"/>
         <ellipse cx="10"   cy="148" rx="7"   ry="1.8" transform="rotate(26 10 148)"   fill="#408255" opacity="0.60"/>
       </g>
 
-      {/* Right bamboo grove */}
+      {/* ── Right bamboo grove ── */}
       <g>
         <line x1="454" y1="200" x2="460" y2="128" stroke="#3e8258" strokeWidth="2.6" strokeLinecap="round"/>
         <ellipse cx="459.5" cy="150" rx="4"   ry="2"   fill="none" stroke="#3e8258" strokeWidth="1"/>
         <ellipse cx="459.5" cy="168" rx="4"   ry="2"   fill="none" stroke="#3e8258" strokeWidth="1"/>
         <ellipse cx="450"   cy="144" rx="12"  ry="3"   transform="rotate(32 450 144)"  fill="#50a068" opacity="0.73"/>
         <ellipse cx="467"   cy="137" rx="11"  ry="2.7" transform="rotate(-22 467 137)" fill="#50a068" opacity="0.73"/>
-
         <line x1="470" y1="200" x2="473" y2="138" stroke="#3a8252" strokeWidth="2.1" strokeLinecap="round"/>
         <ellipse cx="472.5" cy="158" rx="3.5" ry="1.8" fill="none" stroke="#3a8252" strokeWidth="0.9"/>
         <ellipse cx="478"   cy="150" rx="9"   ry="2.3" transform="rotate(-26 478 150)" fill="#4c9862" opacity="0.68"/>
         <ellipse cx="465"   cy="146" rx="8"   ry="2"   transform="rotate(21 465 146)"  fill="#4c9862" opacity="0.68"/>
-
         <line x1="478" y1="200" x2="479" y2="146" stroke="#326a48" strokeWidth="1.6" strokeLinecap="round" opacity="0.62"/>
         <ellipse cx="474"   cy="153" rx="7"   ry="1.8" transform="rotate(30 474 153)"  fill="#408255" opacity="0.58"/>
       </g>
 
-      {/* Foreground ridge */}
+      {/* ── Foreground ridge (riverbank) ── */}
       <path
-        d="M0 176 C55 166, 128 174, 200 170 C272 166, 345 172, 408 168 C434 166, 458 170, 480 174 L480 200 L0 200Z"
+        d="M0 172 C55 164, 130 171, 200 168 C272 165, 348 170, 408 167 C436 165, 460 169, 480 172 L480 200 L0 200Z"
         fill="#2a5038"
       />
+
+      {/* ══════════════════════════════════════════
+          河 RIVER
+          ══════════════════════════════════════════ */}
+      <path
+        d="M0 179 Q80 176, 160 178 Q240 180, 320 178 Q400 176, 480 178 L480 200 L0 200Z"
+        fill="url(#qzRiver)"
+      />
+      {/* Sky reflection in water */}
+      <path
+        d="M0 179 Q80 176, 160 178 Q240 180, 320 178 Q400 176, 480 178 L480 187 Q400 184, 320 186 Q240 188, 160 186 Q80 184, 0 187Z"
+        fill="url(#qzSkyRefl)"
+      />
+      {/* Shimmer lines */}
+      <line x1="18"  y1="184" x2="52"  y2="183" stroke="rgba(255,255,255,0.44)" strokeWidth="0.6" strokeLinecap="round"/>
+      <line x1="72"  y1="188" x2="118" y2="187" stroke="rgba(255,255,255,0.36)" strokeWidth="0.5" strokeLinecap="round"/>
+      <line x1="143" y1="183" x2="176" y2="182" stroke="rgba(255,255,255,0.40)" strokeWidth="0.5" strokeLinecap="round"/>
+      <line x1="292" y1="184" x2="336" y2="183" stroke="rgba(255,255,255,0.36)" strokeWidth="0.5" strokeLinecap="round"/>
+      <line x1="358" y1="188" x2="404" y2="187" stroke="rgba(255,255,255,0.34)" strokeWidth="0.5" strokeLinecap="round"/>
+      <line x1="428" y1="183" x2="464" y2="182" stroke="rgba(255,255,255,0.40)" strokeWidth="0.5" strokeLinecap="round"/>
+
+      {/* ══════════════════════════════════════════
+          舟 BOAT (乌篷船)
+          ══════════════════════════════════════════ */}
+      {/* Reflection shadow */}
+      <ellipse cx="230" cy="196" rx="30" ry="2.2" fill="rgba(28,48,38,0.16)"/>
+      {/* Hull */}
+      <path d="M202 192 C210 188, 250 188, 258 192 C253 197, 207 197, 202 192Z" fill="#3a2010"/>
+      <line x1="204" y1="192" x2="256" y2="192" stroke="#2a1408" strokeWidth="0.5"/>
+      {/* 乌篷 awning arch */}
+      <path d="M212 191 Q222 183, 232 182 Q242 183, 248 191" fill="none" stroke="#241408" strokeWidth="2.6" strokeLinecap="round"/>
+      {/* Awning inner shadow */}
+      <path d="M214 192 Q222 185, 232 184 Q242 185, 247 192" fill="none" stroke="rgba(0,0,0,0.15)" strokeWidth="1" strokeLinecap="round"/>
+      {/* Stern pole */}
+      <line x1="210" y1="191" x2="207" y2="180" stroke="#4a3020" strokeWidth="1.1" strokeLinecap="round"/>
+      {/* Small red pennant */}
+      <path d="M207 180 L216 177 L210 182Z" fill="rgba(188,42,42,0.68)"/>
+      {/* Oar reaching back */}
+      <path d="M254 190 Q262 193, 270 196" stroke="#5a4030" strokeWidth="1.1" fill="none" strokeLinecap="round"/>
+      {/* Ripple rings */}
+      <ellipse cx="230" cy="193" rx="36" ry="1.8" fill="none" stroke="rgba(180,215,235,0.32)" strokeWidth="0.7"/>
+      <ellipse cx="230" cy="194" rx="44" ry="2.2" fill="none" stroke="rgba(180,215,235,0.18)" strokeWidth="0.5"/>
+
+      {/* Fallen petals on water surface */}
+      <ellipse cx="148" cy="185" rx="3.2" ry="1.4" fill="rgba(255,178,193,0.52)" transform="rotate(-18 148 185)"/>
+      <ellipse cx="175" cy="188" rx="2.5" ry="1.1" fill="rgba(255,165,182,0.46)" transform="rotate(26 175 188)"/>
+      <ellipse cx="282" cy="184" rx="3.0" ry="1.3" fill="rgba(255,178,193,0.50)" transform="rotate(14 282 184)"/>
+      <ellipse cx="312" cy="188" rx="2.5" ry="1.2" fill="rgba(255,196,210,0.44)" transform="rotate(-22 312 188)"/>
+      <ellipse cx="374" cy="185" rx="3.0" ry="1.3" fill="rgba(255,178,193,0.48)" transform="rotate(8 374 185)"/>
+      <ellipse cx="420" cy="188" rx="2.2" ry="1.0" fill="rgba(255,200,214,0.42)" transform="rotate(-12 420 188)"/>
     </svg>
   )
 }
