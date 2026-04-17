@@ -599,6 +599,7 @@ export default function QuzhouTripPage({ onBack }: Props) {
   const pillsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     const t = setTimeout(() => setVisible(true), 60)
     return () => clearTimeout(t)
   }, [])
@@ -786,24 +787,18 @@ export default function QuzhouTripPage({ onBack }: Props) {
             <span className={styles.subTitleIcon}><Icon name="hotel" size={18}/></span>
             酒店安排
           </h3>
-          <div className={styles.hotelList}>
-            {HOTELS.map((h, i) => (
-              <div key={i} className={styles.hotelItem}>
-                <div className={styles.hotelNight}>
-                  <span className={styles.hotelNightIcon}><Icon name="hotel" size={13}/></span>
-                  {h.night}
-                </div>
-                <div className={styles.hotelInfo}>
-                  <div className={styles.hotelName}>
-                    {h.name}
-                    <a className={styles.pinLink} href={buildBaiduNavUrl(h.name)} aria-label="导航到酒店" onClick={e => e.stopPropagation()}>
-                      <Icon name="mapPin" size={14}/>
-                    </a>
-                  </div>
-                  <div className={styles.hotelDesc}>{h.desc}</div>
-                </div>
+          <div className={styles.hotelSingle}>
+            <div className={styles.hotelSingleIcon}><Icon name="hotel" size={20}/></div>
+            <div className={styles.hotelSingleInfo}>
+              <div className={styles.hotelSingleName}>
+                衢州希尔顿双树酒店
+                <a className={styles.pinLink} href={buildBaiduNavUrl('衢州希尔顿双树酒店')} aria-label="导航到酒店" onClick={e => e.stopPropagation()}>
+                  <Icon name="mapPin" size={13}/>
+                </a>
               </div>
-            ))}
+              <div className={styles.hotelSingleMeta}>4晚连住 · 5/1 — 5/4 · 市区中心</div>
+              <div className={styles.hotelSingleDesc}>停车便利 · 含室内泳池</div>
+            </div>
           </div>
         </section>
 

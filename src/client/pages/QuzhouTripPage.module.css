@@ -462,6 +462,55 @@
 /* ── Hotel Cards ────────────────────────────────── */
 .hotelList { display: flex; flex-direction: column; gap: 10px; }
 
+.hotelSingle {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  background: linear-gradient(135deg, oklch(94% 0.04 158), oklch(96% 0.03 200));
+  border-radius: var(--r);
+  border: 1px solid oklch(82% 0.08 158 / 0.4);
+  box-shadow: 0 2px 8px rgba(20, 80, 60, 0.06);
+}
+
+.hotelSingleIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hotelSingleInfo { flex: 1; min-width: 0; }
+
+.hotelSingleName {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.4;
+}
+
+.hotelSingleMeta {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-top: 3px;
+  letter-spacing: 0.02em;
+}
+
+.hotelSingleDesc {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
 .hotelItem {
   display: flex;
   gap: 12px;
