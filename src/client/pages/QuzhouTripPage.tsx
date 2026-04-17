@@ -595,10 +595,10 @@ const CIRCLED_NUMBERS = ['①', '②', '③', '④', '⑤', '⑥']
 /* ── Static Data ─────────────────────────────── */
 
 const DAYS = [
-  { id: 'd1', label: '市区', emoji: '🌿' },
-  { id: 'd2', label: '龙游', emoji: '🪨' },
-  { id: 'd3', label: '文化', emoji: '🏛️' },
-  { id: 'd4', label: '南线', emoji: '🏔️' },
+  { id: 'd1', label: '古镇', emoji: '🏮' },
+  { id: 'd2', label: '世遗', emoji: '⛰️' },
+  { id: 'd3', label: '慢游', emoji: '🏛️' },
+  { id: 'd4', label: '石窟', emoji: '🪨' },
   { id: 'd5', label: '返程', emoji: '🏠' },
 ]
 
@@ -619,186 +619,189 @@ interface DayData {
 const ITINERARY: DayData[] = [
   {
     id: 'd1', month: '5月', dayDate: '1',
-    title: '南京→衢州\n城市绿肺初体验',
-    distance: '约400km', hotel: '衢州希尔顿双树酒店',
+    title: '赶早出发\n直奔深山古镇',
+    distance: '约480km', hotel: '廿八都客栈',
     weather: 'partlyCloudy', temp: '18~26°C',
-    weatherCity: '衢州', weatherDate: '2026-05-01',
+    weatherCity: '江山', weatherDate: '2026-05-01',
     entries: [
       {
-        id: 'd1-1', time: '07:30 出发', desc: '南京出发自驾前往衢州',
-        body: '走沪宁高速转杭徽高速或沪渝高速，全程约400km，预计6小时。五一节假日建议07:30前上路，早于早高峰拥堵期。服务区约每2小时停靠休息，全车备好零食和玩具。',
+        id: 'd1-1', time: '07:00 出发底线', desc: '抢在第一波出城大军前上高速',
+        body: '务必在07:00前通过高速收费站！早这10分钟，能帮你省下后面几十公里的拥堵时间。',
       },
       {
-        id: 'd1-2', time: '13:30 - 15:00', desc: '抵达衢州 · 办理入住',
-        body: '入住衢州希尔顿双树酒店或衢州悦苑酒店。停车极其便利，周边餐饮丰富，酒店含高品质室内泳池，是孩子每天结束行程后最好的"充电站"。一次性归置好5天生活用品。',
+        id: 'd1-2', time: '07:00 - 14:30', desc: '分段式赶路：南京 ➔ 廿八都',
+        body: '铁律：每开2小时必须进服务区休息15分钟。二休（约10:00）在建德服务区大休整40分钟吃早午餐。',
       },
       {
-        id: 'd1-3', time: '15:30 - 17:30', desc: '鹿鸣公园',
+        id: 'd1-3', time: '14:40 - 15:00', desc: '抵达廿八都 · 办理入住',
+        body: '导航到“廿八都北入口停车场”，步行2分钟到客栈（推荐念八铺客栈、郎峰客栈，方便拿行李）。',
+      },
+      {
+        id: 'd1-4', time: '15:00 - 17:30', desc: '休息调整',
+        body: '长途车程后，先在客栈休息，吃点水果，喝点茶，调整状态。',
+      },
+      {
+        id: 'd1-5', time: '17:30 - 20:30', desc: '古镇夜游',
         isSight: true,
         detailsList: [
-          { label: '概述', value: '衢州城区绿肺，以极具逻辑美感的高架红色栈道著称' },
-          { label: '亮点', value: '地势极平，非常适合长途乘车后的孩子尽情奔跑；栈道视野开阔' },
-          { label: '必打卡', value: '高架红色木栈道全程、湖面观景平台、儿童游乐区' },
+          { label: '概述', value: '藏于大山深处的国家历史文化名镇，夜晚游客稀少，更显古朴' },
+          { label: '晚餐', value: '客栈附近吃，点些不辣的廿八都豆腐、土鸡煲' },
+          { label: '必打卡', value: '挂满红灯笼的古街漫步' },
         ],
         badges: [
-          { text: '免费开放', type: 'green' }, { text: '无需预约', type: 'green' }, { text: '地势平坦推车无障碍' },
-        ],
-      },
-      {
-        id: 'd1-4', time: '18:00 - 20:00', desc: '水亭门',
-        isSight: true,
-        detailsList: [
-          { label: '概述', value: '衢州古城核心，千年历史城墙与母亲河信安湖交汇处' },
-          { label: '亮点', value: '古城墙下吹江风，感受衢州烟火气，多家地道衢州菜馆' },
-          { label: '必打卡', value: '城楼夜景、信安湖江畔、古铺良食餐厅（水晶糕+不辣烤饼）' },
-        ],
-        badges: [
-          { text: '免费开放', type: 'green' }, { text: '晚餐推荐古铺良食', type: 'gold' }, { text: '水晶糕孩子首选' },
+          { text: '免费', type: 'green' }, { text: '21:00前回房休息', type: 'gold' },
         ],
       },
     ],
   },
   {
     id: 'd2', month: '5月', dayDate: '2',
-    title: '东线探秘\n龙游石窟与古建大观',
-    distance: '约80km(双程)', hotel: '衢州希尔顿双树酒店(续住)',
+    title: '晨雾古镇与世遗野餐\n前往市区',
+    distance: '约100km', hotel: '衢州高星酒店',
     weather: 'sunny', temp: '17~28°C',
-    weatherCity: '龙游', weatherDate: '2026-05-02',
+    weatherCity: '江山', weatherDate: '2026-05-02',
     entries: [
       {
-        id: 'd2-1', time: '08:15 - 08:30', desc: '自驾前往龙游石窟',
-        body: '衢州市区至龙游约40km，约40分钟车程。五一期间务必08:30左右抵达，避开人流高峰。',
+        id: 'd2-1', time: '07:30 - 09:00', desc: '独享清晨古镇',
+        body: '旅游团还没来，带孩子拍拍晨雾里的古镇，顺手买点铜锣糕路上吃。',
       },
       {
-        id: 'd2-2', time: '08:30 - 11:00', desc: '龙游石窟',
+        id: 'd2-2', time: '09:00 - 10:00', desc: '驱车北上前往江郎山',
+        body: '必须要9点走，争取10点前到，避开五一排队坐景交车的大长龙。',
+      },
+      {
+        id: 'd2-3', time: '10:00 - 13:30', desc: '江郎山轻松游',
         isSight: true,
         detailsList: [
-          { label: '概述', value: '规模宏大的地下人工洞窟群，开凿年代至今成谜，被称为"地下奇观"' },
-          { label: '亮点', value: '洞内常年16℃，地下探险感极强；石壁上的神秘浮雕引人遐想' },
-          { label: '必打卡', value: '主洞窟穹顶全景、地下暗河水面倒影、神秘浮雕石刻' },
+          { label: '概述', value: '世界自然遗产，典型丹霞地貌，三爿石拔地而起' },
+          { label: '路线', value: '坐景交车进山，走开明禅寺➔会仙岩这段平路（约30分钟），不去爬台阶，主打轻松' },
+          { label: '必打卡', value: '须女湖走木栈道，江郎山大草坪' },
         ],
         badges: [
-          { text: '成人 60元', type: 'red' }, { text: '儿童优惠', type: 'green' },
-          { text: '洞内16℃备外套', type: 'gold' }, { text: '穿防滑运动鞋' }, { text: '带小手电筒更有趣' },
+          { text: '成人90元(含景交)', type: 'red' }, { text: '儿童优惠', type: 'green' }
         ],
       },
       {
-        id: 'd2-3', time: '11:30 - 13:00', desc: '龙游县城午餐',
-        body: '就近在龙游县城用餐，推荐龙游发糕、龙游米糊等本地特色，口味温和适配儿童。',
+        id: 'd2-4', time: '13:30 - 15:00', desc: '午休转移 · 江郎山 ➔ 衢州市区',
+        body: '这段1.5小时的车程刚好让孩子在车上睡一觉。',
       },
       {
-        id: 'd2-4', time: '13:30 - 16:30', desc: '龙游民居苑',
+        id: 'd2-5', time: '15:00 - 17:00', desc: '安顿大本营',
+        body: '抵达衢州市区高星酒店，把后备箱搬空，接下来的几天都不用再整理行李了。',
+      },
+      {
+        id: 'd2-6', time: '17:00 - 19:00', desc: '鹿鸣公园放风',
         isSight: true,
         detailsList: [
-          { label: '概述', value: '汇聚浙西民间古建筑精华的露天博物馆，明清徽派建筑群落' },
-          { label: '亮点', value: '地势平坦、树荫繁茂；可给孩子设"寻宝任务"：找木雕里的小狮子或花鸟' },
-          { label: '必打卡', value: '翠光堂精雕门窗、各式砖雕牌坊、古戏台、荷花池' },
+          { label: '概述', value: '衢州城区绿肺，以极具逻辑美感的高架红色栈道著称' },
+          { label: '必打卡', value: '高架栈道和大草坪跑跑跳跳' },
         ],
         badges: [
-          { text: '成人 30元', type: 'red' }, { text: '儿童优惠', type: 'green' },
-          { text: '推车无障碍' }, { text: '寻宝任务：找木雕狮子' },
+          { text: '免费开放', type: 'green' }, { text: '记得喷防蚊液', type: 'gold' },
         ],
-      },
-      {
-        id: 'd2-5', time: '16:30 - 17:15', desc: '返回衢州酒店 · 泳池放电',
-        body: '驱车约40分钟返回衢州市区酒店。晚餐后带孩子去室内泳池，消耗剩余精力，为明天做好体能储备。',
       },
     ],
   },
   {
     id: 'd3', month: '5月', dayDate: '3',
-    title: '文化沉浸\n恐龙化石与南孔后花园',
-    distance: '市区内', hotel: '衢州希尔顿双树酒店(续住)',
+    title: '市中心人文慢游\n零车程睡饱吃好',
+    distance: '零车程', hotel: '衢州高星酒店(续住)',
     weather: 'sunny', temp: '19~29°C',
     weatherCity: '衢州', weatherDate: '2026-05-03',
     entries: [
       {
-        id: 'd3-1', time: '09:30 - 11:30', desc: '衢州博物馆',
+        id: 'd3-1', time: '09:00 - 10:30', desc: '衢州博物馆看大恐龙',
         isSight: true,
         detailsList: [
           { label: '概述', value: '国家一级博物馆，馆藏衢州地区史前至近代珍贵文物' },
-          { label: '亮点', value: '重点看"礼贤江山龙"恐龙化石展厅，室内场馆完全规避五一正午烈日' },
-          { label: '必打卡', value: '礼贤江山龙恐龙化石、新石器时代文物展、南孔文化专题展' },
+          { label: '必打卡', value: '一楼的恐龙骨架化石和历史展厅' },
         ],
         badges: [
           { text: '免费', type: 'green' }, { text: '公众号提前预约', type: 'red' },
-          { text: '节假日提前抢票' }, { text: '建议9:30前入场' },
         ],
       },
       {
-        id: 'd3-2', time: '11:30 - 14:30', desc: '黄金午休',
-        body: '午餐后直接步行回酒店，进行2小时午休。这是"连住一地"策略的最大红利——瞬间回血，下午继续以满格状态出发。',
-      },
-      {
-        id: 'd3-3', time: '15:00 - 16:30', desc: '孔氏南宗家庙',
+        id: 'd3-2', time: '10:30 - 12:00', desc: '衢州科技馆',
         isSight: true,
         detailsList: [
-          { label: '概述', value: '南宋以来孔子后裔南迁后的家庙，是儒家文化在南方的重要传承地' },
-          { label: '亮点', value: '环境极度静谧，后花园可带孩子喂锦鲤，是难得的闹中取静之所' },
-          { label: '必打卡', value: '大成殿、思鲁阁、后花园锦鲤池、百年古银杏' },
+          { label: '概述', value: '寓教于乐的互动场馆' },
+          { label: '亮点', value: '有很多适合小朋友玩的互动小实验' },
         ],
         badges: [
-          { text: '免费', type: 'green' }, { text: '无需预约', type: 'green' }, { text: '喂锦鲤孩子最爱' },
+          { text: '步行5分钟即达', type: 'green' },
         ],
       },
       {
-        id: 'd3-4', time: '17:00 - 19:30', desc: '水亭门/府山公园散步 · 采购特产',
-        body: '傍晚凉风习习，在水亭门或府山公园溜达，同时统一采购好明天南线所需零食、水果，以及准备带回南京的特产：龙游发糕、廿八都铜锣糕。',
+        id: 'd3-3', time: '12:00 - 14:30', desc: '回房午睡',
+        body: '在酒店附近吃完午饭，直接溜达回房间睡个踏实的长午觉。',
+      },
+      {
+        id: 'd3-4', time: '15:00 - 16:30', desc: '孔氏南宗家庙',
+        isSight: true,
+        detailsList: [
+          { label: '概述', value: '儒家文化在南方的重要传承地' },
+          { label: '亮点', value: '院子里很安静，带孩子在后花园喂锦鲤' },
+        ],
+        badges: [
+          { text: '免费', type: 'green' }, { text: '喂锦鲤', type: 'gold' },
+        ],
+      },
+      {
+        id: 'd3-5', time: '17:00 - 20:30', desc: '水亭门历史文化街区',
+        isSight: true,
+        detailsList: [
+          { label: '必打卡', value: '城墙上看衢江日落，看灯光秀' },
+          { label: '美食与购物', value: '古铺良食吃儿童餐，买徐氏水晶糕，买齐带回南京的特产（烤饼、麻糍等）' },
+        ],
+        badges: [
+          { text: '提前问灯光秀时间' }, { text: '不辣儿童餐', type: 'green' },
+        ],
       },
     ],
   },
   {
     id: 'd4', month: '5月', dayDate: '4',
-    title: '南线远征\n世遗奇峰与江湖古镇',
-    distance: '约280km(全天)', hotel: '衢州希尔顿双树酒店(续住)',
+    title: '地下探秘与古建\n早去早回不挤人',
+    distance: '约80km(双程)', hotel: '衢州高星酒店(续住)',
     weather: 'partlyCloudy', temp: '18~27°C',
-    weatherCity: '江山', weatherDate: '2026-05-04',
+    weatherCity: '龙游', weatherDate: '2026-05-04',
     entries: [
       {
-        id: 'd4-1', time: '08:30 - 09:30', desc: '南下启程 · 前往清漾村',
-        body: '吃完酒店早餐后出发，走衢州南高速，约1.5小时抵达江山市清漾毛氏文化村（距衢州约90km）。车内备好水和零食，孩子可以在车上小憩。',
+        id: 'd4-1', time: '08:00 - 08:45', desc: '前往龙游',
+        body: '酒店吃完早饭，开车去龙游（全程高速40分钟）。',
       },
       {
-        id: 'd4-2', time: '09:30 - 11:30', desc: '清漾毛氏文化村（远观江郎山）',
+        id: 'd4-2', time: '08:45 - 11:30', desc: '龙游石窟',
         isSight: true,
         detailsList: [
-          { label: '概述', value: '毛泽东祖籍发源地，世界自然遗产江郎山的绝佳远观点' },
-          { label: '亮点', value: '村口荷塘边可眺望远处"三块大石头"（江郎山三爿石），视野毫无遮挡，完全无需耗费攀爬体力' },
-          { label: '必打卡', value: '荷塘边远眺江郎山三爿石、毛氏宗祠、古村石板路漫步' },
+          { label: '概述', value: '趁大部队没来，第一批进地下奇观' },
+          { label: '亮点', value: '里面常年16度，带手电筒玩探险' },
         ],
         badges: [
-          { text: '免费', type: 'green' }, { text: '推车无障碍', type: 'green' },
-          { text: '世界自然遗产视野' }, { text: '拍照最佳：荷塘+奇峰背景' },
+          { text: '成人 60元', type: 'red' }, { text: '儿童加薄外套', type: 'gold' }, { text: '带小手电筒' },
         ],
       },
       {
-        id: 'd4-3', time: '11:30 - 12:30', desc: '清漾村周边农家午餐',
-        body: '就近选择村外农家乐，推荐江山特色土鸡煲，鲜美不辣，孩子和大人都爱。点菜务必提前说明"全桌免辣"。',
+        id: 'd4-3', time: '11:30 - 13:00', desc: '龙游县城午餐',
+        body: '点单时一定要交代全桌免辣，来点特色的发糕和葱花馒头。',
       },
       {
-        id: 'd4-4', time: '12:30 - 13:30', desc: '驱车前往廿八都古镇',
-        body: '全程约1小时车程，这段时间恰好是绝佳的"车厢午休时间"，让孩子在安全座椅里补足午觉，到达时精力充沛。',
-      },
-      {
-        id: 'd4-5', time: '13:30 - 16:30', desc: '廿八都古镇',
+        id: 'd4-4', time: '13:30 - 16:00', desc: '龙游民居苑',
         isSight: true,
         detailsList: [
-          { label: '概述', value: '藏于大山深处的国家历史文化名镇，融合浙、闽、赣三省风格的明清建筑群' },
-          { label: '亮点', value: '3小时沉浸式慢游；古镇咖啡馆/茶馆品铜锣糕；完全不赶时间' },
-          { label: '必打卡', value: '浔里街明清建筑群、古代江湖客栈遗迹、铜锣糕手工作坊、浔里民俗博物馆' },
+          { label: '概述', value: '明清徽派建筑群落' },
         ],
         badges: [
-          { text: '免费', type: 'green' }, { text: '无需预约', type: 'green' },
-          { text: '铜锣糕必尝', type: 'gold' }, { text: '全程平路无爬坡' },
+          { text: '成人 30元', type: 'red' } 
         ],
       },
       {
-        id: 'd4-6', time: '16:30 - 18:00', desc: '返回衢州市区',
-        body: '赶在太阳落山前启程，约1.5小时返回衢州大本营。孩子如果累了可在车上再小憩一会儿。',
+        id: 'd4-5', time: '16:00 - 16:50', desc: '返回衢州市区大本营',
+        body: '早早结束行程往回开，避开晚高峰。',
       },
       {
-        id: 'd4-7', time: '18:30', desc: '马站底美食街晚餐',
-        body: '回到衢州市区，前往"马站底"美食街大快朵颐，点菜照旧强调全桌免辣，衢州小吃琳琅满目，完美收官南线之旅。',
+        id: 'd4-6', time: '19:00', desc: '烟火夜宵',
+        body: '晚上打个车去“马站底”美食街，吃一顿最地道的衢州特色小吃。',
       },
     ],
   },
@@ -809,44 +812,43 @@ const ITINERARY: DayData[] = [
     weatherCity: '衢州', weatherDate: '2026-05-05',
     entries: [
       {
-        id: 'd5-1', time: '09:00 - 10:30', desc: '酒店早餐 · 从容打包',
-        body: '享用酒店自助早餐，然后从容打包行李（4晚未动箱，打包效率极高）。最后一次下酒店泳池也可安排在早餐前。',
+        id: 'd5-1', time: '08:30 - 10:00', desc: '从容收拾',
+        body: '睡到自然醒，安安心心吃顿自助早餐。东西前一晚就装得差不多了，慢慢收拾装车。',
       },
       {
-        id: 'd5-2', time: '10:30 - 11:00', desc: '办理退房 · 准备上路',
-        body: '办理退房，装车，检查是否有遗漏物品，尤其是充电器和儿童安全座椅配件。',
+        id: 'd5-2', time: '10:30', desc: '办理退房',
+        body: '交卡退房，最后检查遗漏物品。',
       },
       {
-        id: 'd5-3', time: '11:00', desc: '🚗 准时启程返回南京',
-        body: '优先走杭长高速转长深高速，车流量通常比沪昆高速更稳定。全程约400km，预留7小时（含服务区休息），最迟18:00前到家，不影响次日上学上班。',
+        id: 'd5-3', time: '11:00 - 17:00', desc: '准时上高速 · 顺利回家',
+        body: '11点准时上高速向北开！首选：衢州➔杭长高速➔长深高速➔南京。备用：如杭长(龙游-建德)拥堵，换走杭州绕城西复线。',
       },
     ],
   },
 ]
 
 const RESERVATIONS = [
-  { name: '龙游石窟', channel: '官方公众号', advance: '随时', price: '成人60元·儿童优惠' },
-  { name: '龙游民居苑', channel: '免预约', advance: '—', price: '成人30元·儿童优惠' },
-  { name: '衢州博物馆', channel: '官方公众号', advance: '提前', price: '(节假日提前抢)免费' },
-  { name: '孔氏南宗家庙', channel: '免预约', advance: '—', price: '免费' },
-  { name: '清漾毛氏文化村', channel: '免预约', advance: '—', price: '免费' },
-  { name: '廿八都古镇', channel: '免预约', advance: '—', price: '免费' },
+  { name: '衢州博物馆', channel: '官方公众号', advance: '提前3天', price: '免费' },
+  { name: '衢州科技馆', channel: '官方公众号', advance: '提前3天', price: '免费' },
+  { name: '龙游石窟', channel: '官方公众号/OTA', advance: '提前1-2天', price: '成人60元' },
+  { name: '江郎山', channel: '官方公众号/OTA', advance: '提前1-2天', price: '成人90元含景交' },
+  { name: '龙游民居苑', channel: '现场/OTA', advance: '—', price: '成人30元' },
+  { name: '孔氏南宗家庙', channel: '现场', advance: '—', price: '免费' },
 ]
 
 const HOTELS: HotelData[] = [
-  { dayId: 'd1', night: '5/1', name: '衢州希尔顿双树酒店', desc: '停车便利，含室内泳池' },
-  { dayId: 'd2', night: '5/2', name: '衢州希尔顿双树酒店', desc: '续住第二晚' },
-  { dayId: 'd3', night: '5/3', name: '衢州希尔顿双树酒店', desc: '续住第三晚' },
-  { dayId: 'd4', night: '5/4', name: '衢州希尔顿双树酒店', desc: '续住第四晚' },
+  { dayId: 'd1', night: '5/1', name: '廿八都北入口客栈(念八铺/郎峰)', desc: '方便拿行李，免走石板路' },
+  { dayId: 'd2', night: '5/2', name: '衢州市区高星酒店', desc: '大本营安营扎寨，停车便利' },
+  { dayId: 'd3', night: '5/3', name: '衢州市区高星酒店', desc: '连住不折腾' },
+  { dayId: 'd4', night: '5/4', name: '衢州市区高星酒店', desc: '连住不折腾' },
 ]
 
 const TIPS = [
+  '时间红线：D1务必在7:00前上高速；D5务必在11:00前上高速返程，卡准时间极大降低拥堵痛苦',
   '避辣指南：衢州菜辣度极高且"隐蔽"，点任何热菜务必反复叮嘱"全桌免辣，锅里不能沾辣椒"',
-  '龙游石窟：洞内常年16℃，务必给孩子备好薄外套；地面潮湿，穿防滑性能好的运动鞋',
-  '导航离线包：第四天南线山区路段信号可能波动，提前下载高德/百度地图离线包',
-  '午休策略：连住一地最大优势，每天午餐后步行回酒店午休，即刻回血',
-  '错峰入园：五一景点尽量08:30前或15:00后入园，减少排队等待时间',
-  '特产采购：龙游发糕、廿八都铜锣糕是最佳手信，建议第三天傍晚统一采购',
+  '超级大堵车预案：D1若下午3点未出杭州，果断就近(江山/衢州)下高速找酒店住下，安全第一',
+  '避开人群预案：若江郎山排队超1小时去清漾村；若龙游石窟约满去根宫佛国',
+  '带娃神器与药品：防蚊喷雾(鹿鸣公园和廿八都必备)、退烧药/晕车贴',
 ]
 
 /* ── Component ─────────────────────────────── */
@@ -947,35 +949,6 @@ export default function QuzhouTripPage({ onBack }: Props) {
           </div>
           <h1 className={styles.heroTitle}>衢州五日亲子游</h1>
           <p className={styles.heroSub}>五一自驾 · 2026.5.1 — 5.5 · 南京出发</p>
-          <div className={styles.heroStats}>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatN}>5</span>
-              <span className={styles.heroStatL}>天</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatN}>8</span>
-              <span className={styles.heroStatL}>景点</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatN}>800</span>
-              <span className={styles.heroStatL}>公里</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatN}>4</span>
-              <span className={styles.heroStatL}>人</span>
-            </div>
-          </div>
-          <div className={styles.heroChips}>
-            {DAYS.map(d => (
-              <button
-                key={d.id}
-                className={`${styles.heroChip} ${activeDay === d.id ? styles.heroChipActive : ''}`}
-                onClick={() => scrollToDay(d.id)}
-              >
-                {d.emoji} {d.label}
-              </button>
-            ))}
-          </div>
           {/* 云雾远山 + 三爿石 SVG landscape */}
           <div className={styles.heroScape}>
             <MountainScape />
@@ -985,7 +958,7 @@ export default function QuzhouTripPage({ onBack }: Props) {
         {/* ── Route ── */}
         <section className={styles.section} id="prep" ref={setSectionRef('prep')}>
           <p className={styles.sectionLabel}>行程路线</p>
-          <h2 className={styles.sectionTitle}>衢州大本营</h2>
+          <h2 className={styles.sectionTitle}>大本营策略</h2>
           <div className={styles.routeMap}>
             <div className={styles.routeRow}>
               <span className={styles.routeStop}>
@@ -996,13 +969,13 @@ export default function QuzhouTripPage({ onBack }: Props) {
               <span className={styles.routeDash}/>
               <span className={styles.routeStop}>
                 <span className={styles.routeStopDot}/>
-                <span className={styles.routeStopName}>衢州</span>
-                <span className={styles.routeStopDate}>5/1-4</span>
+                <span className={styles.routeStopName}>廿八都</span>
+                <span className={styles.routeStopDate}>5/1</span>
               </span>
               <span className={styles.routeDash}/>
               <span className={styles.routeStop}>
                 <span className={styles.routeStopDot}/>
-                <span className={styles.routeStopName}>龙游</span>
+                <span className={styles.routeStopName}>江郎山</span>
                 <span className={styles.routeStopDate}>5/2</span>
               </span>
             </div>
@@ -1010,20 +983,20 @@ export default function QuzhouTripPage({ onBack }: Props) {
             <div className={`${styles.routeRow} ${styles.routeRowReverse}`}>
               <span className={styles.routeStop}>
                 <span className={styles.routeStopDot}/>
+                <span className={styles.routeStopName}>衢州</span>
+                <span className={styles.routeStopDate}>5/2-5</span>
+              </span>
+              <span className={styles.routeDash}/>
+              <span className={styles.routeStop}>
+                <span className={styles.routeStopDot}/>
+                <span className={styles.routeStopName}>龙游</span>
+                <span className={styles.routeStopDate}>5/4</span>
+              </span>
+              <span className={styles.routeDash}/>
+              <span className={styles.routeStop}>
+                <span className={styles.routeStopDot}/>
                 <span className={styles.routeStopName}>南京</span>
                 <span className={styles.routeStopDate}>5/5</span>
-              </span>
-              <span className={styles.routeDash}/>
-              <span className={styles.routeStop}>
-                <span className={styles.routeStopDot}/>
-                <span className={styles.routeStopName}>衢州</span>
-                <span className={styles.routeStopDate}>5/4-5</span>
-              </span>
-              <span className={styles.routeDash}/>
-              <span className={styles.routeStop}>
-                <span className={styles.routeStopDot}/>
-                <span className={styles.routeStopName}>廿八都</span>
-                <span className={styles.routeStopDate}>5/4</span>
               </span>
             </div>
           </div>
@@ -1047,19 +1020,16 @@ export default function QuzhouTripPage({ onBack }: Props) {
 
           <h3 className={`${styles.subTitle} ${styles.subTitleGapLg}`}>
             <span className={styles.subTitleIcon}><Icon name="hotel" size={18}/></span>
-            酒店安排
+            住宿安排
           </h3>
           <div className={styles.hotelSingle}>
             <div className={styles.hotelSingleIcon}><Icon name="hotel" size={20}/></div>
             <div className={styles.hotelSingleInfo}>
               <div className={styles.hotelSingleName}>
-                衢州希尔顿双树酒店
-                <a className={styles.pinLink} href={buildBaiduNavUrl('衢州希尔顿双树酒店')} aria-label="导航到酒店" onClick={e => e.stopPropagation()}>
-                  <Icon name="mapPin" size={13}/>
-                </a>
+                1晚客栈 + 3晚高星酒店
               </div>
-              <div className={styles.hotelSingleMeta}>4晚连住 · 5/1 — 5/4 · 市区中心</div>
-              <div className={styles.hotelSingleDesc}>停车便利 · 含室内泳池</div>
+              <div className={styles.hotelSingleMeta}>1晚古镇客栈免走石板路</div>
+              <div className={styles.hotelSingleDesc}>3晚市区酒店做大本营 · 避免每日整理行李</div>
             </div>
           </div>
         </section>
@@ -1236,8 +1206,6 @@ export default function QuzhouTripPage({ onBack }: Props) {
         <footer className={styles.footer}>
           <span className={styles.footerSeal}>衢</span>
           <p className={styles.footerPoem}>绿阴不减来时路 · 添得黄鹂四五声</p>
-          <p>衢州五日亲子自驾 · 2026年五一</p>
-          <p className={styles.footerSub}>一地连住 · 从容探索</p>
         </footer>
       </div>
 
