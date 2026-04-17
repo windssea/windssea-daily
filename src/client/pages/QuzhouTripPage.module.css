@@ -111,15 +111,12 @@
   position: relative;
   overflow: hidden;
   padding: 28px 20px 0;
-  /* 蓝天 → 远山 → 云雾 */
+  /* 鲜艳的蓝天 → 远山 → 云雾 */
   background: linear-gradient(180deg,
-    #1a4d7e 0%,
-    #2770b0 20%,
-    #4596cc 42%,
-    #7abde0 60%,
-    #a8d8ef 78%,
-    #cae9f5 90%,
-    #dff2f8 100%
+    var(--sky-deep) 0%,
+    var(--sky) 42%,
+    var(--sky-light) 78%,
+    var(--paper) 100%
   );
   color: #fff;
 }
@@ -425,9 +422,12 @@
 
 .routeConnector {
   border-left: 1.5px dashed oklch(78% 0.06 158);
-  margin-left: 50%;
-  margin-bottom: 8px;
-  height: 16px;
+  height: 14px;
+  width: 1.5px;
+  margin-left: auto;
+  margin-right: 21px; /* align with rightmost dot (44px wide / 2 = 22) */
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
 /* ── Reservation List ───────────────────────────── */
@@ -870,7 +870,7 @@
 /* ── Footer ─────────────────────────────────────── */
 .footer {
   text-align: center;
-  padding: 32px 20px 56px;
+  padding: 32px 20px 84px;
   color: var(--ink-muted);
   font-size: 14px;
   position: relative;

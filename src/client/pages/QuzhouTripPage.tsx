@@ -979,7 +979,9 @@ export default function QuzhouTripPage({ onBack }: Props) {
                 <span className={styles.routeStopDate}>5/2</span>
               </span>
             </div>
-            <div className={styles.routeConnector}/>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div className={styles.routeConnector}/>
+            </div>
             <div className={`${styles.routeRow} ${styles.routeRowReverse}`}>
               <span className={styles.routeStop}>
                 <span className={styles.routeStopDot}/>
