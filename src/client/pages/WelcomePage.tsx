@@ -4,6 +4,7 @@ import styles from './WelcomePage.module.css'
 interface Props {
   onEnter: () => void
   onShanxiTrip: () => void
+  onQuzhouTrip: () => void
   onHuangshanTrip: () => void
   onTravelMap: () => void
 }
@@ -55,6 +56,18 @@ function IconMap({ className }: { className?: string }) {
   )
 }
 
+function IconBamboo({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3v18" />
+      <path d="M12 7c-2-1-4-1-5 1" />
+      <path d="M12 12c2-1 4-1 5 1" />
+      <path d="M12 17c-2-1-4-1-5 1" />
+      <path d="M12 7h0.01M12 12h0.01M12 17h0.01" />
+    </svg>
+  )
+}
+
 /* ── Hooks ──────────────────────────────────────────────── */
 
 function useGreeting() {
@@ -79,7 +92,7 @@ function useDateLabel() {
 
 /* ── Component ──────────────────────────────────────────── */
 
-function WelcomePage({ onEnter, onShanxiTrip, onHuangshanTrip, onTravelMap }: Props) {
+function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onTravelMap }: Props) {
   const greeting = useGreeting()
   const dateLabel = useDateLabel()
 
@@ -139,6 +152,23 @@ function WelcomePage({ onEnter, onShanxiTrip, onHuangshanTrip, onTravelMap }: Pr
               <div className={styles.tripBody}>
                 <p className={styles.tripLabel}>山西探索</p>
                 <p className={styles.tripDesc}>6 DAYS EXPLORE</p>
+              </div>
+              <IconArrowRight className={styles.tripArrow} />
+            </button>
+
+            <button
+              className={`${styles.card} ${styles.tripCard}`}
+              onClick={onQuzhouTrip}
+              aria-label="查看衢州旅游"
+            >
+              <div className={styles.tripHeader}>
+                <div className={`${styles.iconWrap} ${styles.iconWrapGreen}`}>
+                  <IconBamboo className={styles.iconElement} />
+                </div>
+              </div>
+              <div className={styles.tripBody}>
+                <p className={styles.tripLabel}>衢州山行</p>
+                <p className={styles.tripDesc}>5 DAYS JOURNEY</p>
               </div>
               <IconArrowRight className={styles.tripArrow} />
             </button>

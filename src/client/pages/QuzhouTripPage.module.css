@@ -1,0 +1,934 @@
+/* ═══════════════════════════════════════════════════════════
+   衢州攻略 · 青山绿水蓝天 小清新
+   三爿石 · 云雾远山 · 竹叶飘动
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
+
+/* ── Design Tokens ─────────────────────────────── */
+.page {
+  /* 竹青 Bamboo Green — primary accent */
+  --accent:       oklch(46% 0.17 158);
+  --accent-light: oklch(93% 0.06 158);
+  --accent-deep:  oklch(30% 0.13 158);
+  --accent-mid:   oklch(62% 0.13 158);
+  --accent-glow:  oklch(46% 0.17 158 / 0.25);
+
+  /* 蓝天 Sky Blue — secondary */
+  --sky:          oklch(62% 0.14 222);
+  --sky-light:    oklch(93% 0.06 222);
+  --sky-deep:     oklch(38% 0.14 230);
+
+  /* 宣纸 / 云雾 Paper — cool white */
+  --ink:          oklch(16% 0.04 200);
+  --ink-soft:     oklch(33% 0.05 200);
+  --ink-muted:    oklch(52% 0.04 200);
+  --paper:        oklch(97.5% 0.018 200);
+  --paper-warm:   oklch(94% 0.022 200);
+  --paper-line:   oklch(87% 0.028 200);
+
+  /* Status */
+  --gold:         oklch(68% 0.13 82);
+  --gold-light:   oklch(94% 0.05 82);
+  --gold-text:    oklch(48% 0.13 82);
+  --green:        oklch(52% 0.14 155);
+  --green-light:  oklch(93% 0.05 155);
+  --red:          oklch(52% 0.14 25);
+  --red-light:    oklch(93% 0.04 25);
+
+  --r: 12px; --r-sm: 8px; --r-xs: 4px;
+}
+
+/* ── Page Base ──────────────────────────────────── */
+.page {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Noto Sans SC', sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  font-size: 16px;
+  line-height: 1.75;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  padding-bottom: calc(60px + env(safe-area-inset-bottom));
+
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Icon ───────────────────────────────────────── */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.icon svg { width: 100%; height: 100%; }
+
+/* ── Floating Back Button ───────────────────────── */
+.backBtn {
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  left: 12px;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.12s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  box-shadow: 0 2px 8px rgba(30, 80, 120, 0.2);
+}
+.backBtn:active { transform: scale(0.88); background: rgba(255, 255, 255, 0.4); }
+.backBtn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* ── Hero ─────────────────────────────────────────
+   蓝天 azure at top fading toward 云雾 horizon
+   ─────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 28px 20px 0;
+  /* 蓝天 → 远山 → 云雾 */
+  background: linear-gradient(180deg,
+    #1a4d7e 0%,
+    #2770b0 20%,
+    #4596cc 42%,
+    #7abde0 60%,
+    #a8d8ef 78%,
+    #cae9f5 90%,
+    #dff2f8 100%
+  );
+  color: #fff;
+}
+
+/* Soft cloud wisps via radial gradients */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 25% at 80% 30%, rgba(255,255,255,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 20% at 15% 55%, rgba(255,255,255,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 18% at 50% 70%, rgba(255,255,255,0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Poem Quote ─────────────────────────────────── */
+.poemQuote {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  opacity: 0.72;
+}
+
+.poemLine {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 11px;
+  color: rgba(220, 240, 255, 0.9);
+  letter-spacing: 0.22em;
+  white-space: nowrap;
+}
+
+.poemDivider {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(200,230,255,0.4), transparent);
+}
+
+.poemAuthor {
+  font-size: 10px;
+  color: rgba(200, 230, 255, 0.6);
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+}
+
+/* ── Hero Text ──────────────────────────────────── */
+.heroTitle {
+  text-align: right;
+  position: relative;
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: clamp(30px, 9vw, 42px);
+  line-height: 1.08;
+  margin: 0 0 8px;
+  letter-spacing: 0.05em;
+  /* 白云 → 竹绿 */
+  background: linear-gradient(135deg, #ffffff 0%, #d4f0e8 50%, #90dbc0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 100%;
+  animation: heroShimmer 8s ease-in-out infinite;
+}
+
+.heroSub {
+  text-align: right;
+  position: relative;
+  font-size: 13px;
+  color: rgba(220, 240, 255, 0.82);
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+
+.heroStats {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.heroStat {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 4px;
+  text-align: center;
+}
+
+.heroStatN {
+  font-size: 22px;
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-variant-numeric: tabular-nums;
+  display: block;
+  line-height: 1;
+  color: #a8f0d4;
+}
+
+.heroStatL {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  display: block;
+  margin-top: 4px;
+  letter-spacing: 0.06em;
+}
+
+/* ── Hero Chips ─────────────────────────────────── */
+.heroChips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin: 0 -20px;
+  padding: 0 20px 14px;
+}
+.heroChips::-webkit-scrollbar { display: none; }
+
+.heroChip {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.72);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.heroChipActive {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: transparent;
+  color: oklch(32% 0.14 158);
+  font-weight: 700;
+}
+
+.heroChip:active:not(.heroChipActive) { background: rgba(255, 255, 255, 0.18); }
+
+/* ── Mountain SVG wrapper ───────────────────────── */
+.heroScape {
+  margin: 0 -20px;  /* bleed to edges */
+  display: block;
+  line-height: 0;
+}
+
+/* ── Bottom Pill Navigation ─────────────────────── */
+.pillNav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  z-index: 20;
+  background: oklch(97.5% 0.018 200 / 0.93);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid oklch(85% 0.04 200 / 0.6);
+  box-shadow: 0 -2px 20px rgba(20, 80, 120, 0.08);
+  padding: 8px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 5px;
+}
+.pillNav::-webkit-scrollbar { display: none; }
+
+.pill {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  background: rgba(46, 120, 80, 0.07);
+  color: oklch(40% 0.06 180);
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s cubic-bezier(0.25, 1, 0.5, 1), color 0.25s;
+  -webkit-tap-highlight-color: transparent;
+  letter-spacing: 0.02em;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pill.active {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 10px var(--accent-glow);
+}
+
+.pill:active:not(.active) { background: rgba(46, 120, 80, 0.14); }
+.pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ── Sections ───────────────────────────────────── */
+.section {
+  padding: 28px 20px;
+  scroll-margin-top: 66px;
+  scroll-margin-bottom: 60px;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: var(--accent);
+  font-weight: 700;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+
+.sectionTitle {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sectionTitle::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, oklch(75% 0.08 158 / 0.5), transparent);
+}
+
+.subTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 20px 0 12px;
+  font-weight: 500;
+}
+
+.subTitleIcon { width: 18px; height: 18px; color: var(--accent); }
+
+/* ── Route Map ──────────────────────────────────── */
+.routeMap {
+  background: linear-gradient(135deg, var(--paper-warm), oklch(94% 0.03 200));
+  border-radius: var(--r);
+  border: 1px solid var(--paper-line);
+  padding: 16px 12px;
+}
+
+.routeRow { display: flex; align-items: flex-start; gap: 0; }
+.routeRowReverse { flex-direction: row-reverse; }
+
+.routeStop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  min-width: 44px;
+}
+
+.routeStopDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 2.5px var(--accent-light);
+  animation: dotPulse 3.5s ease-in-out infinite;
+}
+
+.routeStopName { font-size: 12px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.routeStopDate { font-size: 11px; color: var(--ink-muted); line-height: 1.2; font-variant-numeric: tabular-nums; }
+
+.routeDash {
+  flex: 1;
+  min-width: 12px;
+  height: 0;
+  border-top: 1.5px dashed oklch(78% 0.06 158);
+  margin-top: 4px;
+}
+
+.routeConnector {
+  border-left: 1.5px dashed oklch(78% 0.06 158);
+  margin-left: 50%;
+  margin-bottom: 8px;
+  height: 16px;
+}
+
+/* ── Reservation List ───────────────────────────── */
+.reservList {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  border: 1px solid var(--paper-line);
+}
+.reservItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--paper-line);
+  font-size: 13px;
+}
+.reservItem:last-child { border-bottom: none; }
+.reservItem:nth-child(even) { background: var(--paper-warm); }
+.reservName { font-weight: 600; color: var(--ink); }
+.reservMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  color: var(--ink-muted);
+  font-size: 12px;
+  margin-left: auto;
+}
+.reservChannel { color: var(--ink-soft); }
+.reservAdvance {
+  background: var(--red-light);
+  color: var(--red);
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+.reservPrice { color: var(--ink-soft); }
+
+/* ── Hotel Cards ────────────────────────────────── */
+.hotelList { display: flex; flex-direction: column; gap: 10px; }
+
+.hotelItem {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  background: var(--paper);
+  border-radius: 10px;
+  border: 1px solid var(--paper-line);
+  box-shadow: 0 1px 4px rgba(20, 80, 60, 0.04);
+}
+
+.hotelNight {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--accent-deep);
+  color: oklch(94% 0.05 160);
+  border-radius: var(--r-xs);
+  padding: 5px 8px;
+  font-size: 12px;
+  flex-shrink: 0;
+  min-width: 44px;
+  justify-content: center;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.hotelNightIcon { width: 13px; height: 13px; opacity: 0.7; }
+.hotelInfo { flex: 1; min-width: 0; }
+.hotelName { font-weight: 600; font-size: 14px; color: var(--ink); line-height: 1.4; }
+.hotelDesc { font-size: 12px; color: var(--ink-muted); margin-top: 3px; }
+
+/* ── Day Divider ────────────────────────────────── */
+.dayDivider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.dayDivider::before,
+.dayDivider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, oklch(72% 0.10 158 / 0.4), transparent);
+}
+
+.dayDividerEmoji { font-size: 14px; opacity: 0.7; }
+
+/* ── Day Header ─────────────────────────────────── */
+.dayHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.dayDateCircle {
+  background: linear-gradient(135deg, var(--accent-deep), var(--accent));
+  color: #fff;
+  border-radius: var(--r-sm);
+  padding: 7px 12px;
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 52px;
+  box-shadow: 0 4px 16px var(--accent-glow);
+  animation: datePopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.dayDateM { font-size: 11px; opacity: 0.8; display: block; line-height: 1.2; letter-spacing: 0.04em; }
+.dayDateD {
+  font-size: 28px;
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-weight: 800;
+  line-height: 1;
+  display: block;
+  margin-top: 2px;
+}
+
+.dayInfo { flex: 1; min-width: 0; }
+
+.dayName {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.dayMeta {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.dayMetaItem { display: inline-flex; align-items: center; gap: 4px; }
+.dayMetaIcon { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* ── Timeline ───────────────────────────────────── */
+.timeline { position: relative; padding-left: 22px; }
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px; top: 10px; bottom: 10px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), oklch(78% 0.06 158 / 0.3), var(--accent));
+  border-radius: 1px;
+  opacity: 0.4;
+}
+
+.tlItem { position: relative; margin-bottom: 6px; }
+
+.tlItem::before {
+  content: '';
+  position: absolute;
+  left: -19px; top: 14px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid oklch(80% 0.04 200);
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.tlItem.highlight::before {
+  background: var(--accent);
+  border-color: var(--accent);
+  width: 10px; height: 10px;
+  left: -20px; top: 13px;
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  animation: glowBreath 3s ease-in-out infinite;
+}
+
+.tlBtn {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 0;
+  min-height: 44px;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tlBtn:not(.tlBtnStatic) {
+  background: oklch(0% 0 0 / 0.012);
+  border-radius: var(--r-xs);
+  padding: 10px 8px;
+  margin: 0 -8px;
+  transition: background 0.15s;
+}
+
+.tlBtn:not(.tlBtnStatic):hover  { background: oklch(0% 0 0 / 0.025); }
+.tlBtn:not(.tlBtnStatic):active { background: oklch(0% 0 0 / 0.05); }
+.tlBtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-xs); }
+.tlBtnStatic { cursor: default; min-height: auto; padding: 6px 0; }
+
+.tlTime {
+  font-size: 12px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+
+.tlName {
+  font-size: 16px;
+  color: var(--ink);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  line-height: 1.45;
+  min-width: 0;
+}
+
+.caret {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  color: var(--ink-muted);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tlItem.open .caret { transform: rotate(180deg); }
+.tlItem.open .tlBody { animation: tlBodyIn 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+
+.tlDetail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tlBtn:not(.tlBtnStatic) + .tlDetail { margin-left: -8px; margin-right: 8px; }
+.tlItem.open .tlDetail { grid-template-rows: 1fr; }
+.tlInner { overflow: hidden; }
+
+.tlBody {
+  background: var(--paper-warm);
+  border-radius: var(--r-sm);
+  padding: 14px 16px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+  border-left: 3px solid oklch(78% 0.08 158);
+}
+
+/* ── Sight Card ─────────────────────────────────── */
+.sightTimeAbove {
+  font-size: 11px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  display: block;
+  padding-left: 4px;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sightCard {
+  background: var(--paper);
+  border-radius: 12px;
+  border: 1px solid oklch(82% 0.08 158);
+  box-shadow:
+    0 2px 12px rgba(20, 80, 50, 0.07),
+    0 0 0 1px oklch(91% 0.04 158);
+  margin: 0 0 8px -4px;
+  overflow: hidden;
+}
+
+.sightCardHead {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 12px 14px 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s;
+}
+
+.sightCardHead:hover  { background: oklch(94% 0.04 158 / 0.5); }
+.sightCardHead:active { background: oklch(90% 0.06 158 / 0.6); }
+.sightCardHead:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.sightCardLeft { flex: 1; min-width: 0; }
+
+.sightCardLabel {
+  font-size: 10px;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  display: block;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.sightCardName {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.3;
+  font-family: 'Noto Serif SC', serif;
+  min-width: 0;
+}
+
+.sightCardActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.sightCardBody {
+  border-top: 1px solid oklch(90% 0.04 158 / 0.6);
+  padding: 10px 14px 12px;
+  background: linear-gradient(to bottom, oklch(95% 0.04 158 / 0.5), transparent);
+  animation: tlBodyIn 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.tlBodyText { margin-bottom: 10px; white-space: pre-line; overflow-wrap: break-word; word-break: break-word; }
+.tlBodyText:last-child { margin-bottom: 0; }
+
+.sightRow { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.sightRow:last-child { margin-bottom: 0; }
+
+.sightLabel { font-size: 12px; color: var(--accent); font-weight: 600; flex-shrink: 0; white-space: nowrap; }
+.sightValue { font-size: 14px; color: var(--ink-soft); line-height: 1.75; min-width: 0; overflow-wrap: break-word; word-break: break-word; }
+
+.badgeRow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.badge { font-size: 12px; padding: 3px 10px; border-radius: 20px; line-height: 1.5; overflow-wrap: break-word; }
+.badge-default { background: var(--paper-line); color: var(--ink); }
+.badge-red     { background: var(--red-light);   color: var(--red); }
+.badge-green   { background: var(--green-light);  color: var(--green); }
+.badge-gold    { background: var(--gold-light);   color: var(--gold-text); }
+
+/* ── Tips ───────────────────────────────────────── */
+.tipsList { list-style: none; padding: 0; margin: 0; }
+
+.tipsList li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--paper-line);
+  font-size: 15px;
+  color: var(--ink-soft);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: baseline;
+  line-height: 1.75;
+}
+.tipsList li:last-child { border-bottom: none; }
+
+.tipsCircle {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  border: 1.5px solid oklch(82% 0.08 158 / 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-deep);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.tipsText { min-width: 0; overflow-wrap: break-word; word-break: break-word; }
+
+/* ── Footer ─────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 32px 20px 56px;
+  color: var(--ink-muted);
+  font-size: 14px;
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  display: block;
+  width: 60px; height: 1px;
+  background: linear-gradient(to right, transparent, oklch(72% 0.10 158), transparent);
+  margin: 0 auto 28px;
+}
+
+.footerPoem {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 13px;
+  color: oklch(55% 0.10 158);
+  letter-spacing: 0.18em;
+  margin-bottom: 14px;
+  line-height: 2;
+  opacity: 0.75;
+}
+
+.footerSeal {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 40px;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 12px;
+  opacity: 0.5;
+  cursor: default;
+  animation: sealBreathe 5s ease-in-out infinite;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.footerSeal:hover { transform: rotate(-8deg) scale(1.12); opacity: 0.7; }
+
+/* ── Pin Link ────────────────────────────────────── */
+.pinLink {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+  flex-shrink: 0;
+  opacity: 0.65;
+  transition: opacity 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  padding: 10px;
+  margin: -10px;
+  border-radius: 4px;
+}
+.pinLink:hover, .pinLink:active { opacity: 1; }
+.pinLink:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ── Inline Hotel Section ───────────────────────── */
+.hotelSection { padding: 16px 20px 20px; }
+
+.hotelSectionLabel {
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ── Utility ─────────────────────────────────────── */
+.subTitleGapMd { margin-top: 24px; }
+.subTitleGapLg { margin-top: 28px; }
+.tipsSection   { padding-bottom: 40px; }
+.footerSub     { margin-top: 4px; opacity: 0.55; }
+
+.tlNameText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* ── Keyframes ───────────────────────────────────── */
+@keyframes heroShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 2.5px var(--accent-light); }
+  50%       { box-shadow: 0 0 0 4.5px var(--accent-light), 0 0 10px var(--accent-glow); }
+}
+
+@keyframes glowBreath {
+  0%, 100% { box-shadow: 0 0 0 3px var(--accent-glow); }
+  50%       { box-shadow: 0 0 0 5px oklch(46% 0.17 158 / 0.12); }
+}
+
+@keyframes sealBreathe {
+  0%, 100% { opacity: 0.50; }
+  50%       { opacity: 0.65; }
+}
+
+@keyframes datePopIn {
+  from { opacity: 0; transform: scale(0.6) rotate(-4deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes tlBodyIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Reduced Motion ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .page { opacity: 1; transform: none; transition: none; }
+  .tlBody, .sightCardBody { animation: none; }
+  .tlDetail, .caret, .pinLink, .backBtn, .heroChip, .sightCardHead { transition: none; }
+  .footerSeal, .routeStopDot, .tlItem.highlight::before, .heroTitle { animation: none; }
+  .heroTitle { background-size: 100% 100%; }
+  .dayDateCircle { animation: none; }
+  .tlBtn:not(.tlBtnStatic) { transition: none; }
+}

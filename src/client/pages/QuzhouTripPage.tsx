@@ -1,0 +1,996 @@
+import { useEffect, useState, useRef, useCallback } from 'react'
+import styles from './QuzhouTripPage.module.css'
+import { api } from '../lib/api'
+
+interface Props {
+  onBack: () => void
+}
+
+interface HotelData {
+  dayId: string
+  night: string
+  name: string
+  desc: string
+}
+
+function buildBaiduNavUrl(placeName: string): string {
+  return `baidumap://map/geocoder?address=${encodeURIComponent(placeName)}&src=webapp.windssea.daily`
+}
+
+/* ── SVG Icon System ─────────────────────────── */
+const iconProps = {
+  viewBox: '0 0 24 24',
+  fill: 'none' as const,
+  stroke: 'currentColor',
+  strokeWidth: 1.5,
+  strokeLinecap: 'round' as const,
+  strokeLinejoin: 'round' as const,
+}
+
+function Ic({ children, ...extra }: { children: React.ReactNode } & React.SVGProps<SVGSVGElement>) {
+  return <svg {...iconProps} {...extra}>{children}</svg>
+}
+
+const ICONS: Record<string, React.ReactNode> = {
+  arrowLeft: <Ic><path d="M19 12H5M12 19l-7-7 7-7"/></Ic>,
+  car: (
+    <Ic>
+      <path d="M5 17h14"/><path d="M6 17V12l2.5-5h7L18 12v5"/>
+      <circle cx="8.5" cy="17" r="1.5"/><circle cx="15.5" cy="17" r="1.5"/>
+    </Ic>
+  ),
+  hotel: (
+    <Ic>
+      <path d="M3 21h18"/><rect x="5" y="3" width="14" height="18" rx="1"/>
+      <path d="M10 21v-5h4v5"/><path d="M9 8h0.01M15 8h0.01M9 12h0.01M15 12h0.01"/>
+    </Ic>
+  ),
+  ticket: (
+    <Ic>
+      <path d="M2 9a3 3 0 013-3h14a3 3 0 013 3v1a1 1 0 01-1 1 1 1 0 00-1 1v2a1 1 0 001 1 1 1 0 011 1v1a3 3 0 01-3 3H5a3 3 0 01-3-3v-1a1 1 0 011-1 1 1 0 001-1v-2a1 1 0 00-1-1 1 1 0 01-1-1V9z"/>
+      <path d="M13 6v12"/>
+    </Ic>
+  ),
+  mapPin: (
+    <Ic>
+      <path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/>
+      <circle cx="12" cy="9" r="2.5"/>
+    </Ic>
+  ),
+  sunny: (
+    <Ic>
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </Ic>
+  ),
+  cloudy: <Ic><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></Ic>,
+  partlyCloudy: (
+    <Ic>
+      <path d="M12.5 6.5L11 8l1.5 1.5M14 2v2M21 9h-2"/>
+      <circle cx="14" cy="9" r="3"/>
+      <path d="M17 15H7a4 4 0 01-.4-7.98A5 5 0 0117 12a3 3 0 010 3z"/>
+    </Ic>
+  ),
+  rainy: (
+    <Ic>
+      <path d="M20 17.58A5 5 0 0018 8h-1.26A8 8 0 104 16.25"/>
+      <path d="M8 19v2M8 13v2M16 19v2M16 13v2M12 21v2M12 15v2"/>
+    </Ic>
+  ),
+}
+
+function Icon({ name, size = 16, className = '' }: { name: string; size?: number; className?: string }) {
+  return (
+    <span className={`${styles.icon} ${className}`} style={{ width: size, height: size }}>
+      {ICONS[name]}
+    </span>
+  )
+}
+
+const stripEmoji = (s: string) => s.replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F]+\s*/u, '')
+
+/* ── BambooLeaves: 竹叶飘动 canvas animation ── */
+function BambooLeaves() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    if (!canvasRef.current) return
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')!
+
+    function resize() {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    const LEAF_COLORS = ['#4a9860', '#3d8850', '#5aac70', '#6ab865', '#409055', '#52a868']
+
+    interface Leaf {
+      x: number; y: number
+      len: number; wid: number
+      rotation: number; rotSpeed: number
+      vx: number; vy: number
+      color: string
+      maxAlpha: number
+      born: number; life: number
+    }
+
+    const leaves: Leaf[] = []
+    let lastSpawn = 0
+
+    function spawnLeaf(now: number) {
+      const len = 13 + Math.random() * 10
+      leaves.push({
+        x: -10 + Math.random() * (canvas.width + 20),
+        y: -len,
+        len,
+        wid: len * 0.26,
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.022,
+        vx: -0.5 + Math.random() * 0.7,
+        vy: 0.45 + Math.random() * 0.65,
+        color: LEAF_COLORS[Math.floor(Math.random() * LEAF_COLORS.length)],
+        maxAlpha: 0.5 + Math.random() * 0.35,
+        born: now,
+        life: 10000 + Math.random() * 8000,
+      })
+    }
+
+    function drawLeaf(l: Leaf, alpha: number) {
+      ctx.save()
+      ctx.translate(l.x, l.y)
+      ctx.rotate(l.rotation)
+      ctx.globalAlpha = alpha
+      ctx.fillStyle = l.color
+      const hl = l.len / 2
+      const hw = l.wid / 2
+      ctx.beginPath()
+      ctx.moveTo(0, -hl)
+      ctx.bezierCurveTo(hw, -hl * 0.38, hw, hl * 0.38, 0, hl)
+      ctx.bezierCurveTo(-hw, hl * 0.38, -hw, -hl * 0.38, 0, -hl)
+      ctx.fill()
+      // midrib vein
+      ctx.strokeStyle = 'rgba(20, 65, 30, 0.28)'
+      ctx.lineWidth = 0.4
+      ctx.beginPath()
+      ctx.moveTo(0, -hl * 0.8)
+      ctx.lineTo(0, hl * 0.8)
+      ctx.stroke()
+      ctx.restore()
+    }
+
+    let raf: number
+    function tick(now: number) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      if (now - lastSpawn > 450 + Math.random() * 500) {
+        spawnLeaf(now)
+        lastSpawn = now
+      }
+
+      for (let i = leaves.length - 1; i >= 0; i--) {
+        const l = leaves[i]
+        const elapsed = now - l.born
+        const t = elapsed / l.life
+        if (t >= 1 || l.y > canvas.height + 20) { leaves.splice(i, 1); continue }
+        const fade = t < 0.12 ? t / 0.12 : t > 0.82 ? (1 - t) / 0.18 : 1
+        l.x += l.vx + Math.sin(elapsed * 0.0011 + l.rotation) * 0.35
+        l.y += l.vy
+        l.rotation += l.rotSpeed
+        drawLeaf(l, fade * l.maxAlpha)
+      }
+      raf = requestAnimationFrame(tick)
+    }
+
+    raf = requestAnimationFrame(tick)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize) }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 9998 }}
+    />
+  )
+}
+
+/* ── MountainScape: 云雾远山 + 三爿石 SVG ── */
+function MountainScape() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 480 200"
+      preserveAspectRatio="xMidYMax meet"
+      aria-hidden="true"
+      style={{ display: 'block', width: '100%', height: 'auto' }}
+    >
+      {/* Far mountains — hazy distant blue */}
+      <path
+        d="M0 132 C35 102, 72 118, 105 100 C138 83, 165 112, 205 97 C244 82, 272 108, 312 94 C352 80, 390 104, 424 90 C450 80, 468 95, 480 108 L480 200 L0 200Z"
+        fill="rgba(155, 198, 218, 0.38)"
+      />
+
+      {/* Mid mountains — muted green */}
+      <path
+        d="M0 152 C28 130, 58 142, 85 127 C112 112, 138 134, 172 120 C206 106, 232 130, 262 118 C292 106, 318 126, 350 114 C382 102, 420 122, 455 112 C468 108, 476 116, 480 122 L480 200 L0 200Z"
+        fill="rgba(68, 136, 98, 0.42)"
+      />
+
+      {/* Mist bands at mid-distance */}
+      <ellipse cx="240" cy="140" rx="145" ry="11" fill="rgba(255,255,255,0.30)"/>
+      <ellipse cx="75"  cy="150" rx="75"  ry="8"  fill="rgba(255,255,255,0.24)"/>
+      <ellipse cx="405" cy="144" rx="88"  ry="9"  fill="rgba(255,255,255,0.26)"/>
+
+      {/* ══ 三爿石 (Three Stone Pillars of 江郎山) ══ */}
+      {/* Mountain saddle connecting pillars */}
+      <path
+        d="M178 164 C190 150, 202 154, 215 157 C221 154, 229 151, 237 155 C245 151, 257 154, 270 157 C282 154, 296 150, 310 160 L310 176 L178 176Z"
+        fill="#1e3c2e"
+      />
+
+      {/* Left pillar — 郎峰 (tallest) */}
+      <path
+        d="M199 163 L199 98 L200 74 L202 54 L203 40 L205 32 L207 35 L209 48 L211 70 L213 98 L215 163Z"
+        fill="#1c3828"
+      />
+      {/* Sun-lit right face */}
+      <path
+        d="M206 35 L207 35 L209 48 L211 70 L213 98 L213 163 L210 163 L210 98 L208 70 L207 50Z"
+        fill="rgba(110, 175, 130, 0.22)"
+      />
+      {/* Crack detail */}
+      <path d="M203 58 Q205 82 203 118" stroke="rgba(12,26,18,0.35)" strokeWidth="0.7" fill="none"/>
+
+      {/* Middle pillar — 亚峰 */}
+      <path
+        d="M222 163 L222 106 L223 82 L225 64 L226 52 L228 47 L230 51 L232 64 L234 84 L236 106 L238 163Z"
+        fill="#183222"
+      />
+      <path
+        d="M228 49 L230 51 L232 64 L234 84 L236 106 L236 163 L233 163 L233 106 L231 84 L229 65Z"
+        fill="rgba(110, 175, 130, 0.20)"
+      />
+      <path d="M225 68 Q227 98 225 132" stroke="rgba(12,26,18,0.30)" strokeWidth="0.6" fill="none"/>
+
+      {/* Right pillar — 灵峰 (slightly wider) */}
+      <path
+        d="M245 163 L245 116 L246 93 L248 75 L251 62 L254 58 L257 62 L260 74 L262 92 L264 116 L267 163Z"
+        fill="#142c1e"
+      />
+      <path
+        d="M254 60 L257 62 L260 74 L262 92 L264 116 L267 163 L264 163 L264 116 L261 92 L258 75Z"
+        fill="rgba(110, 175, 130, 0.18)"
+      />
+
+      {/* Mist veil in front of pillars */}
+      <ellipse cx="232" cy="152" rx="62"  ry="7"  fill="rgba(255,255,255,0.38)"/>
+      <ellipse cx="185" cy="160" rx="38"  ry="5"  fill="rgba(255,255,255,0.28)"/>
+      <ellipse cx="285" cy="158" rx="42"  ry="5"  fill="rgba(255,255,255,0.24)"/>
+
+      {/* Left bamboo grove */}
+      <g>
+        {/* Stem 1 */}
+        <line x1="26" y1="200" x2="20" y2="126" stroke="#3e8258" strokeWidth="2.6" strokeLinecap="round"/>
+        <ellipse cx="20.5" cy="148" rx="4"   ry="2"   fill="none" stroke="#3e8258" strokeWidth="1"/>
+        <ellipse cx="20.5" cy="165" rx="4"   ry="2"   fill="none" stroke="#3e8258" strokeWidth="1"/>
+        <ellipse cx="10"   cy="140" rx="13"  ry="3.2" transform="rotate(-34 10 140)"  fill="#50a068" opacity="0.75"/>
+        <ellipse cx="28"   cy="134" rx="11"  ry="2.8" transform="rotate(24 28 134)"   fill="#50a068" opacity="0.75"/>
+        <ellipse cx="8"    cy="155" rx="9"   ry="2.4" transform="rotate(-27 8 155)"   fill="#469a5e" opacity="0.65"/>
+
+        {/* Stem 2 */}
+        <line x1="48" y1="200" x2="44" y2="136" stroke="#3a8252" strokeWidth="2.1" strokeLinecap="round"/>
+        <ellipse cx="44.5" cy="156" rx="3.5" ry="1.8" fill="none" stroke="#3a8252" strokeWidth="0.9"/>
+        <ellipse cx="37"   cy="150" rx="10"  ry="2.6" transform="rotate(-30 37 150)"  fill="#4c9862" opacity="0.70"/>
+        <ellipse cx="50"   cy="143" rx="9"   ry="2.2" transform="rotate(19 50 143)"   fill="#4c9862" opacity="0.70"/>
+
+        {/* Stem 3 (background) */}
+        <line x1="10" y1="200" x2="6"  y2="142" stroke="#326a48" strokeWidth="1.6" strokeLinecap="round" opacity="0.65"/>
+        <ellipse cx="2"    cy="156" rx="8"   ry="2"   transform="rotate(-33 2 156)"   fill="#408255" opacity="0.60"/>
+        <ellipse cx="10"   cy="148" rx="7"   ry="1.8" transform="rotate(26 10 148)"   fill="#408255" opacity="0.60"/>
+      </g>
+
+      {/* Right bamboo grove */}
+      <g>
+        <line x1="454" y1="200" x2="460" y2="128" stroke="#3e8258" strokeWidth="2.6" strokeLinecap="round"/>
+        <ellipse cx="459.5" cy="150" rx="4"   ry="2"   fill="none" stroke="#3e8258" strokeWidth="1"/>
+        <ellipse cx="459.5" cy="168" rx="4"   ry="2"   fill="none" stroke="#3e8258" strokeWidth="1"/>
+        <ellipse cx="450"   cy="144" rx="12"  ry="3"   transform="rotate(32 450 144)"  fill="#50a068" opacity="0.73"/>
+        <ellipse cx="467"   cy="137" rx="11"  ry="2.7" transform="rotate(-22 467 137)" fill="#50a068" opacity="0.73"/>
+
+        <line x1="470" y1="200" x2="473" y2="138" stroke="#3a8252" strokeWidth="2.1" strokeLinecap="round"/>
+        <ellipse cx="472.5" cy="158" rx="3.5" ry="1.8" fill="none" stroke="#3a8252" strokeWidth="0.9"/>
+        <ellipse cx="478"   cy="150" rx="9"   ry="2.3" transform="rotate(-26 478 150)" fill="#4c9862" opacity="0.68"/>
+        <ellipse cx="465"   cy="146" rx="8"   ry="2"   transform="rotate(21 465 146)"  fill="#4c9862" opacity="0.68"/>
+
+        <line x1="478" y1="200" x2="479" y2="146" stroke="#326a48" strokeWidth="1.6" strokeLinecap="round" opacity="0.62"/>
+        <ellipse cx="474"   cy="153" rx="7"   ry="1.8" transform="rotate(30 474 153)"  fill="#408255" opacity="0.58"/>
+      </g>
+
+      {/* Foreground ridge */}
+      <path
+        d="M0 176 C55 166, 128 174, 200 170 C272 166, 345 172, 408 168 C434 166, 458 170, 480 174 L480 200 L0 200Z"
+        fill="#2a5038"
+      />
+    </svg>
+  )
+}
+
+/* ── Weather icon helper ─────────────────────── */
+function weatherTextToIcon(text: string): string {
+  if (!text) return 'cloudy'
+  if (text.includes('晴')) return 'sunny'
+  if (text.includes('多云') || text.includes('少云')) return 'partlyCloudy'
+  if (text.includes('雨')) return 'rainy'
+  if (text.includes('阴') || text.includes('雪')) return 'cloudy'
+  return 'cloudy'
+}
+
+const CIRCLED_NUMBERS = ['①', '②', '③', '④', '⑤', '⑥']
+
+/* ── Static Data ─────────────────────────────── */
+
+const DAYS = [
+  { id: 'd1', label: '市区', emoji: '🌿' },
+  { id: 'd2', label: '龙游', emoji: '🪨' },
+  { id: 'd3', label: '文化', emoji: '🏛️' },
+  { id: 'd4', label: '南线', emoji: '🏔️' },
+  { id: 'd5', label: '返程', emoji: '🏠' },
+]
+
+interface TimelineDetail { label: string; value: string }
+interface Badge { text: string; type?: 'red' | 'green' | 'gold' | 'default' }
+
+interface TimelineEntry {
+  id: string; time: string; desc: string; body?: string
+  isSight?: boolean; detailsList?: TimelineDetail[]; badges?: Badge[]
+}
+
+interface DayData {
+  id: string; month: string; dayDate: string; title: string
+  distance?: string; hotel?: string; weather?: string; temp?: string
+  weatherCity?: string; weatherDate?: string; entries: TimelineEntry[]
+}
+
+const ITINERARY: DayData[] = [
+  {
+    id: 'd1', month: '5月', dayDate: '1',
+    title: '南京→衢州\n城市绿肺初体验',
+    distance: '约400km', hotel: '衢州希尔顿双树酒店',
+    weather: 'partlyCloudy', temp: '18~26°C',
+    weatherCity: '衢州', weatherDate: '2026-05-01',
+    entries: [
+      {
+        id: 'd1-1', time: '07:30 出发', desc: '南京出发自驾前往衢州',
+        body: '走沪宁高速转杭徽高速或沪渝高速，全程约400km，预计6小时。五一节假日建议07:30前上路，早于早高峰拥堵期。服务区约每2小时停靠休息，全车备好零食和玩具。',
+      },
+      {
+        id: 'd1-2', time: '13:30 - 15:00', desc: '抵达衢州 · 办理入住',
+        body: '入住衢州希尔顿双树酒店或衢州悦苑酒店。停车极其便利，周边餐饮丰富，酒店含高品质室内泳池，是孩子每天结束行程后最好的"充电站"。一次性归置好5天生活用品。',
+      },
+      {
+        id: 'd1-3', time: '15:30 - 17:30', desc: '鹿鸣公园',
+        isSight: true,
+        detailsList: [
+          { label: '概述', value: '衢州城区绿肺，以极具逻辑美感的高架红色栈道著称' },
+          { label: '亮点', value: '地势极平，非常适合长途乘车后的孩子尽情奔跑；栈道视野开阔' },
+          { label: '必打卡', value: '高架红色木栈道全程、湖面观景平台、儿童游乐区' },
+        ],
+        badges: [
+          { text: '免费开放', type: 'green' }, { text: '无需预约', type: 'green' }, { text: '地势平坦推车无障碍' },
+        ],
+      },
+      {
+        id: 'd1-4', time: '18:00 - 20:00', desc: '水亭门',
+        isSight: true,
+        detailsList: [
+          { label: '概述', value: '衢州古城核心，千年历史城墙与母亲河信安湖交汇处' },
+          { label: '亮点', value: '古城墙下吹江风，感受衢州烟火气，多家地道衢州菜馆' },
+          { label: '必打卡', value: '城楼夜景、信安湖江畔、古铺良食餐厅（水晶糕+不辣烤饼）' },
+        ],
+        badges: [
+          { text: '免费开放', type: 'green' }, { text: '晚餐推荐古铺良食', type: 'gold' }, { text: '水晶糕孩子首选' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'd2', month: '5月', dayDate: '2',
+    title: '东线探秘\n龙游石窟与古建大观',
+    distance: '约80km(双程)', hotel: '衢州希尔顿双树酒店(续住)',
+    weather: 'sunny', temp: '17~28°C',
+    weatherCity: '龙游', weatherDate: '2026-05-02',
+    entries: [
+      {
+        id: 'd2-1', time: '08:15 - 08:30', desc: '自驾前往龙游石窟',
+        body: '衢州市区至龙游约40km，约40分钟车程。五一期间务必08:30左右抵达，避开人流高峰。',
+      },
+      {
+        id: 'd2-2', time: '08:30 - 11:00', desc: '龙游石窟',
+        isSight: true,
+        detailsList: [
+          { label: '概述', value: '规模宏大的地下人工洞窟群，开凿年代至今成谜，被称为"地下奇观"' },
+          { label: '亮点', value: '洞内常年16℃，地下探险感极强；石壁上的神秘浮雕引人遐想' },
+          { label: '必打卡', value: '主洞窟穹顶全景、地下暗河水面倒影、神秘浮雕石刻' },
+        ],
+        badges: [
+          { text: '成人 60元', type: 'red' }, { text: '儿童优惠', type: 'green' },
+          { text: '洞内16℃备外套', type: 'gold' }, { text: '穿防滑运动鞋' }, { text: '带小手电筒更有趣' },
+        ],
+      },
+      {
+        id: 'd2-3', time: '11:30 - 13:00', desc: '龙游县城午餐',
+        body: '就近在龙游县城用餐，推荐龙游发糕、龙游米糊等本地特色，口味温和适配儿童。',
+      },
+      {
+        id: 'd2-4', time: '13:30 - 16:30', desc: '龙游民居苑',
+        isSight: true,
+        detailsList: [
+          { label: '概述', value: '汇聚浙西民间古建筑精华的露天博物馆，明清徽派建筑群落' },
+          { label: '亮点', value: '地势平坦、树荫繁茂；可给孩子设"寻宝任务"：找木雕里的小狮子或花鸟' },
+          { label: '必打卡', value: '翠光堂精雕门窗、各式砖雕牌坊、古戏台、荷花池' },
+        ],
+        badges: [
+          { text: '成人 30元', type: 'red' }, { text: '儿童优惠', type: 'green' },
+          { text: '推车无障碍' }, { text: '寻宝任务：找木雕狮子' },
+        ],
+      },
+      {
+        id: 'd2-5', time: '16:30 - 17:15', desc: '返回衢州酒店 · 泳池放电',
+        body: '驱车约40分钟返回衢州市区酒店。晚餐后带孩子去室内泳池，消耗剩余精力，为明天做好体能储备。',
+      },
+    ],
+  },
+  {
+    id: 'd3', month: '5月', dayDate: '3',
+    title: '文化沉浸\n恐龙化石与南孔后花园',
+    distance: '市区内', hotel: '衢州希尔顿双树酒店(续住)',
+    weather: 'sunny', temp: '19~29°C',
+    weatherCity: '衢州', weatherDate: '2026-05-03',
+    entries: [
+      {
+        id: 'd3-1', time: '09:30 - 11:30', desc: '衢州博物馆',
+        isSight: true,
+        detailsList: [
+          { label: '概述', value: '国家一级博物馆，馆藏衢州地区史前至近代珍贵文物' },
+          { label: '亮点', value: '重点看"礼贤江山龙"恐龙化石展厅，室内场馆完全规避五一正午烈日' },
+          { label: '必打卡', value: '礼贤江山龙恐龙化石、新石器时代文物展、南孔文化专题展' },
+        ],
+        badges: [
+          { text: '免费', type: 'green' }, { text: '公众号提前预约', type: 'red' },
+          { text: '节假日提前抢票' }, { text: '建议9:30前入场' },
+        ],
+      },
+      {
+        id: 'd3-2', time: '11:30 - 14:30', desc: '黄金午休',
+        body: '午餐后直接步行回酒店，进行2小时午休。这是"连住一地"策略的最大红利——瞬间回血，下午继续以满格状态出发。',
+      },
+      {
+        id: 'd3-3', time: '15:00 - 16:30', desc: '孔氏南宗家庙',
+        isSight: true,
+        detailsList: [
+          { label: '概述', value: '南宋以来孔子后裔南迁后的家庙，是儒家文化在南方的重要传承地' },
+          { label: '亮点', value: '环境极度静谧，后花园可带孩子喂锦鲤，是难得的闹中取静之所' },
+          { label: '必打卡', value: '大成殿、思鲁阁、后花园锦鲤池、百年古银杏' },
+        ],
+        badges: [
+          { text: '免费', type: 'green' }, { text: '无需预约', type: 'green' }, { text: '喂锦鲤孩子最爱' },
+        ],
+      },
+      {
+        id: 'd3-4', time: '17:00 - 19:30', desc: '水亭门/府山公园散步 · 采购特产',
+        body: '傍晚凉风习习，在水亭门或府山公园溜达，同时统一采购好明天南线所需零食、水果，以及准备带回南京的特产：龙游发糕、廿八都铜锣糕。',
+      },
+    ],
+  },
+  {
+    id: 'd4', month: '5月', dayDate: '4',
+    title: '南线远征\n世遗奇峰与江湖古镇',
+    distance: '约280km(全天)', hotel: '衢州希尔顿双树酒店(续住)',
+    weather: 'partlyCloudy', temp: '18~27°C',
+    weatherCity: '江山', weatherDate: '2026-05-04',
+    entries: [
+      {
+        id: 'd4-1', time: '08:30 - 09:30', desc: '南下启程 · 前往清漾村',
+        body: '吃完酒店早餐后出发，走衢州南高速，约1.5小时抵达江山市清漾毛氏文化村（距衢州约90km）。车内备好水和零食，孩子可以在车上小憩。',
+      },
+      {
+        id: 'd4-2', time: '09:30 - 11:30', desc: '清漾毛氏文化村（远观江郎山）',
+        isSight: true,
+        detailsList: [
+          { label: '概述', value: '毛泽东祖籍发源地，世界自然遗产江郎山的绝佳远观点' },
+          { label: '亮点', value: '村口荷塘边可眺望远处"三块大石头"（江郎山三爿石），视野毫无遮挡，完全无需耗费攀爬体力' },
+          { label: '必打卡', value: '荷塘边远眺江郎山三爿石、毛氏宗祠、古村石板路漫步' },
+        ],
+        badges: [
+          { text: '免费', type: 'green' }, { text: '推车无障碍', type: 'green' },
+          { text: '世界自然遗产视野' }, { text: '拍照最佳：荷塘+奇峰背景' },
+        ],
+      },
+      {
+        id: 'd4-3', time: '11:30 - 12:30', desc: '清漾村周边农家午餐',
+        body: '就近选择村外农家乐，推荐江山特色土鸡煲，鲜美不辣，孩子和大人都爱。点菜务必提前说明"全桌免辣"。',
+      },
+      {
+        id: 'd4-4', time: '12:30 - 13:30', desc: '驱车前往廿八都古镇',
+        body: '全程约1小时车程，这段时间恰好是绝佳的"车厢午休时间"，让孩子在安全座椅里补足午觉，到达时精力充沛。',
+      },
+      {
+        id: 'd4-5', time: '13:30 - 16:30', desc: '廿八都古镇',
+        isSight: true,
+        detailsList: [
+          { label: '概述', value: '藏于大山深处的国家历史文化名镇，融合浙、闽、赣三省风格的明清建筑群' },
+          { label: '亮点', value: '3小时沉浸式慢游；古镇咖啡馆/茶馆品铜锣糕；完全不赶时间' },
+          { label: '必打卡', value: '浔里街明清建筑群、古代江湖客栈遗迹、铜锣糕手工作坊、浔里民俗博物馆' },
+        ],
+        badges: [
+          { text: '免费', type: 'green' }, { text: '无需预约', type: 'green' },
+          { text: '铜锣糕必尝', type: 'gold' }, { text: '全程平路无爬坡' },
+        ],
+      },
+      {
+        id: 'd4-6', time: '16:30 - 18:00', desc: '返回衢州市区',
+        body: '赶在太阳落山前启程，约1.5小时返回衢州大本营。孩子如果累了可在车上再小憩一会儿。',
+      },
+      {
+        id: 'd4-7', time: '18:30', desc: '马站底美食街晚餐',
+        body: '回到衢州市区，前往"马站底"美食街大快朵颐，点菜照旧强调全桌免辣，衢州小吃琳琅满目，完美收官南线之旅。',
+      },
+    ],
+  },
+  {
+    id: 'd5', month: '5月', dayDate: '5',
+    title: '错峰返程\n从容归家',
+    weather: 'sunny', temp: '18~27°C',
+    weatherCity: '衢州', weatherDate: '2026-05-05',
+    entries: [
+      {
+        id: 'd5-1', time: '09:00 - 10:30', desc: '酒店早餐 · 从容打包',
+        body: '享用酒店自助早餐，然后从容打包行李（4晚未动箱，打包效率极高）。最后一次下酒店泳池也可安排在早餐前。',
+      },
+      {
+        id: 'd5-2', time: '10:30 - 11:00', desc: '办理退房 · 准备上路',
+        body: '办理退房，装车，检查是否有遗漏物品，尤其是充电器和儿童安全座椅配件。',
+      },
+      {
+        id: 'd5-3', time: '11:00', desc: '🚗 准时启程返回南京',
+        body: '优先走杭长高速转长深高速，车流量通常比沪昆高速更稳定。全程约400km，预留7小时（含服务区休息），最迟18:00前到家，不影响次日上学上班。',
+      },
+    ],
+  },
+]
+
+const RESERVATIONS = [
+  { name: '龙游石窟', channel: '官方公众号', advance: '随时', price: '成人60元·儿童优惠' },
+  { name: '龙游民居苑', channel: '免预约', advance: '—', price: '成人30元·儿童优惠' },
+  { name: '衢州博物馆', channel: '官方公众号', advance: '提前', price: '(节假日提前抢)免费' },
+  { name: '孔氏南宗家庙', channel: '免预约', advance: '—', price: '免费' },
+  { name: '清漾毛氏文化村', channel: '免预约', advance: '—', price: '免费' },
+  { name: '廿八都古镇', channel: '免预约', advance: '—', price: '免费' },
+]
+
+const HOTELS: HotelData[] = [
+  { dayId: 'd1', night: '5/1', name: '衢州希尔顿双树酒店', desc: '停车便利，含室内泳池' },
+  { dayId: 'd2', night: '5/2', name: '衢州希尔顿双树酒店', desc: '续住第二晚' },
+  { dayId: 'd3', night: '5/3', name: '衢州希尔顿双树酒店', desc: '续住第三晚' },
+  { dayId: 'd4', night: '5/4', name: '衢州希尔顿双树酒店', desc: '续住第四晚' },
+]
+
+const TIPS = [
+  '避辣指南：衢州菜辣度极高且"隐蔽"，点任何热菜务必反复叮嘱"全桌免辣，锅里不能沾辣椒"',
+  '龙游石窟：洞内常年16℃，务必给孩子备好薄外套；地面潮湿，穿防滑性能好的运动鞋',
+  '导航离线包：第四天南线山区路段信号可能波动，提前下载高德/百度地图离线包',
+  '午休策略：连住一地最大优势，每天午餐后步行回酒店午休，即刻回血',
+  '错峰入园：五一景点尽量08:30前或15:00后入园，减少排队等待时间',
+  '特产采购：龙游发糕、廿八都铜锣糕是最佳手信，建议第三天傍晚统一采购',
+]
+
+/* ── Component ─────────────────────────────── */
+export default function QuzhouTripPage({ onBack }: Props) {
+  const [visible, setVisible] = useState(false)
+  const [activeDay, setActiveDay] = useState('prep')
+  const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
+  const [weatherMap, setWeatherMap] = useState<Record<string, { icon: string; temp: string }>>({})
+
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
+  const isScrolling = useRef(false)
+  const pillsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 60)
+    return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
+    const items = ITINERARY.filter(d => d.weatherCity && d.weatherDate)
+      .map(d => ({ city: d.weatherCity!, date: d.weatherDate! }))
+    if (items.length === 0) return
+    api.batchWeather(items)
+      .then(res => {
+        const map: Record<string, { icon: string; temp: string }> = {}
+        for (const day of ITINERARY) {
+          if (!day.weatherCity || !day.weatherDate) continue
+          const key = `${day.weatherCity}:${day.weatherDate}`
+          const w = res.results[key]
+          if (w) map[day.id] = { icon: weatherTextToIcon(w.textDay), temp: `${w.tempLow}~${w.tempHigh}°C` }
+        }
+        setWeatherMap(map)
+      })
+      .catch(() => {})
+  }, [])
+
+  const scrollToDay = useCallback((dayId: string) => {
+    isScrolling.current = true
+    setActiveDay(dayId)
+    const el = sectionRefs.current[dayId]
+    if (el) {
+      const offsetPosition = el.getBoundingClientRect().top + window.pageYOffset
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
+    }
+    const pillIndex = DAYS.findIndex(d => d.id === dayId)
+    if (pillsRef.current && pillIndex >= 0) {
+      const pillButtons = pillsRef.current.querySelectorAll('button')
+      pillButtons[pillIndex]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+    }
+    setTimeout(() => { isScrolling.current = false }, 800)
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isScrolling.current) return
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveDay(entry.target.id)
+        }
+      },
+      { rootMargin: '0px 0px -65% 0px', threshold: 0 }
+    )
+    const prepEl = sectionRefs.current['prep']
+    if (prepEl) observer.observe(prepEl)
+    for (const day of ITINERARY) {
+      const el = sectionRefs.current[day.id]
+      if (el) observer.observe(el)
+    }
+    return () => observer.disconnect()
+  }, [])
+
+  const setSectionRef = useCallback(
+    (id: string) => (el: HTMLDivElement | null) => { sectionRefs.current[id] = el },
+    []
+  )
+
+  const toggleItem = (id: string) => {
+    setOpenItems(prev => ({ ...prev, [id]: !prev[id] }))
+  }
+
+  return (
+    <>
+      <BambooLeaves />
+      <button onClick={onBack} className={styles.backBtn} aria-label="返回">
+        <Icon name="arrowLeft" size={20} />
+      </button>
+
+      <div className={`${styles.page} ${visible ? styles.visible : ''}`}>
+
+        {/* ── Hero ── */}
+        <section className={styles.hero}>
+          <div className={styles.poemQuote}>
+            <span className={styles.poemLine}>梅子黄时日日晴</span>
+            <span className={styles.poemLine}>小溪泛尽却山行</span>
+            <span className={styles.poemDivider} />
+            <span className={styles.poemAuthor}>三衢道中</span>
+          </div>
+          <h1 className={styles.heroTitle}>衢州五日亲子游</h1>
+          <p className={styles.heroSub}>五一自驾 · 2026.5.1 — 5.5 · 南京出发</p>
+          <div className={styles.heroStats}>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatN}>5</span>
+              <span className={styles.heroStatL}>天</span>
+            </div>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatN}>8</span>
+              <span className={styles.heroStatL}>景点</span>
+            </div>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatN}>800</span>
+              <span className={styles.heroStatL}>公里</span>
+            </div>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatN}>4</span>
+              <span className={styles.heroStatL}>人</span>
+            </div>
+          </div>
+          <div className={styles.heroChips}>
+            {DAYS.map(d => (
+              <button
+                key={d.id}
+                className={`${styles.heroChip} ${activeDay === d.id ? styles.heroChipActive : ''}`}
+                onClick={() => scrollToDay(d.id)}
+              >
+                {d.emoji} {d.label}
+              </button>
+            ))}
+          </div>
+          {/* 云雾远山 + 三爿石 SVG landscape */}
+          <div className={styles.heroScape}>
+            <MountainScape />
+          </div>
+        </section>
+
+        {/* ── Route ── */}
+        <section className={styles.section} id="prep" ref={setSectionRef('prep')}>
+          <p className={styles.sectionLabel}>行程路线</p>
+          <h2 className={styles.sectionTitle}>衢州大本营</h2>
+          <div className={styles.routeMap}>
+            <div className={styles.routeRow}>
+              <span className={styles.routeStop}>
+                <span className={styles.routeStopDot}/>
+                <span className={styles.routeStopName}>南京</span>
+                <span className={styles.routeStopDate}>5/1</span>
+              </span>
+              <span className={styles.routeDash}/>
+              <span className={styles.routeStop}>
+                <span className={styles.routeStopDot}/>
+                <span className={styles.routeStopName}>衢州</span>
+                <span className={styles.routeStopDate}>5/1-4</span>
+              </span>
+              <span className={styles.routeDash}/>
+              <span className={styles.routeStop}>
+                <span className={styles.routeStopDot}/>
+                <span className={styles.routeStopName}>龙游</span>
+                <span className={styles.routeStopDate}>5/2</span>
+              </span>
+            </div>
+            <div className={styles.routeConnector}/>
+            <div className={`${styles.routeRow} ${styles.routeRowReverse}`}>
+              <span className={styles.routeStop}>
+                <span className={styles.routeStopDot}/>
+                <span className={styles.routeStopName}>南京</span>
+                <span className={styles.routeStopDate}>5/5</span>
+              </span>
+              <span className={styles.routeDash}/>
+              <span className={styles.routeStop}>
+                <span className={styles.routeStopDot}/>
+                <span className={styles.routeStopName}>衢州</span>
+                <span className={styles.routeStopDate}>5/4-5</span>
+              </span>
+              <span className={styles.routeDash}/>
+              <span className={styles.routeStop}>
+                <span className={styles.routeStopDot}/>
+                <span className={styles.routeStopName}>廿八都</span>
+                <span className={styles.routeStopDate}>5/4</span>
+              </span>
+            </div>
+          </div>
+
+          <h3 className={`${styles.subTitle} ${styles.subTitleGapMd}`}>
+            <span className={styles.subTitleIcon}><Icon name="ticket" size={18}/></span>
+            票务预约指南
+          </h3>
+          <div className={styles.reservList}>
+            {RESERVATIONS.map(r => (
+              <div key={r.name} className={styles.reservItem}>
+                <span className={styles.reservName}>{r.name}</span>
+                <span className={styles.reservMeta}>
+                  <span className={styles.reservChannel}>{r.channel}</span>
+                  {r.advance !== '—' && <span className={styles.reservAdvance}>提前{r.advance}</span>}
+                  <span className={styles.reservPrice}>{r.price}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <h3 className={`${styles.subTitle} ${styles.subTitleGapLg}`}>
+            <span className={styles.subTitleIcon}><Icon name="hotel" size={18}/></span>
+            酒店安排
+          </h3>
+          <div className={styles.hotelList}>
+            {HOTELS.map((h, i) => (
+              <div key={i} className={styles.hotelItem}>
+                <div className={styles.hotelNight}>
+                  <span className={styles.hotelNightIcon}><Icon name="hotel" size={13}/></span>
+                  {h.night}
+                </div>
+                <div className={styles.hotelInfo}>
+                  <div className={styles.hotelName}>
+                    {h.name}
+                    <a className={styles.pinLink} href={buildBaiduNavUrl(h.name)} aria-label="导航到酒店" onClick={e => e.stopPropagation()}>
+                      <Icon name="mapPin" size={14}/>
+                    </a>
+                  </div>
+                  <div className={styles.hotelDesc}>{h.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Itinerary ── */}
+        {ITINERARY.map(day => (
+          <section key={day.id} className={styles.section} id={day.id} ref={setSectionRef(day.id)}>
+            {(() => {
+              const dayInfo = DAYS.find(d => d.id === day.id)
+              if (!dayInfo) return null
+              return (
+                <div className={styles.dayDivider}>
+                  <span className={styles.dayDividerEmoji}>{dayInfo.emoji}</span>
+                </div>
+              )
+            })()}
+            <div className={styles.dayHeader}>
+              <div className={styles.dayDateCircle}>
+                <span className={styles.dayDateM}>{day.month}</span>
+                <span className={styles.dayDateD}>{day.dayDate}</span>
+              </div>
+              <div className={styles.dayInfo}>
+                <div className={styles.dayName}>
+                  {day.title.split('\n').map((line, i) => <span key={i}>{line}<br/></span>)}
+                </div>
+                <div className={styles.dayMeta}>
+                  {day.distance && (
+                    <span className={styles.dayMetaItem}>
+                      <span className={styles.dayMetaIcon}><Icon name="car" size={14}/></span>
+                      {day.distance}
+                    </span>
+                  )}
+                  {day.hotel && (
+                    <span className={styles.dayMetaItem}>
+                      <span className={styles.dayMetaIcon}><Icon name="hotel" size={14}/></span>
+                      {day.hotel}
+                    </span>
+                  )}
+                  {(weatherMap[day.id]?.icon || day.weather) && (
+                    <span className={styles.dayMetaItem}>
+                      <span className={styles.dayMetaIcon}>
+                        <Icon name={weatherMap[day.id]?.icon || day.weather!} size={14}/>
+                      </span>
+                      {weatherMap[day.id]?.temp || day.temp}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.timeline}>
+              {day.entries.map((entry) => {
+                const isOpen = !!openItems[entry.id]
+                const isSightWithDetail = entry.isSight && !!(entry.detailsList?.length)
+                const hasRegularAccordion = !entry.isSight && !!entry.body
+
+                return (
+                  <div key={entry.id} className={`${styles.tlItem} ${entry.isSight ? styles.highlight : ''} ${isOpen ? styles.open : ''}`}>
+                    {isSightWithDetail ? (
+                      <>
+                        <span className={styles.sightTimeAbove}>{entry.time}</span>
+                        <div className={styles.sightCard}>
+                          <button className={styles.sightCardHead} onClick={() => toggleItem(entry.id)} aria-expanded={isOpen} aria-controls={entry.id + '-detail'}>
+                            <div className={styles.sightCardLeft}>
+                              <span className={styles.sightCardLabel}>景点</span>
+                              <div className={styles.sightCardName}>{stripEmoji(entry.desc)}</div>
+                            </div>
+                            <div className={styles.sightCardActions}>
+                              <a className={styles.pinLink} href={buildBaiduNavUrl(stripEmoji(entry.desc))} aria-label="导航" onClick={e => e.stopPropagation()}>
+                                <Icon name="mapPin" size={14}/>
+                              </a>
+                              <svg className={styles.caret} viewBox="0 0 16 16" fill="none">
+                                <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            </div>
+                          </button>
+                          <div className={styles.tlDetail} id={entry.id + '-detail'}>
+                            <div className={styles.tlInner}>
+                              <div className={styles.sightCardBody}>
+                                {entry.detailsList?.map((dt, i) => (
+                                  <div key={i} className={styles.sightRow}>
+                                    <span className={styles.sightLabel}>{dt.label}</span>
+                                    <span className={styles.sightValue}>{dt.value}</span>
+                                  </div>
+                                ))}
+                                {entry.badges && entry.badges.length > 0 && (
+                                  <div className={styles.badgeRow}>
+                                    {entry.badges.map((b, i) => (
+                                      <span key={i} className={`${styles.badge} ${styles['badge-' + (b.type || 'default')]}`}>{b.text}</span>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : hasRegularAccordion ? (
+                      <>
+                        <button className={styles.tlBtn} onClick={() => toggleItem(entry.id)} aria-expanded={isOpen} aria-controls={entry.id + '-detail'}>
+                          <span className={styles.tlTime}>{entry.time}</span>
+                          <span className={styles.tlName}>
+                            <span className={styles.tlNameText}>{stripEmoji(entry.desc)}</span>
+                            <svg className={styles.caret} viewBox="0 0 16 16" fill="none">
+                              <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          </span>
+                        </button>
+                        <div className={styles.tlDetail} id={entry.id + '-detail'}>
+                          <div className={styles.tlInner}>
+                            <div className={styles.tlBody}>
+                              <div className={styles.tlBodyText}>{entry.body}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className={`${styles.tlBtn} ${styles.tlBtnStatic}`}>
+                        <span className={styles.tlTime}>{entry.time}</span>
+                        <span className={styles.tlName}>
+                          <span className={styles.tlNameText}>{stripEmoji(entry.desc)}</span>
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+
+            {(() => {
+              const hotel = HOTELS.find(h => h.dayId === day.id)
+              if (!hotel) return null
+              return (
+                <div className={styles.hotelSection}>
+                  <div className={styles.hotelSectionLabel}>今日住宿</div>
+                  <div className={styles.hotelItem}>
+                    <div className={styles.hotelNight}>
+                      <span className={styles.hotelNightIcon}><Icon name="hotel" size={13}/></span>
+                      {hotel.night}
+                    </div>
+                    <div className={styles.hotelInfo}>
+                      <div className={styles.hotelName}>
+                        {hotel.name}
+                        <a className={styles.pinLink} href={buildBaiduNavUrl(hotel.name)} aria-label="导航到酒店" onClick={e => e.stopPropagation()}>
+                          <Icon name="mapPin" size={14}/>
+                        </a>
+                      </div>
+                      <div className={styles.hotelDesc}>{hotel.desc}</div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })()}
+          </section>
+        ))}
+
+        {/* ── Tips ── */}
+        <section className={`${styles.section} ${styles.tipsSection}`} id="tips">
+          <p className={styles.sectionLabel}>出行须知</p>
+          <h2 className={styles.sectionTitle}>注意事项</h2>
+          <ul className={styles.tipsList}>
+            {TIPS.map((tip, i) => {
+              const [bold, rest] = tip.split('：')
+              return (
+                <li key={i}>
+                  <span className={styles.tipsCircle}>{CIRCLED_NUMBERS[i] || i + 1}</span>
+                  <div className={styles.tipsText}><strong>{bold}</strong>：{rest}</div>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+
+        <footer className={styles.footer}>
+          <span className={styles.footerSeal}>衢</span>
+          <p className={styles.footerPoem}>绿阴不减来时路 · 添得黄鹂四五声</p>
+          <p>衢州五日亲子自驾 · 2026年五一</p>
+          <p className={styles.footerSub}>一地连住 · 从容探索</p>
+        </footer>
+      </div>
+
+      <nav className={styles.pillNav} ref={pillsRef}>
+        {DAYS.map(d => (
+          <button key={d.id} className={`${styles.pill} ${activeDay === d.id ? styles.active : ''}`} onClick={() => scrollToDay(d.id)}>
+            {d.emoji} {d.label}
+          </button>
+        ))}
+      </nav>
+    </>
+  )
+}

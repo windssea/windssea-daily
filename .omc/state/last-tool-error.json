@@ -1,7 +1,0 @@
-{
-  "tool_name": "Read",
-  "tool_input_preview": "{\"file_path\":\"D:\\\\dev\\\\windssea\\\\windssea-daily\\\\node_modules\\\\@amap\\\\amap-jsapi-loader\\\\dist\"}",
-  "error": "EISDIR: illegal operation on a directory, read 'D:\\dev\\windssea\\windssea-daily\\node_modules\\@amap\\amap-jsapi-loader\\dist'",
-  "timestamp": "2026-04-16T02:45:02.589Z",
-  "retry_count": 1
-}

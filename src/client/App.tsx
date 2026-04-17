@@ -2,14 +2,15 @@ import { useState, useEffect, useCallback } from 'react'
 import WelcomePage from './pages/WelcomePage'
 import TodoPage from './pages/TodoPage'
 import ShanxiTripPage from './pages/ShanxiTripPage'
+import QuzhouTripPage from './pages/QuzhouTripPage'
 import IFramePage from './pages/IFramePage'
 import TravelMapPage from './pages/TravelMapPage'
 
-type Page = 'welcome' | 'todo' | 'shanxi' | 'huangshan' | 'travelmap'
+type Page = 'welcome' | 'todo' | 'shanxi' | 'quzhou' | 'huangshan' | 'travelmap'
 
 function getPageFromHash(): Page {
   const hash = window.location.hash.replace('#', '')
-  if (hash === 'todo' || hash === 'shanxi' || hash === 'huangshan' || hash === 'travelmap') return hash
+  if (hash === 'todo' || hash === 'shanxi' || hash === 'quzhou' || hash === 'huangshan' || hash === 'travelmap') return hash
   return 'welcome'
 }
 
@@ -33,6 +34,7 @@ function App() {
 
   if (page === 'todo') return <TodoPage onBack={() => navigate('welcome')} />
   if (page === 'shanxi') return <ShanxiTripPage onBack={() => navigate('welcome')} />
+  if (page === 'quzhou') return <QuzhouTripPage onBack={() => navigate('welcome')} />
   if (page === 'travelmap') return <TravelMapPage onBack={() => navigate('welcome')} />
   if (page === 'huangshan') return (
     <IFramePage
@@ -45,6 +47,7 @@ function App() {
     <WelcomePage
       onEnter={() => navigate('todo')}
       onShanxiTrip={() => navigate('shanxi')}
+      onQuzhouTrip={() => navigate('quzhou')}
       onHuangshanTrip={() => navigate('huangshan')}
       onTravelMap={() => navigate('travelmap')}
     />
