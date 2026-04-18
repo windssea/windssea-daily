@@ -619,51 +619,54 @@ interface DayData {
 const ITINERARY: DayData[] = [
   {
     id: 'd1', month: '5月', dayDate: '1',
-    title: '赶早出发\n直奔深山古镇',
-    distance: '约480km', hotel: '廿八都客栈',
+    title: '高铁直达\n轻松挺进深山古镇',
+    distance: '高铁约2.5h', hotel: '廿八都名都酒店',
     weather: 'partlyCloudy', temp: '18~26°C',
     weatherCity: '江山', weatherDate: '2026-05-01',
     entries: [
       {
-        id: 'd1-1', time: '07:00 出发底线', desc: '抢在第一波出城大军前上高速',
-        body: '务必在07:00前通过高速收费站！早这10分钟，能帮你省下后面几十公里的拥堵时间。',
+        id: 'd1-1', time: '09:00 - 11:30', desc: '高铁出发：南京南 ➔ 衢州',
+        body: '推荐 G7691（09:44发，12:26到）或 G645（10:00发）。孩子在车厢内自由走动，告别安全座椅的长时间束缚。',
       },
       {
-        id: 'd1-2', time: '07:00 - 14:30', desc: '分段式赶路：南京 ➔ 廿八都',
-        body: '铁律：每开2小时必须进服务区休息15分钟。二休（约10:00）在建德服务区大休整40分钟吃早午餐。',
+        id: 'd1-2', time: '11:30 - 12:30', desc: '落地提车 · 站内吃饭',
+        body: '直接在高铁站停车场取提前订好的租赁车辆，行李扔进后备箱。就近午餐，不慌不忙。',
       },
       {
-        id: 'd1-3', time: '14:40 - 15:00', desc: '抵达廿八都 · 办理入住',
-        body: '导航到“廿八都北入口停车场”，步行2分钟到客栈（推荐念八铺客栈、郎峰客栈，方便拿行李）。',
+        id: 'd1-3', time: '13:30 - 15:00', desc: '南下入山：衢州 ➔ 廿八都',
+        body: '平稳省道约1.5小时。刚好让孩子在车上睡个午觉，精力满满抵达古镇。',
       },
       {
-        id: 'd1-4', time: '15:00 - 17:30', desc: '休息调整',
-        body: '长途车程后，先在客栈休息，吃点水果，喝点茶，调整状态。',
+        id: 'd1-4', time: '15:00 - 15:30', desc: '抵达廿八都 · 办理入住',
+        body: '导航到廿八都名都酒店（北入口游客中心旁，带大型停车场），办理入住，行李放好。',
       },
       {
-        id: 'd1-5', time: '17:30 - 20:30', desc: '古镇夜游',
+        id: 'd1-5', time: '15:30 - 17:30', desc: '漫游古镇',
         isSight: true,
         detailsList: [
-          { label: '概述', value: '藏于大山深处的国家历史文化名镇，夜晚游客稀少，更显古朴' },
-          { label: '晚餐', value: '客栈附近吃，点些不辣的廿八都豆腐、土鸡煲' },
-          { label: '必打卡', value: '挂满红灯笼的古街漫步' },
+          { label: '概述', value: '藏于大山深处的国家历史文化名镇，各省门楼，江湖气息浓郁' },
+          { label: '晚餐', value: '隆兴斋（不辣豆腐煲、土鸡煲）或廿八都人家（枫果粿）' },
         ],
         badges: [
-          { text: '免费', type: 'green' }, { text: '21:00前回房休息', type: 'gold' },
+          { text: '成人80元', type: 'red' }, { text: '提前抢票 4/28 00:00', type: 'gold' },
         ],
+      },
+      {
+        id: 'd1-6', time: '17:30 - 20:00', desc: '古镇夜色',
+        body: '晚餐后看红灯笼亮起。早早回房休息，明天要赶江郎山第一波。',
       },
     ],
   },
   {
     id: 'd2', month: '5月', dayDate: '2',
-    title: '晨雾古镇与世遗野餐\n前往市区',
-    distance: '约100km', hotel: '衢州高星酒店',
+    title: '晨雾古镇与世遗野餐\n移师大本营',
+    distance: '约100km', hotel: '衢州西站体育中心亚朵酒店',
     weather: 'sunny', temp: '17~28°C',
     weatherCity: '江山', weatherDate: '2026-05-02',
     entries: [
       {
         id: 'd2-1', time: '07:30 - 09:00', desc: '独享清晨古镇',
-        body: '旅游团还没来，带孩子拍拍晨雾里的古镇，顺手买点铜锣糕路上吃。',
+        body: '旅游团还没来，拍拍晨雾里的古镇，顺手买点铜锣糕路上吃。',
       },
       {
         id: 'd2-2', time: '09:00 - 10:00', desc: '驱车北上前往江郎山',
@@ -678,26 +681,26 @@ const ITINERARY: DayData[] = [
           { label: '必打卡', value: '须女湖走木栈道，江郎山大草坪' },
         ],
         badges: [
-          { text: '成人90元(含景交)', type: 'red' }, { text: '儿童优惠', type: 'green' }
+          { text: '成人105元(含景交车)', type: 'red' }, { text: '提前抢票 4/25 08:00', type: 'gold' }
         ],
       },
       {
-        id: 'd2-4', time: '13:30 - 15:00', desc: '午休转移 · 江郎山 ➔ 衢州市区',
+        id: 'd2-4', time: '13:00 - 14:30', desc: '午休转移 · 江郎山 ➔ 衢州市区',
         body: '这段1.5小时的车程刚好让孩子在车上睡一觉。',
       },
       {
-        id: 'd2-5', time: '15:00 - 17:00', desc: '安顿大本营',
-        body: '抵达衢州市区高星酒店，把后备箱搬空，接下来的几天都不用再整理行李了。',
+        id: 'd2-5', time: '14:30 - 15:30', desc: '入驻大本营',
+        body: '抵达衢州西站体育中心亚朵酒店，彻底卸下所有行李。',
       },
       {
-        id: 'd2-6', time: '17:00 - 19:00', desc: '鹿鸣公园放风',
+        id: 'd2-6', time: '16:00 - 18:30', desc: '体育中心草坪放风',
         isSight: true,
         detailsList: [
-          { label: '概述', value: '衢州城区绿肺，以极具逻辑美感的高架红色栈道著称' },
-          { label: '必打卡', value: '高架栈道和大草坪跑跑跳跳' },
+          { label: '概述', value: '步行2分钟直达衢州体育中心，大面积起伏绿草坪' },
+          { label: '必打卡', value: '让孩子在草坡上尽情奔跑打滚，释放一天的活力' },
         ],
         badges: [
-          { text: '免费开放', type: 'green' }, { text: '记得喷防蚊液', type: 'gold' },
+          { text: '酒店步行2分钟', type: 'green' }, { text: '记得喷防蚊液', type: 'gold' },
         ],
       },
     ],
@@ -705,7 +708,7 @@ const ITINERARY: DayData[] = [
   {
     id: 'd3', month: '5月', dayDate: '3',
     title: '市中心人文慢游\n零车程睡饱吃好',
-    distance: '零车程', hotel: '衢州高星酒店(续住)',
+    distance: '零车程', hotel: '衢州西站体育中心亚朵酒店(续住)',
     weather: 'sunny', temp: '19~29°C',
     weatherCity: '衢州', weatherDate: '2026-05-03',
     entries: [
@@ -762,7 +765,7 @@ const ITINERARY: DayData[] = [
   {
     id: 'd4', month: '5月', dayDate: '4',
     title: '地下探秘与古建\n早去早回不挤人',
-    distance: '约80km(双程)', hotel: '衢州高星酒店(续住)',
+    distance: '约80km(双程)', hotel: '衢州西站体育中心亚朵酒店(续住)',
     weather: 'partlyCloudy', temp: '18~27°C',
     weatherCity: '龙游', weatherDate: '2026-05-04',
     entries: [
@@ -778,7 +781,7 @@ const ITINERARY: DayData[] = [
           { label: '亮点', value: '里面常年16度，带手电筒玩探险' },
         ],
         badges: [
-          { text: '成人 60元', type: 'red' }, { text: '儿童加薄外套', type: 'gold' }, { text: '带小手电筒' },
+          { text: '成人85元', type: 'red' }, { text: '提前抢票 5/1 00:00', type: 'gold' }, { text: '洞内16°C带外套' },
         ],
       },
       {
@@ -812,43 +815,42 @@ const ITINERARY: DayData[] = [
     weatherCity: '衢州', weatherDate: '2026-05-05',
     entries: [
       {
-        id: 'd5-1', time: '08:30 - 10:00', desc: '从容收拾',
-        body: '睡到自然醒，安安心心吃顿自助早餐。东西前一晚就装得差不多了，慢慢收拾装车。',
+        id: 'd5-1', time: '08:30 - 10:30', desc: '睡到自然醒 · 从容收拾',
+        body: '享用酒店营养早餐，慢慢将特产和行李打包。',
       },
       {
-        id: 'd5-2', time: '10:30', desc: '办理退房',
-        body: '交卡退房，最后检查遗漏物品。',
+        id: 'd5-2', time: '10:30 - 11:30', desc: '还车进站',
+        body: '办理退房，驱车前往高铁站指定地点还车，轻松进站候车。',
       },
       {
-        id: 'd5-3', time: '11:00 - 17:00', desc: '准时上高速 · 顺利回家',
-        body: '11点准时上高速向北开！首选：衢州➔杭长高速➔长深高速➔南京。备用：如杭长(龙游-建德)拥堵，换走杭州绕城西复线。',
+        id: 'd5-3', time: '12:00之后', desc: '高铁平稳回家',
+        body: '2.5小时后顺利闪现南京南。',
       },
     ],
   },
 ]
 
 const RESERVATIONS = [
-  { name: '衢州博物馆', channel: '官方公众号', advance: '提前3天', price: '免费' },
-  { name: '衢州科技馆', channel: '官方公众号', advance: '提前3天', price: '免费' },
-  { name: '龙游石窟', channel: '官方公众号/OTA', advance: '提前1-2天', price: '成人60元' },
-  { name: '江郎山', channel: '官方公众号/OTA', advance: '提前1-2天', price: '成人90元含景交' },
-  { name: '龙游民居苑', channel: '现场/OTA', advance: '—', price: '成人30元' },
+  { name: '江郎山', channel: '官方公众号/OTA', advance: '4/25 08:00放票(提前7天)', price: '成人105元含景交车' },
+  { name: '廿八都古镇', channel: '官方公众号/OTA', advance: '4/28 00:00放票(提前3天)', price: '成人80元' },
+  { name: '龙游石窟', channel: '官方公众号/OTA', advance: '5/1 00:00放票(提前3天)', price: '成人85元' },
+  { name: '衢州博物馆', channel: '官方公众号', advance: '提前3-5天关注放票', price: '免费' },
+  { name: '根宫佛国(备选)', channel: '官方公众号/OTA', advance: '提前7天 08:00放票', price: '成人180元' },
   { name: '孔氏南宗家庙', channel: '现场', advance: '—', price: '免费' },
 ]
 
 const HOTELS: HotelData[] = [
-  { dayId: 'd1', night: '5/1', name: '廿八都北入口客栈(念八铺/郎峰)', desc: '方便拿行李，免走石板路' },
-  { dayId: 'd2', night: '5/2', name: '衢州市区高星酒店', desc: '大本营安营扎寨，停车便利' },
-  { dayId: 'd3', night: '5/3', name: '衢州市区高星酒店', desc: '连住不折腾' },
-  { dayId: 'd4', night: '5/4', name: '衢州市区高星酒店', desc: '连住不折腾' },
+  { dayId: 'd1', night: '5/1', name: '廿八都名都酒店', desc: '北入口游客中心旁，带大型停车场，免搬运' },
+  { dayId: 'd2', night: '5/2', name: '衢州西站体育中心亚朵酒店', desc: '大本营，步行2分钟到体育中心草坪' },
+  { dayId: 'd3', night: '5/3', name: '衢州西站体育中心亚朵酒店', desc: '连住不折腾，市区景点打车即达' },
+  { dayId: 'd4', night: '5/4', name: '衢州西站体育中心亚朵酒店', desc: '连住不折腾，还车进站一路顺畅' },
 ]
 
 const TIPS = [
-  '时间红线：D1务必在7:00前上高速；D5务必在11:00前上高速返程，卡准时间极大降低拥堵痛苦',
-  '避辣指南：衢州菜辣度极高且"隐蔽"，点任何热菜务必反复叮嘱"全桌免辣，锅里不能沾辣椒"',
-  '超级大堵车预案：D1若下午3点未出杭州，果断就近(江山/衢州)下高速找酒店住下，安全第一',
-  '避开人群预案：若江郎山排队超1小时去清漾村；若龙游石窟约满去根宫佛国',
-  '带娃神器与药品：防蚊喷雾(鹿鸣公园和廿八都必备)、退烧药/晕车贴',
+  '抢票闹钟三连：4/25 08:00抢江郎山、4/28 00:00抢廿八都、5/1 00:00抢龙游石窟，务必设置闹钟',
+  '避辣指南：衢州菜辣度极高，点任何热菜务必叮嘱"全桌免辣，锅洗干净，不能沾任何辣味"',
+  '租车关键：下单时务必勾选儿童安全座椅并致电客服确认；五一期间建议买不计免赔',
+  '备用预案：龙游石窟约满可抢根宫佛国（提前7天 08:00放票，180元）；水亭门节假日停车极难建议全程打车',
 ]
 
 /* ── Component ─────────────────────────────── */
@@ -948,7 +950,7 @@ export default function QuzhouTripPage({ onBack }: Props) {
             <span className={styles.poemAuthor}>三衢道中</span>
           </div>
           <h1 className={styles.heroTitle}>衢州五日亲子游</h1>
-          <p className={styles.heroSub}>五一自驾 · 2026.5.1 — 5.5 · 南京出发</p>
+          <p className={styles.heroSub}>五一高铁+租车 · 2026.5.1 — 5.5 · 南京出发</p>
           {/* 云雾远山 + 三爿石 SVG landscape */}
           <div className={styles.heroScape}>
             <MountainScape />
@@ -1013,7 +1015,7 @@ export default function QuzhouTripPage({ onBack }: Props) {
                 <span className={styles.reservName}>{r.name}</span>
                 <span className={styles.reservMeta}>
                   <span className={styles.reservChannel}>{r.channel}</span>
-                  {r.advance !== '—' && <span className={styles.reservAdvance}>提前{r.advance}</span>}
+                  {r.advance !== '—' && <span className={styles.reservAdvance}>{r.advance}</span>}
                   <span className={styles.reservPrice}>{r.price}</span>
                 </span>
               </div>
@@ -1028,10 +1030,10 @@ export default function QuzhouTripPage({ onBack }: Props) {
             <div className={styles.hotelSingleIcon}><Icon name="hotel" size={20}/></div>
             <div className={styles.hotelSingleInfo}>
               <div className={styles.hotelSingleName}>
-                1晚客栈 + 3晚高星酒店
+                1晚古镇 + 3晚亚朵大本营
               </div>
-              <div className={styles.hotelSingleMeta}>1晚古镇客栈免走石板路</div>
-              <div className={styles.hotelSingleDesc}>3晚市区酒店做大本营 · 避免每日整理行李</div>
+              <div className={styles.hotelSingleMeta}>廿八都名都酒店(北入口) · 免搬运直入古镇</div>
+              <div className={styles.hotelSingleDesc}>衢州西站体育中心亚朵 · 3晚连住零折腾</div>
             </div>
           </div>
         </section>
