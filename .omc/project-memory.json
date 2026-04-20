@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1776520435350,
+  "lastScanned": 1776672637888,
   "projectRoot": "D:\\dev\\windssea\\windssea-daily",
   "techStack": {
     "languages": [
@@ -81,28 +81,28 @@
       "path": "-Force",
       "purpose": null,
       "fileCount": 0,
-      "lastAccessed": 1776520435268,
+      "lastAccessed": 1776672637813,
       "keyFiles": []
     },
     "dist": {
       "path": "dist",
       "purpose": "Distribution/build output",
       "fileCount": 0,
-      "lastAccessed": 1776520435269,
+      "lastAccessed": 1776672637814,
       "keyFiles": []
     },
     "docs": {
       "path": "docs",
       "purpose": "Documentation",
       "fileCount": 0,
-      "lastAccessed": 1776520435311,
+      "lastAccessed": 1776672637851,
       "keyFiles": []
     },
     "migrations": {
       "path": "migrations",
       "purpose": "Database migrations",
       "fileCount": 1,
-      "lastAccessed": 1776520435312,
+      "lastAccessed": 1776672637852,
       "keyFiles": [
         "0001_init.sql"
       ]
@@ -111,7 +111,7 @@
       "path": "src",
       "purpose": "Source code",
       "fileCount": 0,
-      "lastAccessed": 1776520435312,
+      "lastAccessed": 1776672637853,
       "keyFiles": []
     }
   },
@@ -124,32 +124,32 @@
     },
     {
       "path": "src\\client\\pages\\WelcomePage.tsx",
-      "accessCount": 19,
-      "lastAccessed": 1776391354089,
-      "type": "file"
-    },
-    {
-      "path": "src\\client\\pages\\TravelMapPage.tsx",
-      "accessCount": 13,
-      "lastAccessed": 1776309986049,
+      "accessCount": 24,
+      "lastAccessed": 1776673126801,
       "type": "file"
     },
     {
       "path": "src\\client\\App.tsx",
-      "accessCount": 12,
-      "lastAccessed": 1776391328267,
+      "accessCount": 15,
+      "lastAccessed": 1776673152585,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\pages\\TravelMapPage.tsx",
+      "accessCount": 14,
+      "lastAccessed": 1776672861104,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\pages\\WelcomePage.module.css",
+      "accessCount": 10,
+      "lastAccessed": 1776673133399,
       "type": "file"
     },
     {
       "path": "src\\client\\pages\\QuzhouTripPage.module.css",
       "accessCount": 9,
       "lastAccessed": 1776521201306,
-      "type": "file"
-    },
-    {
-      "path": "src\\client\\pages\\WelcomePage.module.css",
-      "accessCount": 7,
-      "lastAccessed": 1776402204585,
       "type": "file"
     },
     {
@@ -165,6 +165,12 @@
       "type": "directory"
     },
     {
+      "path": "src\\server\\index.ts",
+      "accessCount": 4,
+      "lastAccessed": 1776673101619,
+      "type": "file"
+    },
+    {
       "path": "docs\\superpowers\\plans\\2026-04-16-travel-map.md",
       "accessCount": 3,
       "lastAccessed": 1776307980499,
@@ -172,14 +178,44 @@
     },
     {
       "path": "src\\client\\pages\\ShanxiTripPage.tsx",
-      "accessCount": 2,
-      "lastAccessed": 1776390735124,
+      "accessCount": 3,
+      "lastAccessed": 1776672909228,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\lib\\api.ts",
+      "accessCount": 3,
+      "lastAccessed": 1776673090819,
+      "type": "file"
+    },
+    {
+      "path": "src\\server\\routes\\todos.ts",
+      "accessCount": 3,
+      "lastAccessed": 1776673097708,
       "type": "file"
     },
     {
       "path": "docs\\衢州\\攻略.md",
       "accessCount": 2,
       "lastAccessed": 1776520511057,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 2,
+      "lastAccessed": 1776672849001,
+      "type": "file"
+    },
+    {
+      "path": "migrations\\0001_init.sql",
+      "accessCount": 2,
+      "lastAccessed": 1776672965773,
+      "type": "file"
+    },
+    {
+      "path": "wrangler.toml",
+      "accessCount": 2,
+      "lastAccessed": 1776673044712,
       "type": "file"
     },
     {
@@ -231,12 +267,6 @@
       "type": "file"
     },
     {
-      "path": "package.json",
-      "accessCount": 1,
-      "lastAccessed": 1776307402371,
-      "type": "file"
-    },
-    {
       "path": "docs\\superpowers\\specs\\2026-04-17-quzhou-trip-design.md",
       "accessCount": 1,
       "lastAccessed": 1776390859615,
@@ -246,6 +276,66 @@
       "path": "src\\client\\pages\\ShanxiTripPage.module.css",
       "accessCount": 1,
       "lastAccessed": 1776390956249,
+      "type": "file"
+    },
+    {
+      "path": "src\\shared\\types.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776672849700,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\pages\\TodoPage.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776672860323,
+      "type": "file"
+    },
+    {
+      "path": "src\\server\\routes\\weather.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776672874767,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\main.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776672875227,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 1,
+      "lastAccessed": 1776672897827,
+      "type": "file"
+    },
+    {
+      "path": "migrations\\0002_settings.sql",
+      "accessCount": 1,
+      "lastAccessed": 1776673052874,
+      "type": "file"
+    },
+    {
+      "path": "src\\server\\routes\\auth.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776673055748,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\hooks\\useAuth.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776673059360,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\components\\PinModal.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776673073070,
+      "type": "file"
+    },
+    {
+      "path": "src\\client\\components\\PinModal.module.css",
+      "accessCount": 1,
+      "lastAccessed": 1776673085401,
       "type": "file"
     }
   ],

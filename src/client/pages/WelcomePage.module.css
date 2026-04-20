@@ -138,6 +138,23 @@
   border: 1px solid var(--border);
 }
 
+.avatarBtn {
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.avatarBtn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 6px 20px rgba(26, 29, 46, 0.1);
+}
+
+.avatarBtn:active {
+  transform: scale(0.94);
+}
+
 /* ════════════════════════════════════════════
    Sections
    ════════════════════════════════════════════ */

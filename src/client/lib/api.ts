@@ -2,9 +2,14 @@ import type { Todo } from '../../shared/types'
 
 const API_BASE = '/api'
 
+let _pin = ''
+export function setApiPin(pin: string) { _pin = pin }
+
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+  if (_pin) headers['X-Pin'] = _pin
   const res = await fetch(`${API_BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    headers: { ...headers, ...options?.headers },
     ...options,
   })
   if (!res.ok) {

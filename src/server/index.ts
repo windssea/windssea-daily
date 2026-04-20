@@ -4,6 +4,7 @@ import { logger } from 'hono/logger'
 import { cors } from 'hono/cors'
 import { todosRoutes } from './routes/todos'
 import { weatherRoutes } from './routes/weather'
+import { authRoutes } from './routes/auth'
 
 type Env = {
   Bindings: {
@@ -27,6 +28,7 @@ app.get('/api/health', async (c) => {
 })
 
 // Mount routes
+app.route('/api/auth', authRoutes)
 app.route('/api/todos', todosRoutes)
 app.route('/api/weather', weatherRoutes)
 

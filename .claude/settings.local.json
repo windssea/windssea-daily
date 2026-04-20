@@ -15,7 +15,8 @@
       "Bash(git add *)",
       "Bash(git commit *)",
       "Bash(pnpm build *)",
-      "Bash(ls D:/dev/windssea/windssea-daily/*.json)"
+      "Bash(ls D:/dev/windssea/windssea-daily/*.json)",
+      "Bash(npx wrangler *)"
     ]
   }
 }

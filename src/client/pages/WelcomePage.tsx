@@ -7,6 +7,8 @@ interface Props {
   onQuzhouTrip: () => void
   onHuangshanTrip: () => void
   onTravelMap: () => void
+  isAuthenticated: boolean
+  onAvatarClick: () => void
 }
 
 /* ── SVG Icons (Thinner strokes for elegance) ── */
@@ -92,7 +94,7 @@ function useDateLabel() {
 
 /* ── Component ──────────────────────────────────────────── */
 
-function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onTravelMap }: Props) {
+function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onTravelMap, isAuthenticated, onAvatarClick }: Props) {
   const greeting = useGreeting()
   const dateLabel = useDateLabel()
 
@@ -106,10 +108,22 @@ function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onT
             <p className={styles.dateLine}>{dateLabel}</p>
             <h1 className={styles.greetTitle}>{greeting}，<br />windssea</h1>
           </div>
-          <div className={styles.avatar}>W</div>
+          <button
+            className={`${styles.avatar} ${styles.avatarBtn}`}
+            onClick={onAvatarClick}
+            aria-label={isAuthenticated ? '已验证，点击注销' : '点击验证 PIN 码'}
+          >
+            {isAuthenticated ? 'W' : (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+              </svg>
+            )}
+          </button>
         </header>
 
         {/* ── Daily Tasks (Quiet Luxury White Card) ── */}
+        {isAuthenticated && (
         <section className={styles.section} aria-label="今日待办">
           <button
             className={`${styles.card} ${styles.widgetDaily}`}
@@ -131,6 +145,7 @@ function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onT
             <IconArrowRight className={styles.widgetArrow} />
           </button>
         </section>
+        )}
 
         {/* ── Trips Grid (Stacked Rows) ── */}
         <section className={styles.section} aria-label="旅行计划">
@@ -190,6 +205,7 @@ function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onT
               <IconArrowRight className={styles.tripArrow} />
             </button>
 
+            {isAuthenticated && (
             <button
               className={`${styles.card} ${styles.tripCard}`}
               onClick={onTravelMap}
@@ -206,6 +222,7 @@ function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onT
               </div>
               <IconArrowRight className={styles.tripArrow} />
             </button>
+            )}
           </div>
         </section>
 

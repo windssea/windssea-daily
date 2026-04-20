@@ -10,6 +10,22 @@ type Env = {
 
 const todos = new Hono<Env>()
 
+// PIN auth middleware
+todos.use('/*', async (c, next) => {
+  const pin = c.req.header('X-Pin')
+  if (!pin) return c.json({ error: 'Authentication required' }, 401)
+
+  const row = await c.env.DB.prepare(
+    'SELECT value FROM settings WHERE key = ?'
+  ).bind('pin_code').first<{ value: string }>()
+
+  if (pin !== (row?.value ?? '1221')) {
+    return c.json({ error: 'Invalid PIN' }, 401)
+  }
+
+  await next()
+})
+
 // GET / — list todos (default: today)
 todos.get('/', async (c) => {
   const date = c.req.query('date')

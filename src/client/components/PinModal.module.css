@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&display=swap');
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(16, 18, 32, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 28px;
+  padding: 36px 32px 32px;
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow:
+    0 24px 64px rgba(26, 29, 46, 0.14),
+    0 8px 20px rgba(26, 29, 46, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.lockIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: rgba(59, 91, 219, 0.08);
+  color: #3b5bdb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.lockIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #1a1d2e;
+  margin: 0 0 6px;
+  letter-spacing: -0.03em;
+}
+
+.sub {
+  font-size: 13px;
+  color: #8c92ad;
+  margin: 0 0 28px;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.digits {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.digit {
+  width: 56px;
+  height: 64px;
+  border-radius: 16px;
+  border: 1.5px solid rgba(26, 29, 46, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #1a1d2e;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  caret-color: transparent;
+}
+
+.digit:focus {
+  border-color: #3b5bdb;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(59, 91, 219, 0.12);
+}
+
+.digitFilled {
+  border-color: rgba(59, 91, 219, 0.4);
+  background: rgba(59, 91, 219, 0.04);
+}
+
+.digitError {
+  border-color: #e03131 !important;
+  background: rgba(224, 49, 49, 0.05) !important;
+  box-shadow: 0 0 0 3px rgba(224, 49, 49, 0.1) !important;
+}
+
+.errorMsg {
+  font-size: 13px;
+  color: #e03131;
+  margin: 0;
+  text-align: center;
+  animation: fadeIn 0.2s ease;
+}
+
+.loadingMsg {
+  font-size: 13px;
+  color: #8c92ad;
+  margin: 0;
+  text-align: center;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-8px); }
+  40%       { transform: translateX(8px); }
+  60%       { transform: translateX(-6px); }
+  80%       { transform: translateX(6px); }
+}
+
+.shake {
+  animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
