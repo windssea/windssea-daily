@@ -199,12 +199,12 @@ function MeteorShower() {
     /* ── Starfield: 200 stars ── */
     interface Star { x: number; y: number; r: number; baseAlpha: number; phase: number; speed: number }
     const stars: Star[] = []
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 100; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        r: 0.3 + Math.random() * 2.0,
-        baseAlpha: 0.3 + Math.random() * 0.7,
+        r: 0.2 + Math.random() * 1.2,
+        baseAlpha: 0.2 + Math.random() * 0.45,
         phase: Math.random() * Math.PI * 2,
         speed: 0.0003 + Math.random() * 0.0012,
       })
@@ -265,12 +265,12 @@ function MeteorShower() {
         const alpha = s.baseAlpha * twinkle
         ctx.beginPath()
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,250,235,${alpha.toFixed(2)})`
+        ctx.fillStyle = `rgba(240,245,255,${alpha.toFixed(2)})`
         ctx.fill()
-        if (s.r > 0.6 && twinkle > 0.8) {
+        if (s.r > 1.4 && twinkle > 0.88) {
           ctx.beginPath()
-          ctx.arc(s.x, s.y, s.r * 3.5, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(255,230,160,${(alpha * 0.18).toFixed(2)})`
+          ctx.arc(s.x, s.y, s.r * 2.5, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(255,240,200,${(alpha * 0.08).toFixed(2)})`
           ctx.fill()
         }
       }
