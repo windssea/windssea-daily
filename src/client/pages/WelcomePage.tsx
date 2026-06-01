@@ -6,6 +6,7 @@ interface Props {
   onShanxiTrip: () => void
   onQuzhouTrip: () => void
   onHuangshanTrip: () => void
+  onNingxiaTrip: () => void
   onTravelMap: () => void
   isAuthenticated: boolean
   onAvatarClick: () => void
@@ -70,6 +71,19 @@ function IconBamboo({ className }: { className?: string }) {
   )
 }
 
+function IconDesert({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 18c2-4 4-6 6-5s5 3 8 0 5-4 6-2" />
+      <path d="M5 14l1-3" />
+      <path d="M10 13l2-4" />
+      <path d="M15 15l1-3" />
+      <circle cx="20" cy="12" r="1" fill="currentColor" stroke="none" />
+      <path d="M3 19h18" />
+    </svg>
+  )
+}
+
 /* ── Hooks ──────────────────────────────────────────────── */
 
 function useGreeting() {
@@ -94,7 +108,7 @@ function useDateLabel() {
 
 /* ── Component ──────────────────────────────────────────── */
 
-function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onTravelMap, isAuthenticated, onAvatarClick }: Props) {
+function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onNingxiaTrip, onTravelMap, isAuthenticated, onAvatarClick }: Props) {
   const greeting = useGreeting()
   const dateLabel = useDateLabel()
 
@@ -106,7 +120,7 @@ function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onT
         <header className={styles.header}>
           <div className={styles.headerText}>
             <p className={styles.dateLine}>{dateLabel}</p>
-            <h1 className={styles.greetTitle}>{greeting}，<br />windssea</h1>
+            <h1 className={styles.greetTitle}>{greeting}</h1>
           </div>
           <button
             className={`${styles.avatar} ${styles.avatarBtn}`}
@@ -184,6 +198,23 @@ function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onT
               <div className={styles.tripBody}>
                 <p className={styles.tripLabel}>衢州山行</p>
                 <p className={styles.tripDesc}>5 DAYS JOURNEY</p>
+              </div>
+              <IconArrowRight className={styles.tripArrow} />
+            </button>
+
+            <button
+              className={`${styles.card} ${styles.tripCard}`}
+              onClick={onNingxiaTrip}
+              aria-label="查看宁夏旅游"
+            >
+              <div className={styles.tripHeader}>
+                <div className={`${styles.iconWrap} ${styles.iconWrapOrange}`}>
+                  <IconDesert className={styles.iconElement} />
+                </div>
+              </div>
+              <div className={styles.tripBody}>
+                <p className={styles.tripLabel}>宁夏沙漠</p>
+                <p className={styles.tripDesc}>9 DAYS ADVENTURE</p>
               </div>
               <IconArrowRight className={styles.tripArrow} />
             </button>

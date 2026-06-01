@@ -844,7 +844,7 @@ git commit -m "style: white hotel cards, darker bottom nav with orange active"
       {/* Hero */}
       <section className={styles.hero}>
         <h1 className={styles.heroTitle}>山西五日深度游</h1>
-        <p className={styles.heroSub}>五一亲子自驾 · 2025.4.30 — 5.5</p>
+        <p className={styles.heroSub}>五一自驾 · 2025.4.30 — 5.5</p>
         <p className={styles.heroSubDetail}>南京出发 · 晋北环线</p>
       </section>
 ```
@@ -856,7 +856,7 @@ git commit -m "style: white hotel cards, darker bottom nav with orange active"
       <section className={styles.hero}>
         <p className={styles.heroSubDetail}>SHANXI · FAMILY ROAD TRIP · 2025</p>
         <h1 className={styles.heroTitle}>山西五日深度游</h1>
-        <p className={styles.heroSub}>五一亲子自驾 · 2025.4.30 — 5.5 · 南京出发</p>
+        <p className={styles.heroSub}>五一自驾 · 2025.4.30 — 5.5 · 南京出发</p>
         <div className={styles.heroStats}>
           <div className={styles.heroStat}>
             <span className={styles.heroStatN}>5</span>
@@ -925,7 +925,7 @@ git commit -m "feat: add hero stats row (5天/8景点/760公里/4人)"
       <section className={styles.hero}>
         <p className={styles.heroSubDetail}>SHANXI · FAMILY ROAD TRIP · 2025</p>
         <h1 className={styles.heroTitle}>山西五日深度游</h1>
-        <p className={styles.heroSub}>五一亲子自驾 · 2025.4.30 — 5.5 · 南京出发</p>
+        <p className={styles.heroSub}>五一自驾 · 2025.4.30 — 5.5 · 南京出发</p>
         <div className={styles.heroStats}>
           <div className={styles.heroStat}><span className={styles.heroStatN}>5</span><span className={styles.heroStatL}>天</span></div>
           <div className={styles.heroStat}><span className={styles.heroStatN}>8</span><span className={styles.heroStatL}>景点</span></div>

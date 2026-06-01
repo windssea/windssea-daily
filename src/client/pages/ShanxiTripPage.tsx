@@ -852,7 +852,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
       {/* Hero */}
       <section className={styles.hero}>
         <h1 className={styles.heroTitle}>山西五日深度游</h1>
-        <p className={styles.heroSub}>五一亲子自驾 · 2026.4.30 — 5.5 · 南京出发</p>
+        <p className={styles.heroSub}>五一自驾 · 2026.4.30 — 5.5 · 南京出发</p>
         <div className={styles.heroStats}>
           <div className={styles.heroStat}>
             <span className={styles.heroStatN}>5</span>
@@ -1190,7 +1190,7 @@ export default function ShanxiTripPage({ onBack }: Props) {
 
       <footer className={styles.footer}>
         <span className={styles.footerSeal}>晋</span>
-        <p>山西五日亲子自驾 · 2026年五一</p>
+        <p>山西五日自驾 · 2026年五一</p>
         <p className={styles.footerSub}>一路平安 · 满载而归</p>
       </footer>
     </div>

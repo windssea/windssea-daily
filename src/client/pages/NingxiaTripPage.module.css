@@ -1,0 +1,1272 @@
+/* ── Design Tokens (Cool Galaxy Theme) ──────── */
+.page {
+  --ink: oklch(16% 0.04 260);
+  --ink-soft: oklch(30% 0.04 255);
+  --ink-muted: oklch(46% 0.03 250);
+  --paper: oklch(97% 0.005 250);
+  --paper-warm: oklch(94% 0.01 250);
+  --paper-line: oklch(88% 0.015 250);
+  --accent: oklch(62% 0.18 270);
+  --accent-light: oklch(94% 0.04 270);
+  --accent-deep: oklch(26% 0.10 260);
+  --gold: oklch(78% 0.16 80);
+  --gold-light: oklch(96% 0.06 80);
+  --gold-text: oklch(56% 0.16 78);
+  --star: oklch(95% 0.01 240);
+  --cosmic: oklch(45% 0.18 285);
+  --green: oklch(58% 0.10 135);
+  --green-light: oklch(92% 0.05 135);
+  --red: oklch(52% 0.14 25);
+  --red-light: oklch(92% 0.04 25);
+
+  --r: 12px;
+  --r-sm: 8px;
+  --r-xs: 4px;
+
+  --shadow-sm: 0 1px 3px oklch(0% 0 0 / 0.06);
+  --shadow-md: 0 2px 8px oklch(0% 0 0 / 0.08);
+}
+
+/* ── Page Base ──────────────────────────────── */
+.page {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Noto Sans SC', sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 5%, rgba(120, 90, 240, 0.42) 0%, transparent 55%),
+    radial-gradient(circle at 85% 15%, rgba(100, 140, 240, 0.28) 0%, transparent 50%),
+    radial-gradient(circle at 5% 85%, rgba(80, 60, 210, 0.3) 0%, transparent 55%),
+    radial-gradient(circle at 70% 95%, rgba(100, 80, 230, 0.32) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(40, 25, 100, 0.35) 0%, transparent 70%),
+    #0d1226;
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  padding-bottom: calc(60px + env(safe-area-inset-bottom));
+
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+              transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.page.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Icon Base ──────────────────────────────── */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Floating Back Button ───────────────────── */
+.backBtn {
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  left: 12px;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(15, 20, 40, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 0 8px rgba(240, 190, 60, 0.12);
+  color: rgba(220, 210, 190, 0.7);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s, transform 0.12s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.backBtn:active {
+  transform: scale(0.9);
+  background: rgba(15, 20, 40, 0.65);
+  color: rgba(245, 200, 66, 0.9);
+}
+
+.backBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Hero (Galaxy Night Sky) ───────────────── */
+.hero {
+  position: relative;
+  padding: 28px 20px 0;
+  overflow: hidden;
+  background: linear-gradient(165deg, #070b1a 0%, #0f1830 30%, #1a1040 60%, #0d1a2d 100%);
+  color: #fff;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 40% at 20% 20%, rgba(120, 100, 240, 0.2) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 50% at 85% 70%, rgba(100, 140, 240, 0.16) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 35% at 60% 10%, rgba(160, 140, 250, 0.14) 0%, transparent 50%),
+    radial-gradient(circle 3px at 15% 25%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(circle 2px at 75% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(circle 2px at 40% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(circle 1px at 60% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 88% 35%, rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(circle 2px at 25% 65%, rgba(255,255,255,0.35) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 8%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 28% 22%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 12%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 62% 28%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 78% 8%, rgba(255,255,255,0.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 45%, rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(1px 1px at 8% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 33% 48%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 38%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 52%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 18% 72%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 82% 62%, rgba(255,255,255,0.45) 0%, transparent 100%);
+  pointer-events: none;
+  animation: starTwinkle 3s ease-in-out infinite alternate;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.heroTitle {
+  text-align: right;
+  position: relative;
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: clamp(30px, 9vw, 42px);
+  line-height: 1.1;
+  margin: 0 0 8px;
+  letter-spacing: 0.02em;
+  text-wrap: balance;
+  background: linear-gradient(135deg, #ffffff 0%, #c8d8ff 25%, #8eb8ff 50%, #d0e0ff 75%, #f0f4ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(150,180,255,0.3));
+}
+
+.heroSub {
+  text-align: right;
+  position: relative;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.heroSubDetail {
+  position: relative;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 18px;
+  letter-spacing: 0.15em;
+}
+
+.heroStats {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.heroStat {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 4px;
+  text-align: center;
+}
+
+.heroStatN {
+  font-size: 20px;
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-variant-numeric: tabular-nums;
+  display: block;
+  line-height: 1;
+  color: #f0c840;
+  text-shadow: 0 0 12px rgba(240,200,64,0.4);
+}
+
+.heroStatL {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  display: block;
+  margin-top: 4px;
+  letter-spacing: 0.04em;
+}
+
+/* ── Hero Chips ─────────────────────────────── */
+.heroChips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin: 0 -20px;
+  padding: 0 20px 16px;
+  position: relative;
+}
+
+.heroChips::-webkit-scrollbar {
+  display: none;
+}
+
+.heroChip {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.65);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.heroChipActive {
+  background: oklch(78% 0.16 80);
+  border-color: oklch(78% 0.16 80);
+  color: oklch(22% 0.06 265);
+  font-weight: 700;
+  box-shadow: 0 0 14px oklch(78% 0.16 80 / 0.35);
+}
+
+.heroChip:active:not(.heroChipActive) {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Bottom Pill Navigation ─────────────────── */
+.pillNav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  z-index: 20;
+  background: rgba(16, 18, 34, 0.96);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-top: 2px solid rgba(240, 190, 60, 0.3);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+  padding: 10px 8px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 6px;
+}
+.pillNav::-webkit-scrollbar {
+  display: none;
+}
+
+.pill {
+  flex-shrink: 0;
+  padding: 9px 14px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(210, 215, 235, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s cubic-bezier(0.25, 1, 0.5, 1), color 0.25s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.25s;
+  -webkit-tap-highlight-color: transparent;
+  letter-spacing: 0.02em;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pill.active {
+  background: oklch(78% 0.18 80);
+  color: oklch(20% 0.06 265);
+  font-weight: 700;
+  border-color: oklch(78% 0.18 80);
+  box-shadow: 0 2px 14px oklch(78% 0.16 80 / 0.4);
+}
+
+.pill:active:not(.active) {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Sections ───────────────────────────────── */
+.section {
+  padding: 28px 20px;
+  scroll-margin-top: 66px;
+  scroll-margin-bottom: 60px;
+  background: oklch(97% 0.005 250 / 0.96);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.sectionLabel {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.sectionTitle {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sectionTitle::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--paper-line), transparent);
+}
+
+.subTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 20px 0 12px;
+  font-weight: 500;
+}
+
+.subTitleIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--gold);
+}
+
+.subTitleGapMd { margin-top: 24px; }
+.subTitleGapLg { margin-top: 28px; }
+
+/* ── Route Map ──────────────────────────────── */
+.routeMap {
+  background: oklch(95% 0.01 250 / 0.88);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: var(--r);
+  border: 1px solid oklch(90% 0.02 250 / 0.5);
+  padding: 16px 12px;
+}
+
+.routeRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.routeRowReverse {
+  flex-direction: row-reverse;
+}
+
+.routeStop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  min-width: 44px;
+}
+
+.routeStopDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 2.5px var(--accent-light);
+}
+
+.routeStopName {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.routeStopDate {
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.routeDash {
+  flex: 1;
+  min-width: 12px;
+  height: 0;
+  border-top: 1.5px dashed var(--paper-line);
+  margin-top: 4px;
+}
+
+.routeConnector {
+  border-left: 1.5px dashed var(--paper-line);
+  margin-left: 50%;
+  margin-bottom: 8px;
+  height: 16px;
+}
+
+/* ── Reservation List ───────────────────────── */
+.reservList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  border: 1px solid oklch(86% 0.015 250 / 0.5);
+  background: oklch(96% 0.005 250 / 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.reservItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid oklch(86% 0.015 250 / 0.4);
+  font-size: 13px;
+}
+.reservItem:last-child {
+  border-bottom: none;
+}
+.reservItem:nth-child(even) {
+  background: oklch(93% 0.01 250 / 0.55);
+}
+.reservName {
+  font-weight: 600;
+  color: var(--ink);
+}
+.reservMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  color: var(--ink-muted);
+  font-size: 12px;
+  margin-left: auto;
+}
+.reservChannel {
+  color: var(--ink-soft);
+}
+.reservAdvance {
+  background: var(--red-light);
+  color: var(--red);
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+.reservPrice {
+  color: var(--ink-soft);
+}
+
+/* ── Hotel Cards ────────────────────────────── */
+.hotelList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hotelItem {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  background: oklch(96% 0.005 250 / 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid oklch(86% 0.015 250 / 0.4);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.hotelNight {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--accent-deep);
+  color: var(--gold);
+  border-radius: var(--r-xs);
+  padding: 5px 8px;
+  font-size: 12px;
+  flex-shrink: 0;
+  text-align: center;
+  min-width: 44px;
+  justify-content: center;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.hotelNightIcon {
+  width: 13px;
+  height: 13px;
+  opacity: 0.7;
+}
+
+.hotelInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.hotelName {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.hotelDesc {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 3px;
+}
+
+/* ── Day Divider ────────────────────────────── */
+.dayDivider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: var(--paper-line);
+}
+
+.dayDivider::before,
+.dayDivider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--paper-line);
+}
+
+.dayDividerEmoji {
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+/* ── Day Header ─────────────────────────────── */
+.dayHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.dayDateCircle {
+  background: var(--accent-deep);
+  color: var(--gold);
+  border-radius: var(--r-sm);
+  padding: 6px 12px;
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 52px;
+  box-shadow: 0 4px 18px oklch(78% 0.16 80 / 0.3);
+}
+
+.dayDateM {
+  font-size: 11px;
+  opacity: 0.8;
+  display: block;
+  line-height: 1.2;
+}
+
+.dayDateD {
+  font-size: 26px;
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-weight: 800;
+  line-height: 1;
+  display: block;
+  margin-top: 2px;
+}
+
+.dayInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.dayName {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.dayMeta {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.dayMetaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dayMetaIcon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ── Timeline & Accordions ──────────────────── */
+.timeline {
+  position: relative;
+  padding-left: 22px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), var(--paper-line), var(--accent));
+  border-radius: 1px;
+  opacity: 0.35;
+}
+
+.tlItem {
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.tlItem::before {
+  content: '';
+  position: absolute;
+  left: -19px;
+  top: 14px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid oklch(75% 0.03 250);
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+}
+
+.tlItem.highlight::before {
+  background: var(--accent);
+  border-color: var(--accent);
+  width: 10px;
+  height: 10px;
+  left: -20px;
+  top: 13px;
+  box-shadow: 0 0 0 3px oklch(62% 0.18 270 / 0.3);
+}
+
+.tlBtn {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 0;
+  min-height: 44px;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.15s;
+}
+
+.tlBtn:not(.tlBtnStatic) {
+  background: oklch(0% 0 0 / 0.015);
+  border-radius: var(--r-xs);
+  padding: 10px 8px;
+  margin: 0 -8px;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.tlBtn:not(.tlBtnStatic):hover {
+  background: oklch(0% 0 0 / 0.03);
+}
+
+.tlBtn:not(.tlBtnStatic):active {
+  background: oklch(0% 0 0 / 0.06);
+  opacity: 1;
+}
+
+.tlBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+.tlBtnStatic {
+  cursor: default;
+  min-height: auto;
+  padding: 6px 0;
+}
+
+.tlBtnStatic:active {
+  opacity: 1;
+}
+
+.tlTime {
+  font-size: 12px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+
+.tlName {
+  font-size: 16px;
+  color: var(--ink);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  line-height: 1.45;
+  min-width: 0;
+}
+
+.caret {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--ink-soft);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tlItem.open .caret {
+  transform: rotate(180deg);
+}
+
+.tlItem.open .tlBody {
+  animation: tlBodyIn 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes tlBodyIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tlDetail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tlBtn:not(.tlBtnStatic) + .tlDetail {
+  margin-left: -8px;
+  margin-right: 8px;
+}
+
+.tlItem.open .tlDetail {
+  grid-template-rows: 1fr;
+}
+
+.tlInner {
+  overflow: hidden;
+}
+
+.tlBody {
+  background: oklch(95% 0.01 250 / 0.82);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: var(--r-sm);
+  padding: 14px 16px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  border-left: 3px solid var(--gold);
+}
+
+.tlBody.isSight {
+  border-left-color: var(--accent);
+  background: oklch(95% 0.02 260 / 0.82);
+}
+
+/* ── Sight Card ─────────────────────────────── */
+.sightTimeAbove {
+  font-size: 11px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+  display: block;
+  padding-left: 4px;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sightCard {
+  background: oklch(96% 0.005 250 / 0.78);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 12px;
+  border: 1px solid oklch(85% 0.03 260 / 0.5);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07), 0 0 0 1px oklch(90% 0.02 260 / 0.4);
+  margin: 0 0 8px -4px;
+  overflow: hidden;
+}
+
+.sightCardHead {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 12px 14px 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s;
+}
+
+.sightCardHead:hover {
+  background: oklch(92% 0.04 80);
+}
+
+.sightCardHead:active {
+  background: oklch(88% 0.06 80);
+}
+
+.sightCardHead:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.sightCardLeft {
+  flex: 1;
+  min-width: 0;
+}
+
+.sightCardLabel {
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.sightCardName {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.sightCardActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.sightCardBody {
+  border-top: 1px solid oklch(92% 0.02 250);
+  padding: 10px 14px 12px;
+  background: linear-gradient(to bottom, oklch(93% 0.02 260), transparent);
+  animation: tlBodyIn 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.tlBodyText {
+  margin-bottom: 10px;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.tlBodyText:last-child {
+  margin-bottom: 0;
+}
+
+.sightRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.sightRow:last-child {
+  margin-bottom: 0;
+}
+
+.sightLabel {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.sightValue {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.75;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+.badge-default {
+  background: var(--paper-line);
+  color: var(--ink);
+}
+
+.badge-red {
+  background: var(--red-light);
+  color: var(--red);
+}
+
+.badge-green {
+  background: var(--green-light);
+  color: var(--green);
+}
+
+.badge-gold {
+  background: var(--gold-light);
+  color: var(--gold-text);
+}
+
+/* ── Tips Section ───────────────────────────── */
+.tipsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tipsList li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--paper-line);
+  font-size: 15px;
+  color: var(--ink-soft);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: baseline;
+  line-height: 1.7;
+}
+
+.tipsList li:last-child {
+  border-bottom: none;
+}
+
+.tipsCircle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--paper-warm);
+  border: 1.5px solid var(--paper-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.tipsText {
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.tipsSection { padding-bottom: 40px; }
+
+/* ── Footer ─────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 28px 20px 52px;
+  color: var(--ink-muted);
+  font-size: 14px;
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: var(--paper-line);
+  margin: 0 auto 28px;
+}
+
+.footerSeal {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 36px;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 10px;
+  opacity: 0.55;
+  text-shadow: 0 0 20px oklch(78% 0.16 80 / 0.25);
+  animation: sealBreathe 4s ease-in-out infinite;
+}
+
+@keyframes sealBreathe {
+  0%, 100% { opacity: 0.55; text-shadow: 0 0 20px oklch(78% 0.16 80 / 0.25); }
+  50% { opacity: 0.75; text-shadow: 0 0 30px oklch(78% 0.16 80 / 0.4); }
+}
+
+.footerSub { margin-top: 4px; opacity: 0.6; }
+
+/* ── Pin Link ───────────────────────────────── */
+.pinLink {
+  display: inline-flex;
+  align-items: center;
+  color: var(--gold);
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  padding: 10px;
+  margin: -10px;
+  border-radius: 4px;
+}
+.pinLink:hover,
+.pinLink:active {
+  opacity: 1;
+}
+
+.pinLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Inline Hotel Section ───────────────────── */
+.hotelSection {
+  padding: 16px 20px 20px;
+}
+
+.hotelSectionLabel {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ── Hero title shimmer ────────────────────── */
+.heroTitle {
+  background-size: 200% 100%;
+  animation: heroShimmer 6s ease-in-out infinite;
+}
+
+@keyframes heroShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ── Route stop pulse ──────────────────────── */
+.routeStopDot {
+  animation: dotPulse 3s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 2.5px var(--accent-light); }
+  50% { box-shadow: 0 0 0 5px var(--accent-light), 0 0 14px oklch(78% 0.16 80 / 0.4); }
+}
+
+/* ── Timeline highlight glow ───────────────── */
+.tlItem.highlight::before {
+  animation: glowBreath 2.5s ease-in-out infinite;
+}
+
+@keyframes glowBreath {
+  0%, 100% { box-shadow: 0 0 0 3px oklch(78% 0.16 80 / 0.35); }
+  50% { box-shadow: 0 0 0 6px oklch(78% 0.16 80 / 0.18); }
+}
+
+/* ── Footer seal hover ─────────────────────── */
+.footerSeal {
+  cursor: default;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.footerSeal:hover {
+  transform: rotate(-8deg) scale(1.1);
+  opacity: 0.75;
+}
+
+/* ── Day date circle pop-in ────────────────── */
+.dayDateCircle {
+  animation: datePopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes datePopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Reduced Motion ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .tlBody {
+    animation: none;
+  }
+  .tlDetail {
+    transition: none;
+  }
+  .caret {
+    transition: none;
+  }
+  .footerSeal {
+    animation: none;
+  }
+  .pill {
+    transition: none;
+  }
+  .pinLink {
+    transition: none;
+  }
+  .backBtn {
+    transition: none;
+  }
+  .hotelItem {
+    transition: none;
+  }
+  .tlItem::before {
+    transition: none;
+  }
+  .tlBtn:not(.tlBtnStatic) {
+    transition: none;
+  }
+  .heroChip {
+    transition: none;
+  }
+  .sightCardHead {
+    transition: none;
+  }
+  .sightCardBody {
+    animation: none;
+  }
+  .heroTitle {
+    animation: none;
+    background-size: 100% 100%;
+  }
+  .routeStopDot {
+    animation: none;
+  }
+  .tlItem.highlight::before {
+    animation: none;
+  }
+  .footerSeal {
+    animation: none;
+    transition: none;
+  }
+  .dayDateCircle {
+    animation: none;
+  }
+  .icon svg {
+    transition: none;
+  }
+}
+
+.tlNameText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}

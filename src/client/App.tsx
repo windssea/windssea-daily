@@ -3,18 +3,19 @@ import WelcomePage from './pages/WelcomePage'
 import TodoPage from './pages/TodoPage'
 import ShanxiTripPage from './pages/ShanxiTripPage'
 import QuzhouTripPage from './pages/QuzhouTripPage'
+import NingxiaTripPage from './pages/NingxiaTripPage'
 import IFramePage from './pages/IFramePage'
 import TravelMapPage from './pages/TravelMapPage'
 import { PinModal } from './components/PinModal'
 import { useAuth } from './hooks/useAuth'
 
-type Page = 'welcome' | 'todo' | 'shanxi' | 'quzhou' | 'huangshan' | 'travelmap'
+type Page = 'welcome' | 'todo' | 'shanxi' | 'quzhou' | 'huangshan' | 'ningxia' | 'travelmap'
 
 const PROTECTED: Page[] = ['todo', 'travelmap']
 
 function getPageFromHash(): Page {
   const hash = window.location.hash.replace('#', '')
-  if (hash === 'todo' || hash === 'shanxi' || hash === 'quzhou' || hash === 'huangshan' || hash === 'travelmap') return hash
+  if (hash === 'todo' || hash === 'shanxi' || hash === 'quzhou' || hash === 'huangshan' || hash === 'ningxia' || hash === 'travelmap') return hash
   return 'welcome'
 }
 
@@ -61,6 +62,7 @@ function App() {
   if (page === 'shanxi') return <ShanxiTripPage onBack={() => navigate('welcome')} />
   if (page === 'quzhou') return <QuzhouTripPage onBack={() => navigate('welcome')} />
   if (page === 'travelmap') return <TravelMapPage onBack={() => navigate('welcome')} />
+  if (page === 'ningxia') return <NingxiaTripPage onBack={() => navigate('welcome')} />
   if (page === 'huangshan') return (
     <IFramePage
       title="黄山旅游"
@@ -75,6 +77,7 @@ function App() {
         onShanxiTrip={() => navigate('shanxi')}
         onQuzhouTrip={() => navigate('quzhou')}
         onHuangshanTrip={() => navigate('huangshan')}
+        onNingxiaTrip={() => navigate('ningxia')}
         onTravelMap={() => handleProtectedNav('travelmap')}
         isAuthenticated={isAuthenticated}
         onAvatarClick={() => setPinModalOpen(true)}

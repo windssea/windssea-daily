@@ -949,7 +949,7 @@ export default function QuzhouTripPage({ onBack }: Props) {
             <span className={styles.poemDivider} />
             <span className={styles.poemAuthor}>三衢道中</span>
           </div>
-          <h1 className={styles.heroTitle}>衢州五日亲子游</h1>
+          <h1 className={styles.heroTitle}>衢州五日游</h1>
           <p className={styles.heroSub}>五一高铁+租车 · 2026.5.1 — 5.5 · 南京出发</p>
           {/* 云雾远山 + 三爿石 SVG landscape */}
           <div className={styles.heroScape}>

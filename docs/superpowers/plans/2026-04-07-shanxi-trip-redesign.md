@@ -46,7 +46,7 @@ function buildBaiduNavUrl(placeName: string): string {
 将现有：
 ```ts
 const HOTELS = [
-  { night: '5/1', name: '大同古城四星亲子酒店', desc: '永泰门附近 · 含早餐 · 停车位充足' },
+  { night: '5/1', name: '大同古城四星酒店', desc: '永泰门附近 · 含早餐 · 停车位充足' },
   { night: '5/2', name: '应县县城连锁酒店', desc: '近应县木塔 · 出行便利' },
   { night: '5/3-4', name: '太原南站周边高端酒店', desc: '方便还车与返程 · 连住两晚' },
 ]
@@ -55,7 +55,7 @@ const HOTELS = [
 替换为：
 ```ts
 const HOTELS: HotelData[] = [
-  { dayId: 'd1', night: '5/1', name: '大同古城四星亲子酒店', desc: '永泰门附近 · 含早餐 · 停车位充足' },
+  { dayId: 'd1', night: '5/1', name: '大同古城四星酒店', desc: '永泰门附近 · 含早餐 · 停车位充足' },
   { dayId: 'd2', night: '5/2', name: '应县县城连锁酒店', desc: '近应县木塔 · 出行便利' },
   { dayId: 'd3', night: '5/3', name: '太原南站周边高端酒店', desc: '方便还车与返程 · 连住两晚' },
   { dayId: 'd4', night: '5/4', name: '太原南站周边高端酒店', desc: '方便还车与返程 · 续住第二晚' },

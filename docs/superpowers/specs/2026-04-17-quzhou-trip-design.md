@@ -32,7 +32,7 @@ Structure mirrors `ShanxiTripPage.tsx`:
 - Continuous emission ~1-2 leaves/frame, lifetime 6-10s
 
 **Hero section**
-- Title: 衢州五日亲子游
+- Title: 衢州五日游
 - Sub: 五一自驾 · 2026.5.1 — 5.5 · 南京出发
 - Stats: 5天 / 8景 / 800公里 / 4人
 - Day chips: 🌿市区 / 🪨龙游 / 🏛️文化 / 🏔️南线 / 🏠返程
