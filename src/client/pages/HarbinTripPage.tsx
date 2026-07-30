@@ -276,14 +276,14 @@ const ITINERARY: DayData[] = [
   {
     id: 'd0',
     month: '8月',
-    dayDate: '7',
+    dayDate: '14',
     title: '南京→哈尔滨\nZ366卧铺出发',
     flight: '南京→哈尔滨 Z366',
     hotel: '火车软卧',
     weather: 'sunny',
     temp: '27~36°C',
     weatherCity: '南京',
-    weatherDate: '2026-08-07',
+    weatherDate: '2026-08-14',
     entries: [
       {
         id: 'd0-1',
@@ -302,13 +302,13 @@ const ITINERARY: DayData[] = [
   {
     id: 'd1',
     month: '8月',
-    dayDate: '8',
+    dayDate: '15',
     title: '哈尔滨抵达日\n中央大街·松花江',
     hotel: '哈尔滨酒店（中央大街中段至圣索菲亚教堂之间）',
     weather: 'sunny',
     temp: '18~28°C',
     weatherCity: '哈尔滨',
-    weatherDate: '2026-08-08',
+    weatherDate: '2026-08-15',
     entries: [
       {
         id: 'd1-1',
@@ -333,14 +333,14 @@ const ITINERARY: DayData[] = [
   {
     id: 'd2',
     month: '8月',
-    dayDate: '9',
+    dayDate: '16',
     title: '太阳岛＋极地公园\n松花江北岸一日',
     distance: '松花江北岸',
     hotel: '哈尔滨酒店（中央大街区域）',
     weather: 'sunny',
     temp: '17~29°C',
     weatherCity: '哈尔滨',
-    weatherDate: '2026-08-09',
+    weatherDate: '2026-08-16',
     entries: [
       {
         id: 'd2-1',
@@ -391,14 +391,14 @@ const ITINERARY: DayData[] = [
   {
     id: 'd3',
     month: '8月',
-    dayDate: '10',
+    dayDate: '17',
     title: '哈尔滨→长白山\n转场日',
     flight: '哈尔滨西→长白山 D553（参考）',
     hotel: '长白山二道白河酒店',
     weather: 'cloudy',
     temp: '14~24°C',
     weatherCity: '长白山',
-    weatherDate: '2026-08-10',
+    weatherDate: '2026-08-17',
     entries: [
       {
         id: 'd3-1',
@@ -423,19 +423,19 @@ const ITINERARY: DayData[] = [
   {
     id: 'd4',
     month: '8月',
-    dayDate: '11',
+    dayDate: '18',
     title: '长白山北景区\n天池核心日',
     hotel: '长白山二道白河酒店',
     weather: 'partlyCloudy',
     temp: '12~22°C',
     weatherCity: '长白山',
-    weatherDate: '2026-08-11',
+    weatherDate: '2026-08-18',
     entries: [
       {
         id: 'd4-1',
         time: '预约提醒',
         desc: '提前7天18:00 抢票 · 选07:30-08:30入园',
-        body: '长白山景区从 2026.6.26 起，门票和车票预约窗口由提前 15 天调整为提前 7 天，对应日期票源一般在晚上 18:00 更新。\n\n例：计划 8 月 11 日游览 → 8 月 4 日 17:50 前进入官方平台，18:00 抢票。\n\n只通过"长白山"官方渠道或官方小程序购票，四个人的信息提前录入。',
+        body: '长白山景区从 2026.6.26 起，门票和车票预约窗口由提前 15 天调整为提前 7 天，对应日期票源一般在晚上 18:00 更新。\n\n例：计划 8 月 18 日游览 → 8 月 11 日 17:50 前进入官方平台，18:00 抢票。\n\n只通过"长白山"官方渠道或官方小程序购票，四个人的信息提前录入。',
       },
       {
         id: 'd4-2',
@@ -472,13 +472,13 @@ const ITINERARY: DayData[] = [
   {
     id: 'd5',
     month: '8月',
-    dayDate: '12',
+    dayDate: '19',
     title: '天气备用日\n小镇亲子＋温泉',
     hotel: '长白山二道白河酒店',
     weather: 'cloudy',
     temp: '13~23°C',
     weatherCity: '长白山',
-    weatherDate: '2026-08-12',
+    weatherDate: '2026-08-19',
     entries: [
       {
         id: 'd5-1',
@@ -497,14 +497,14 @@ const ITINERARY: DayData[] = [
   {
     id: 'd6',
     month: '8月',
-    dayDate: '13',
+    dayDate: '20',
     title: '长白山→沈阳\n轻松转场日',
     flight: '长白山→沈阳北 高铁（约2h）',
     hotel: '沈阳酒店（中街—故宫—青年大街北段）',
     weather: 'sunny',
     temp: '19~30°C',
     weatherCity: '沈阳',
-    weatherDate: '2026-08-13',
+    weatherDate: '2026-08-20',
     entries: [
       {
         id: 'd6-1',
@@ -523,13 +523,13 @@ const ITINERARY: DayData[] = [
   {
     id: 'd7',
     month: '8月',
-    dayDate: '14',
+    dayDate: '21',
     title: '沈阳故宫\n＋张学良旧居',
     hotel: '沈阳酒店（中街区域）',
     weather: 'sunny',
     temp: '20~31°C',
     weatherCity: '沈阳',
-    weatherDate: '2026-08-14',
+    weatherDate: '2026-08-21',
     entries: [
       {
         id: 'd7-1',
@@ -575,13 +575,13 @@ const ITINERARY: DayData[] = [
   {
     id: 'd8',
     month: '8月',
-    dayDate: '15',
+    dayDate: '22',
     title: '辽宁科技馆\n＋辽宁省博物馆',
     hotel: '沈阳酒店（中街区域）',
     weather: 'sunny',
     temp: '20~31°C',
     weatherCity: '沈阳',
-    weatherDate: '2026-08-15',
+    weatherDate: '2026-08-22',
     entries: [
       {
         id: 'd8-1',
@@ -617,14 +617,14 @@ const ITINERARY: DayData[] = [
   {
     id: 'd9',
     month: '8月',
-    dayDate: '16',
+    dayDate: '23',
     title: '沈阳→南京\n高铁返程',
     flight: '沈阳北→南京南 高铁（约8.5h）',
     hotel: '— 回家',
     weather: 'sunny',
     temp: '20~31°C',
     weatherCity: '沈阳',
-    weatherDate: '2026-08-16',
+    weatherDate: '2026-08-23',
     entries: [
       {
         id: 'd9-1',
@@ -831,7 +831,7 @@ export default function HarbinTripPage({ onBack }: Props) {
       {/* Hero */}
       <section className={styles.hero}>
         <h1 className={styles.heroTitle}>东北避暑十日</h1>
-        <p className={styles.heroSub}>暑期亲子 · 2026.8.7 — 8.16 · 南京出发 ✦ 清凉东北</p>
+        <p className={styles.heroSub}>暑期亲子 · 2026.8.14 — 8.23 · 南京出发 ✦ 清凉东北</p>
         <div className={styles.heroStats}>
           <div className={styles.heroStat}>
             <span className={styles.heroStatN}>10</span>
@@ -872,25 +872,25 @@ export default function HarbinTripPage({ onBack }: Props) {
             <span className={styles.routeStop}>
               <span className={styles.routeStopDot} />
               <span className={styles.routeStopName}>南京</span>
-              <span className={styles.routeStopDate}>8/7</span>
+              <span className={styles.routeStopDate}>8/14</span>
             </span>
             <span className={styles.routeDash} />
             <span className={styles.routeStop}>
               <span className={styles.routeStopDot} />
               <span className={styles.routeStopName}>哈尔滨</span>
-              <span className={styles.routeStopDate}>8/8-10</span>
+              <span className={styles.routeStopDate}>8/15-17</span>
             </span>
             <span className={styles.routeDash} />
             <span className={styles.routeStop}>
               <span className={styles.routeStopDot} />
               <span className={styles.routeStopName}>长白山</span>
-              <span className={styles.routeStopDate}>8/10-13</span>
+              <span className={styles.routeStopDate}>8/17-20</span>
             </span>
             <span className={styles.routeDash} />
             <span className={styles.routeStop}>
               <span className={styles.routeStopDot} />
               <span className={styles.routeStopName}>沈阳</span>
-              <span className={styles.routeStopDate}>8/13-16</span>
+              <span className={styles.routeStopDate}>8/20-23</span>
             </span>
           </div>
           <div className={styles.routeConnector} />
@@ -898,13 +898,13 @@ export default function HarbinTripPage({ onBack }: Props) {
             <span className={styles.routeStop}>
               <span className={styles.routeStopDot} />
               <span className={styles.routeStopName}>南京</span>
-              <span className={styles.routeStopDate}>8/16</span>
+              <span className={styles.routeStopDate}>8/23</span>
             </span>
             <span className={styles.routeDash} />
             <span className={styles.routeStop}>
               <span className={styles.routeStopDot} />
               <span className={styles.routeStopName}>沈阳北</span>
-              <span className={styles.routeStopDate}>8/16</span>
+              <span className={styles.routeStopDate}>8/23</span>
             </span>
           </div>
         </div>
