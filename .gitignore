@@ -4,3 +4,6 @@ dist/
 .dev.vars
 *.log
 /.omc
+reasonix.toml
+.env
+.codegraph/daemon.pid

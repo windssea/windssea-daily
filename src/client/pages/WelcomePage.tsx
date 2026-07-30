@@ -7,6 +7,7 @@ interface Props {
   onQuzhouTrip: () => void
   onHuangshanTrip: () => void
   onNingxiaTrip: () => void
+  onHarbinTrip: () => void
   onTravelMap: () => void
   isAuthenticated: boolean
   onAvatarClick: () => void
@@ -84,6 +85,16 @@ function IconDesert({ className }: { className?: string }) {
   )
 }
 
+function IconSnowPeak({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 20l7-10 4 6 3-4 6 8" />
+      <path d="M12 6l2-3 3 5" />
+      <path d="M17 4l-1.5 1.5M20 2v3" />
+    </svg>
+  )
+}
+
 /* ── Hooks ──────────────────────────────────────────────── */
 
 function useGreeting() {
@@ -108,7 +119,7 @@ function useDateLabel() {
 
 /* ── Component ──────────────────────────────────────────── */
 
-function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onNingxiaTrip, onTravelMap, isAuthenticated, onAvatarClick }: Props) {
+function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onNingxiaTrip, onHarbinTrip, onTravelMap, isAuthenticated, onAvatarClick }: Props) {
   const greeting = useGreeting()
   const dateLabel = useDateLabel()
 
@@ -215,6 +226,23 @@ function WelcomePage({ onEnter, onShanxiTrip, onQuzhouTrip, onHuangshanTrip, onN
               <div className={styles.tripBody}>
                 <p className={styles.tripLabel}>宁夏沙漠</p>
                 <p className={styles.tripDesc}>9 DAYS ADVENTURE</p>
+              </div>
+              <IconArrowRight className={styles.tripArrow} />
+            </button>
+
+            <button
+              className={`${styles.card} ${styles.tripCard}`}
+              onClick={onHarbinTrip}
+              aria-label="查看东北避暑旅游"
+            >
+              <div className={styles.tripHeader}>
+                <div className={`${styles.iconWrap} ${styles.iconWrapGreen}`}>
+                  <IconSnowPeak className={styles.iconElement} />
+                </div>
+              </div>
+              <div className={styles.tripBody}>
+                <p className={styles.tripLabel}>东北避暑</p>
+                <p className={styles.tripDesc}>10 DAYS COOL ESCAPE</p>
               </div>
               <IconArrowRight className={styles.tripArrow} />
             </button>
