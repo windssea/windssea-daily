@@ -260,13 +260,15 @@
 
 .reservationRail {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
   margin: 0 0 22px;
 }
 
 .reservationCard {
   min-width: 0;
+  height: 100%;
   padding: 14px 13px 13px;
   border: 1px solid var(--line);
   border-top: 3px solid var(--accent);
@@ -279,21 +281,21 @@
 .reservation-soon { border-top-color: var(--accent); }
 .reservation-weather { border-top-color: var(--amber); background: linear-gradient(180deg, var(--amber-wash), var(--card) 44%); }
 .reservation-confirmed { border-top-color: var(--green); background: linear-gradient(180deg, var(--green-wash), var(--card) 44%); }
-.reservationHead { display: flex; align-items: center; justify-content: space-between; gap: 7px; }
+.reservationHead { display: flex; align-items: flex-start; justify-content: space-between; gap: 9px; }
 .reservationIcon { display: inline-flex; align-items: center; justify-content: center; width: 29px; height: 29px; border-radius: 9px; color: var(--accent); background: var(--teal-wash); }
 .reservation-urgent .reservationIcon { color: var(--red); background: var(--red-wash); }
 .reservation-weather .reservationIcon { color: var(--amber); background: var(--amber-wash); }
 .reservation-confirmed .reservationIcon { color: var(--green); background: var(--green-wash); }
-.reservationMeta { display: flex; min-width: 0; align-items: flex-end; flex-direction: column; gap: 4px; }
-.reservationDate { color: var(--ink-muted); font-size: 10px; font-weight: 700; white-space: nowrap; }
+.reservationMeta { display: flex; min-width: 0; max-width: calc(100% - 38px); align-items: flex-end; flex-direction: column; gap: 4px; text-align: right; }
+.reservationDate { color: var(--ink-muted); font-size: 10px; font-weight: 700; line-height: 1.35; white-space: normal; overflow-wrap: anywhere; }
 .reservationStatus { padding: 2px 5px; border-radius: 999px; color: var(--accent); background: var(--teal-wash); font-size: 9px; font-weight: 800; line-height: 1.2; white-space: nowrap; }
 .reservation-urgent .reservationStatus { color: var(--red); background: var(--red-wash); }
 .reservation-weather .reservationStatus { color: var(--amber); background: var(--amber-wash); }
 .reservation-confirmed .reservationStatus { color: var(--green); background: var(--green-wash); }
-.reservationTitle { margin: 12px 0 3px; color: var(--ink); font-size: 14px; font-weight: 750; }
-.reservationDetail { min-height: 34px; margin: 0; color: var(--ink-soft); font-size: 11px; line-height: 1.55; }
+.reservationTitle { margin: 12px 0 3px; color: var(--ink); font-size: 14px; font-weight: 750; overflow-wrap: anywhere; }
+.reservationDetail { min-height: 34px; margin: 0; color: var(--ink-soft); font-size: 11px; line-height: 1.55; overflow-wrap: anywhere; }
 .reservationChannel { margin-top: 10px; color: var(--accent); font-size: 10px; font-weight: 700; }
-.reservationAction { display: flex; align-items: flex-start; gap: 5px; margin: 8px 0 0; color: var(--ink-muted); font-size: 10px; line-height: 1.55; }
+.reservationAction { display: flex; align-items: flex-start; gap: 5px; min-width: 0; margin: 8px 0 0; color: var(--ink-muted); font-size: 10px; line-height: 1.55; overflow-wrap: anywhere; }
 .reservation-urgent .reservationAction { color: var(--red); }
 .reservation-weather .reservationAction { color: var(--amber); }
 .reservation-confirmed .reservationAction { color: var(--green); }
@@ -425,7 +427,7 @@
 }
 
 @media (max-width: 760px) {
-  .reservationRail { grid-template-columns: repeat(5, minmax(178px, 1fr)); overflow-x: auto; padding-bottom: 4px; margin-right: -24px; padding-right: 24px; }
+  .reservationRail { grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: visible; padding-bottom: 0; margin-right: 0; padding-right: 0; }
   .overviewGrid { grid-template-columns: 1fr; }
   .sectionHeadingRow { align-items: flex-start; flex-direction: column; gap: 9px; }
   .sourceNote { white-space: normal; }
@@ -454,7 +456,12 @@
   .overviewSection { padding-top: 48px; }
   .daySection { padding-top: 56px; }
   .daySection::before { top: 27px; left: 16px; right: 16px; }
-  .reservationRail { margin-right: -16px; padding-right: 16px; }
+  .reservationRail { gap: 9px; }
+  .reservationCard { padding: 12px 10px 11px; }
+  .reservationIcon { width: 27px; height: 27px; }
+  .reservationDate { font-size: 9px; }
+  .reservationStatus { padding: 2px 4px; font-size: 8px; }
+  .reservationTitle { font-size: 13px; }
   .panel { padding: 15px; border-radius: 16px; }
   .hotelNight { width: 88px; font-size: 9px; }
   .weatherCard { padding: 12px; }
