@@ -218,7 +218,7 @@ const ITINERARY: DayData[] = [
         { label: '导航', value: '黑龙江东北虎林园西北门。夏季参考开放 08:30—17:00，16:30 停止检票。' },
         { label: '票型', value: '孩子不害怕大型动物可选惊险车；胆小则选普通观光车。价格和儿童优惠以官方购票页为准。' },
         { label: '顺序', value: '观光车 → 猛兽车行区 → 步行观虎区 → 观虎台 → 科普/萌虎区，11:15 前结束。' },
-      ], badges: [{ text: '亲子主任务', type: 'green' }, { text: '建议提前购票' }] },
+      ], badges: [{ text: '亲子主任务', type: 'green' }, { text: '已购票', type: 'green' }] },
       { id: 'd2-5', time: '11:15—12:10', desc: '打车前往哈工大和兴路区域' },
       { id: 'd2-6', time: '12:10—13:15', desc: '午餐、坐下休息', body: '不返回中央大街再折返，附近简餐即可，留半小时给孩子恢复体力。' },
       { id: 'd2-7', time: '13:15—13:30', desc: '前往校门、核验预约' },
@@ -412,7 +412,7 @@ const RESERVATIONS: ReservationItem[] = [
   { id: 'r2', date: '已出票 · 8月17日', title: 'D552', detail: '哈尔滨站 15:37 → 长白山站 19:38', channel: '铁路12306 · 已支付', action: '车票已确认；当天按票面时间完成安检、候车和接站', state: 'confirmed', status: '已购票', icon: 'train' },
   { id: 'r3', date: '已出票 · 8月19日', title: 'G142', detail: '长白山站 17:47 → 沈阳北站 19:48', channel: '铁路12306 · 已支付', action: '车票已确认；D5 当天按票面时间到站候车', state: 'confirmed', status: '已购票', icon: 'train' },
   { id: 'r4', date: '8月8日 · 09:00', title: 'G98／G99', detail: '沈阳北站 → 南京南站', channel: '铁路12306', action: '08:50 登录，优先 4 人同单二等座；无票立即候补直达车', state: 'upcoming', status: '待抢票', window: { from: '2026-08-08', to: '2026-08-08' }, icon: 'train' },
-  { id: 'r5', date: '现在—8月9日前', title: '东北虎林园', detail: '8月16日 · 普通／惊险观光车', channel: '东北虎林园购票页', action: '今天起即可购票；确认观光车票型和儿童优惠规则', state: 'upcoming', status: '待购票', window: { from: '2026-08-06', to: '2026-08-09' }, icon: 'tiger' },
+  { id: 'r5', date: '已预订 · 8月16日', title: '东北虎林园', detail: '8月16日 · 普通／惊险观光车', channel: '东北虎林园购票页 · 已支付', action: '门票已确认；出行前复核观光车票型和儿童优惠规则', state: 'confirmed', status: '已预订', icon: 'tiger' },
   { id: 'r6', date: '8月9日起', title: '哈工大入校预约', detail: '8月16日校园和航天馆', channel: '哈工大官方微信公众号', action: '预约 1 位成人＋另外 3 名同行者，儿童随预约监护人入校', state: 'upcoming', status: '待预约', window: { from: '2026-08-09', to: '2026-08-16' }, icon: 'school' },
   { id: 'r7', date: '8月17日 · 现场', title: '哈药六厂', detail: '南直路326号 · 公开参观区', channel: '现场身份证登记', action: '无需预约，轻装到场；若改上午直达车，直接取消', state: 'walkin', status: '无需预约', icon: 'museum' },
   { id: 'r8', date: '8月11日 · 18:00', title: '长白山北景区', detail: '8月18日目标早场入园', channel: '长白山官方小程序', action: '17:55 进入，18:00 抢票；无票只关注官方回流', state: 'upcoming', status: '待抢票', window: { from: '2026-08-11', to: '2026-08-11' }, icon: 'mountain' },
@@ -672,7 +672,7 @@ export default function HarbinTripPage({ onBack }: Props) {
               <span key={`${stop}-${index}`} className={styles.heroRouteStop}><span className={styles.heroRouteDot}>{index === 0 ? '出发' : index === 4 ? '回家' : index + 1}</span><strong>{stop}</strong>{index < 4 && <span className={styles.heroRouteLine} />}</span>
             ))}
           </div>
-          <div className={styles.heroAlert}><Icon name="alert" size={17} /><span>Z366、D552、G142 车票已确认；8 月 8 日 09:00 抢 G98／G99 返程票，虎林园今天起即可购票。D4 是长白山唯一核心天气日，D6 高强度项目按规则删减。</span></div>
+          <div className={styles.heroAlert}><Icon name="alert" size={17} /><span>Z366、D552、G142 车票与东北虎林园门票均已确认；8 月 8 日 09:00 抢 G98／G99 返程票。D4 是长白山唯一核心天气日，D6 高强度项目按规则删减。</span></div>
           <div className={styles.heroChips}>
             {DAYS.map(day => <button key={day.id} className={`${styles.heroChip} ${activeDay === day.id ? styles.heroChipActive : ''}`} onClick={() => scrollToDay(day.id)}>{day.emoji} {day.label}</button>)}
           </div>
