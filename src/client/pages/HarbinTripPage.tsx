@@ -155,7 +155,7 @@ function weatherTextToIcon(text: string): string {
 const WEATHER_REFERENCE: Record<string, WeatherFallback> = {
   南京: { icon: 'sun', temp: '夏季参考', text: '出发前复核', wind: '以出发前预报为准', advice: '出发日注意高温，车站候车预留安检时间' },
   哈尔滨: { icon: 'partlyCloudy', temp: '夏季参考', text: '舒适但有阵雨可能', wind: '以当日预报为准', advice: '轻薄长袖、防晒和一次性雨衣随身' },
-  长白山: { icon: 'cloudy', temp: '山地参考', text: '山顶多变', wind: '山顶风力随时变化', advice: '雨衣、薄外套和防滑鞋；天池以当天调度为准' },
+  长春: { icon: 'partlyCloudy', temp: '夏季参考', text: '高温/阵雨复核', wind: '以当日预报为准', advice: '市区活动多，遮阳、驱蚊和雨具随身，午后动物园注意补水' },
   沈阳: { icon: 'partlyCloudy', temp: '夏季参考', text: '高温/阵雨复核', wind: '以当日预报为准', advice: '高温或大雨时优先室内场馆，取消红梅文创园' },
 }
 
@@ -163,8 +163,8 @@ const DAYS = [
   { id: 'd0', label: '出发', emoji: '🚂' },
   { id: 'd1', label: '哈尔滨', emoji: '🏙️' },
   { id: 'd2', label: '虎园/哈工大', emoji: '🐅' },
-  { id: 'd3', label: '转场', emoji: '🚄' },
-  { id: 'd4', label: '天池', emoji: '🏔️' },
+  { id: 'd3', label: '转长春', emoji: '🚄' },
+  { id: 'd4', label: '长影/动物园', emoji: '🦒' },
   { id: 'd5', label: '转沈阳', emoji: '🚄' },
   { id: 'd6', label: '沈飞/工博', emoji: '✈️' },
   { id: 'd7', label: '故宫/帅府', emoji: '👑' },
@@ -191,128 +191,136 @@ const ITINERARY: DayData[] = [
     id: 'd1', month: '8月', dayDate: '15', weekday: '周六', city: '哈尔滨', title: '抵达哈尔滨：索菲亚、中央大街与松花江',
     hotel: '哈尔滨中央大街区域家庭房', weatherCity: '哈尔滨', weatherDate: '2026-08-15', weatherFallback: WEATHER_REFERENCE.哈尔滨,
     entries: [
-      { id: 'd1-1', time: '14:51', desc: '抵达哈尔滨西站' },
-      { id: 'd1-2', time: '14:51—15:15', desc: '出站、上厕所、叫车' },
-      { id: 'd1-3', time: '15:15—15:55', desc: '打车前往中央大街附近酒店', body: '周末路况按 40 分钟左右预留；哈尔滨停留时间短，不建议住哈尔滨西站附近。' },
-      { id: 'd1-4', time: '15:55—16:25', desc: '办理入住、洗漱、轻装出门', body: '优先家庭房或两张至少 1.35 米宽的床，并确认 8 月 17 日退房后可寄存行李。' },
-      { id: 'd1-5', time: '16:30—17:10', desc: '圣索菲亚教堂广场及外观', isSight: true, detailsList: [
+      { id: 'd1-1', time: '07:30—08:30', desc: '火车早餐', body: '卧铺上吃早餐，提前备好面包、牛奶和水果。' },
+      { id: 'd1-2', time: '11:30—12:30', desc: '火车午餐', body: '午餐后开始整理行李，准备到站。' },
+      { id: 'd1-3', time: '14:51参考', desc: '抵达哈尔滨西站' },
+      { id: 'd1-4', time: '15:00—15:20', desc: '出站、上厕所、叫车' },
+      { id: 'd1-5', time: '15:20—16:00', desc: '打车前往中央大街附近酒店', body: '周末路况按 40 分钟左右预留；哈尔滨停留时间短，不建议住哈尔滨西站附近。' },
+      { id: 'd1-6', time: '16:00—16:25', desc: '办理入住、洗漱、轻装出门', body: '优先家庭房或两张至少 1.35 米宽的床，并确认 8 月 17 日退房后可寄存行李。' },
+      { id: 'd1-7', time: '16:30—17:10', desc: '圣索菲亚教堂广场及外观', isSight: true, detailsList: [
         { label: '方式', value: '以外观和广场为主，教堂内部不列为必选。' },
         { label: '亲子', value: '刚结束近 22 小时卧铺，不安排大型场馆，先让孩子适应城市环境。' },
       ], badges: [{ text: '免费外观', type: 'green' }, { text: '无需预约' }] },
-      { id: 'd1-6', time: '17:10—18:35', desc: '中央大街慢逛', body: '沿街观察建筑和街景，步行节奏放慢，不为打卡压缩孩子休息时间。' },
-      { id: 'd1-7', time: '18:35—19:20', desc: '防洪纪念塔、松花江边', body: '江边短暂停留后在附近用餐；如遇阵雨，直接回中央大街室内餐厅。' },
-      { id: 'd1-8', time: '19:30—20:30', desc: '晚餐', body: '第一顿东北菜控制在三四道，铁锅炖不安排在需要赶时间的晚上。' },
-      { id: 'd1-9', time: '20:30—21:00', desc: '返回酒店' },
-      { id: 'd1-10', time: '21:00后', desc: '洗澡、休息' },
+      { id: 'd1-8', time: '17:10—18:35', desc: '中央大街慢逛', body: '沿街观察建筑和街景，步行节奏放慢，不为打卡压缩孩子休息时间。' },
+      { id: 'd1-9', time: '18:35—19:20', desc: '防洪纪念塔、松花江边', body: '江边短暂停留后在附近用餐；如遇阵雨，直接回中央大街室内餐厅。' },
+      { id: 'd1-10', time: '19:30—20:30', desc: '晚餐', body: '第一顿东北菜控制在三四道，铁锅炖不安排在需要赶时间的晚上。' },
+      { id: 'd1-11', time: '21:00前', desc: '返回酒店' },
+      { id: 'd1-12', time: '21:00后', desc: '洗澡、休息' },
     ],
   },
   {
     id: 'd2', month: '8月', dayDate: '16', weekday: '周日', city: '哈尔滨', title: '东北虎林园＋哈工大校园与航天馆',
     flight: '中央大街 → 虎林园西北门 → 哈工大一校区', hotel: '哈尔滨中央大街区域家庭房', weatherCity: '哈尔滨', weatherDate: '2026-08-16', weatherFallback: WEATHER_REFERENCE.哈尔滨,
-    decision: { title: '哈工大预约已完成：12:00—14:30', body: '8月16日哈工大入校预约已完成，预约时段为 12:00—14:30。虎林园结束后直接前往和兴路校门，提前准备预约所用证件；校园开放区域与航天馆按预约时段安排。', tone: 'success' },
+    decision: { title: '哈工大入校预约已完成', body: '8月16日哈工大入校预约已完成。虎林园结束后先在和兴路附近午餐，13:15 前后到和兴路校门核验入校；校园开放区域与航天馆按预约安排，两位成人手机各保存预约截图并携带预约所用证件原件。', tone: 'success' },
     entries: [
       { id: 'd2-1', time: '07:10', desc: '起床' },
       { id: 'd2-2', time: '07:20—07:50', desc: '早餐' },
       { id: 'd2-3', time: '07:50', desc: '打车前往东北虎林园西北门' },
-      { id: 'd2-4', time: '08:30—10:45', desc: '东北虎林园：先观光车，再步行观虎区', isSight: true, detailsList: [
+      { id: 'd2-4', time: '08:30—11:15', desc: '东北虎林园：先观光车，再步行观虎区', isSight: true, detailsList: [
         { label: '导航', value: '黑龙江东北虎林园西北门。夏季参考开放 08:30—17:00，16:30 停止检票。' },
         { label: '票型', value: '孩子不害怕大型动物可选惊险车；胆小则选普通观光车。价格和儿童优惠以官方购票页为准。' },
-        { label: '顺序', value: '观光车 → 猛兽车行区 → 步行观虎区 → 观虎台 → 科普/萌虎区，10:45 前结束。' },
+        { label: '顺序', value: '观光车 → 猛兽车行区 → 步行观虎区 → 观虎台 → 科普/萌虎区，11:15 前结束。' },
       ], badges: [{ text: '亲子主任务', type: 'green' }, { text: '已购票', type: 'green' }] },
-      { id: 'd2-5', time: '10:45—11:30', desc: '打车前往哈工大和兴路校门' },
-      { id: 'd2-6', time: '11:30—12:00', desc: '和兴路附近午餐、补水、休息', body: '不返回中央大街再折返，校门附近简餐即可，12:00 前整理好预约所用证件。' },
-      { id: 'd2-7', time: '12:00', desc: '进入校门、核验已完成预约' },
-      { id: 'd2-8', time: '12:00—13:15', desc: '哈工大一校区校园开放区域', isSight: true, detailsList: [
-        { label: '预约', value: '8月16日 12:00—14:30 已完成入校预约；一位成人预约即可覆盖一家四口，儿童必须由预约成功的监护人陪同。' },
-        { label: '路径', value: '哈工大官方微信公众号 → 服务 → 校园参观预约 → 入校预约。' },
+      { id: 'd2-5', time: '11:15—12:10', desc: '打车前往哈工大和兴路校门', body: '两段跨区移动直接使用网约车，带孩子和背包时不建议多次换乘。' },
+      { id: 'd2-6', time: '12:10—13:15', desc: '和兴路附近午餐、补水、休息', body: '不返回中央大街再折返，校门附近简餐即可，13:15 前整理好预约所用证件。' },
+      { id: 'd2-7', time: '13:15—13:30', desc: '和兴路校门入校核验' },
+      { id: 'd2-8', time: '13:30—14:10', desc: '哈工大一校区校园开放区域', isSight: true, detailsList: [
+        { label: '预约', value: '8月16日入校预约已完成；一位成人预约即可覆盖一家四口，儿童必须由预约成功的监护人陪同。' },
+        { label: '路径', value: '哈工大官方微信公众号 → 服务 → 校园参观预约 → 入校预约；入口按和兴路校门／个人通道执行。' },
       ], badges: [{ text: '免费', type: 'green' }, { text: '已预约' }] },
-      { id: 'd2-9', time: '13:15—14:30', desc: '哈工大航天馆', isSight: true, detailsList: [
-        { label: '重点', value: '航天模型、工程技术和孩子可理解的“人类如何飞上太空”。' },
-        { label: '入馆', value: '航天馆不单独预约，随已完成的入校预约进入；14:30 前完成预约时段内参观。' },
-      ], badges: [{ text: '免费', type: 'green' }, { text: '12:00—14:30' }] },
-      { id: 'd2-10', time: '14:30—15:10', desc: '校园补逛、文创或休息' },
-      { id: 'd2-11', time: '15:10', desc: '结束馆内参观' },
-      { id: 'd2-12', time: '15:20—16:10', desc: '返回酒店' },
-      { id: 'd2-13', time: '16:10—18:00', desc: '酒店休息' },
-      { id: 'd2-14', time: '18:00以后', desc: '酒店附近晚餐', body: '不再增加必游项目，孩子状态好再短逛中央大街。' },
+      { id: 'd2-9', time: '14:10—15:50', desc: '哈工大航天馆', isSight: true, detailsList: [
+        { label: '重点', value: '中国航天、发动机、火箭/导弹模型和孩子能理解的“人类如何飞上太空”。' },
+        { label: '入馆', value: '航天馆不单独预约，随已完成的入校预约进入。' },
+      ], badges: [{ text: '免费', type: 'green' }, { text: '已预约' }] },
+      { id: 'd2-10', time: '15:50—16:25', desc: '校园补逛、文创或休息' },
+      { id: 'd2-11', time: '16:40—17:30', desc: '返回酒店' },
+      { id: 'd2-12', time: '17:30—18:30', desc: '酒店休息' },
+      { id: 'd2-13', time: '18:30以后', desc: '酒店附近晚餐', body: '不再增加必游项目，孩子状态好再短逛中央大街。' },
     ],
   },
   {
-    id: 'd3', month: '8月', dayDate: '17', weekday: '周一', city: '哈尔滨 → 长白山', title: '哈药六厂＋D552/D553 前往长白山',
-    flight: 'D552 哈尔滨站 15:37 → 长白山站 19:38（已购票）', hotel: '二道白河／池北区酒店', weatherCity: '长白山', weatherDate: '2026-08-17', weatherFallback: WEATHER_REFERENCE.长白山,
-    decision: { title: 'D552 已购票：终点必须是长白山站', body: 'D552 车票已确认，15:37 哈尔滨站出发；按票面车次、座位和检票口候车。若临时调整，先保住车站安检、候车和酒店接站衔接。', tone: 'info' },
+    id: 'd3', month: '8月', dayDate: '17', weekday: '周一', city: '哈尔滨 → 长春', title: '哈药六厂＋G126 前往长春＋这有山',
+    flight: 'G126 哈尔滨站 16:42 → 长春西 17:51（已购票）', hotel: '长春人民广场—重庆路区域酒店', weatherCity: '长春', weatherDate: '2026-08-17', weatherFallback: WEATHER_REFERENCE.长春,
+    decision: { title: 'G126 已购票：哈尔滨站上车，长春西下车', body: 'G126 车票已确认，8月17日哈尔滨站发车、长春西到站；当天 15:15 左右从酒店出发去哈尔滨站，不要误去哈尔滨西站。到长春西后打车去人民广场—重庆路区域酒店。', tone: 'info' },
     entries: [
       { id: 'd3-1', time: '07:30—08:05', desc: '早餐' },
       { id: 'd3-2', time: '08:05—08:20', desc: '退房、寄存行李' },
       { id: 'd3-3', time: '08:20', desc: '打车前往南直路 326 号' },
       { id: 'd3-4', time: '09:00—10:30', desc: '哈药六厂公开区域及建筑打卡', isSight: true, detailsList: [
-        { label: '导航', value: '哈尔滨市道外区南直路 326 号。重点看建筑、厂区大厅、楼梯和老厂区空间。' },
-        { label: '票务', value: '公开区域参考为免费、凭身份证登记；开放政策以当天公告为准。' },
-        { label: '取舍', value: '若只能改上午直达车，直接取消此项，不压缩车站安检和候车时间。' },
+        { label: '导航', value: '哈尔滨市道外区南直路 326 号。地图若显示“哈药六版画博物馆”不算走错，重点是老厂区建筑、欧式大厅、楼梯与穹顶。' },
+        { label: '票务', value: '暑期公开参观 09:00—17:00，16:30 停止入场，周一正常开放；身份证登记、无需预约。' },
+        { label: '取舍', value: '午餐后留足车站安检和候车时间，不压缩高铁进站余量。' },
       ], badges: [{ text: '免费登记', type: 'green' }, { text: '转场敏感' }] },
-      { id: 'd3-5', time: '10:45—11:25', desc: '返回酒店附近' },
+      { id: 'd3-5', time: '10:45—11:25', desc: '返回酒店区域' },
       { id: 'd3-6', time: '11:30—12:30', desc: '午餐' },
-      { id: 'd3-7', time: '12:30—13:20', desc: '取行李、休息、确认接站', body: '确认二道白河酒店接站司机、电话、车型，并让酒店确认 20:30 后入住和简餐安排。' },
-      { id: 'd3-8', time: '13:50', desc: '打车前往哈尔滨站' },
-      { id: 'd3-9', time: '14:20左右', desc: '抵达哈尔滨站，安检、候车、补水' },
-      { id: 'd3-10', time: '15:37', desc: 'D552 从哈尔滨站出发（已购票）', body: '车票已确认；按票面车次、座位和检票口候车，提前完成安检。', variant: 'decision' },
-      { id: 'd3-11', time: '19:38参考', desc: '抵达长白山站，联系酒店司机', body: '终点必须是长白山站，不是长白山西站。出站后先上厕所、联系接站。' },
-      { id: 'd3-12', time: '19:40—20:00', desc: '出站、联系酒店接站' },
-      { id: 'd3-13', time: '20:00—20:35', desc: '酒店接站前往二道白河' },
-      { id: 'd3-14', time: '20:35—21:15', desc: '入住、简餐' },
-      { id: 'd3-15', time: '22:00前', desc: '睡觉' },
+      { id: 'd3-7', time: '12:30—14:20', desc: '酒店附近休息', body: '午饭后回到酒店区域休息，14:20 开始取行李。' },
+      { id: 'd3-8', time: '14:20—15:00', desc: '取行李、检查证件和订单' },
+      { id: 'd3-9', time: '15:15', desc: '从中央大街附近酒店前往哈尔滨站', body: '确认是哈尔滨站，不是哈尔滨西站。' },
+      { id: 'd3-10', time: '15:35—15:50', desc: '抵达哈尔滨站' },
+      { id: 'd3-11', time: '15:50以后', desc: '安检、候车、补水' },
+      { id: 'd3-12', time: '16:42', desc: 'G126 从哈尔滨站出发（已购票）', body: '车票已确认；按票面车次、座位和检票口候车，提前完成安检。', variant: 'decision' },
+      { id: 'd3-13', time: '17:51参考', desc: '抵达长春西站' },
+      { id: 'd3-14', time: '18:00—18:45', desc: '打车前往长春酒店', body: '目的地人民广场—重庆路区域，入住后轻装去这有山。' },
+      { id: 'd3-15', time: '18:45—19:10', desc: '办理入住、放行李' },
+      { id: 'd3-16', time: '19:15—21:15', desc: '这有山＋晚餐', isSight: true, detailsList: [
+        { label: '安排', value: '先看特色街区再吃饭；这有山公共商业空间无需预约。' },
+        { label: '节奏', value: '孩子转场疲劳时缩减逛街时间，21:30 前回酒店。' },
+      ], badges: [{ text: '免费街区', type: 'green' }] },
+      { id: 'd3-17', time: '21:30左右', desc: '回酒店' },
     ],
   },
   {
-    id: 'd4', month: '8月', dayDate: '18', weekday: '周二', city: '长白山北景区', title: '长白山北景区全天：天池核心日',
-    hotel: '二道白河／池北区酒店', weatherCity: '长白山', weatherDate: '2026-08-18', weatherFallback: WEATHER_REFERENCE.长白山,
-    decision: { title: 'D4 是长白山唯一核心游览日', body: '两晚方案不再单独设置完整备用天。天池能否开放取决于风、雾、雷雨等安全条件；主峰开放时优先服从景区调度，关闭时按瀑布、温泉群、绿渊潭、地下森林的顺序取舍。', tone: 'warning' },
+    id: 'd4', month: '8月', dayDate: '18', weekday: '周二', city: '长春', title: '长影旧址博物馆＋长春市动植物公园',
+    flight: '酒店 → 长影旧址博物馆 → 长春市动植物公园', hotel: '长春人民广场—重庆路区域酒店', weatherCity: '长春', weatherDate: '2026-08-18', weatherFallback: WEATHER_REFERENCE.长春,
+    decision: { title: '净月潭已取消：8月18日全部市区活动', body: '本版取消净月潭：市区单程车程可控，亲子节奏更好，也给 8月19日上午留出完整恢复时间。长影与动植物公园都在市区，全天不赶火车。', tone: 'info' },
     entries: [
-      { id: 'd4-1', time: '06:30', desc: '起床' },
-      { id: 'd4-2', time: '06:50—07:20', desc: '早餐、检查身份证／雨衣／薄外套／水' },
-      { id: 'd4-3', time: '07:30', desc: '前往池北区游客集散中心' },
-      { id: 'd4-4', time: '07:50—08:20', desc: '排队、核验、转运' },
-      { id: 'd4-5', time: '08:20以后', desc: '按景区调度游览', isSight: true, detailsList: [
-        { label: '预约', value: '计划 8 月 18 日游览，8 月 11 日 17:55 进入官方平台，18:00 抢票。' },
-        { label: '渠道', value: '“长白山”官方微信公众号、小程序或“长白山一机游”，实名分时预约。' },
-        { label: '顺序', value: '天池开放时优先；随后长白瀑布、聚龙温泉群、绿渊潭，地下森林视体力决定。' },
-      ], badges: [{ text: '提前7天18:00', type: 'red' }, { text: '天气敏感', type: 'gold' }] },
-      { id: 'd4-6', time: '09:00—10:30', desc: '天池主峰（开放时优先）', body: '山顶风大、温度变化快，雨衣优于雨伞，服从现场安全调度。' },
-      { id: 'd4-7', time: '10:30—13:00', desc: '长白瀑布、聚龙温泉群', isSight: true, detailsList: [
-        { label: '取舍', value: '主峰关闭时将这里作为当天核心体验；步行节奏放慢，给孩子补水和能量。' },
-        { label: '装备', value: '防滑运动鞋、薄防风外套、一次性雨衣和少量高能量零食。' },
-      ], badges: [{ text: '北坡必留', type: 'green' }] },
-      { id: 'd4-8', time: '13:00—13:30', desc: '简餐、补充能量' },
-      { id: 'd4-9', time: '13:30—14:30', desc: '绿渊潭', body: '绿渊潭后判断孩子体力，地下森林是最后一个可放弃项目。' },
-      { id: 'd4-10', time: '14:30—16:00', desc: '地下森林（视体力决定）' },
-      { id: 'd4-11', time: '16:00—17:30', desc: '返回二道白河' },
-      { id: 'd4-12', time: '18:30—19:30', desc: '晚餐' },
-      { id: 'd4-13', time: '19:30—20:30', desc: '温泉或酒店休息' },
-      { id: 'd4-14', time: '21:30前', desc: '孩子睡觉' },
+      { id: 'd4-1', time: '07:30', desc: '起床' },
+      { id: 'd4-2', time: '07:40—08:15', desc: '早餐' },
+      { id: 'd4-3', time: '08:20', desc: '前往长影旧址博物馆' },
+      { id: 'd4-4', time: '08:50左右', desc: '抵达、核验/购票' },
+      { id: 'd4-5', time: '09:00—11:30', desc: '长影旧址博物馆', isSight: true, detailsList: [
+        { label: '地址', value: '长春市朝阳区红旗街1118号。' },
+        { label: '亲子', value: '重点看老摄影机、胶片、摄影棚、老电影道具、洗印流程和特技布景，讲“以前没有电脑，电影是怎么做出来的”。' },
+        { label: '核验', value: '8月17日晚通过长影旧址博物馆官方平台核对8月18日开馆时间、票务和演出时刻；演出遇上就看，不为等待延长到下午。' },
+      ], badges: [{ text: '上午主任务', type: 'green' }, { text: '前晚核验' }] },
+      { id: 'd4-6', time: '11:30—11:45', desc: '离馆、休息' },
+      { id: 'd4-7', time: '11:45—12:50', desc: '红旗街附近午餐' },
+      { id: 'd4-8', time: '12:50—13:20', desc: '饮料、短暂坐下休息' },
+      { id: 'd4-9', time: '13:20—13:45', desc: '前往长春市动植物公园' },
+      { id: 'd4-10', time: '13:45—14:00', desc: '到达、核验/购票', body: '只买日场；8月17日晚通过“长春市动植物公园官微”核对日场开园时间、票价、儿童优惠和日夜场是否分票。' },
+      { id: 'd4-11', time: '14:00—17:15', desc: '长春市动植物公园（不与虎园重复猛兽主线）', isSight: true, detailsList: [
+        { label: '重点', value: '小熊猫、长颈鹿、大象、河马、灵长类和草食动物；植物景观边走边看。' },
+        { label: '差异', value: '8月16日已看过东北虎，猛兽区路过即可，不再以虎、狮为主线。' },
+        { label: '节奏', value: '午后偏热，动物活跃度可能下降；留足 3 小时，重点看室内和阴凉区域，16:20 开始向出口移动。' },
+      ], badges: [{ text: '下午主任务', type: 'green' }, { text: '日场票' }] },
+      { id: 'd4-12', time: '17:15', desc: '离园' },
+      { id: 'd4-13', time: '17:30—18:00', desc: '返回酒店/餐厅' },
+      { id: 'd4-14', time: '18:10—19:30', desc: '晚餐' },
+      { id: 'd4-15', time: '19:30以后', desc: '回酒店休息', body: '8月18日晚完成：核对G138票面、确认长春站上车、核对沈飞预约与刘老根门票、行李至少收好80%。' },
     ],
   },
   {
-    id: 'd5', month: '8月', dayDate: '19', weekday: '周三', city: '二道白河 → 沈阳', title: '二道白河→沈阳：G142 优先',
-    flight: 'G142 长白山 17:47 → 沈阳北 19:48（已购票）', hotel: '沈阳中街—故宫区域家庭房', weatherCity: '长白山', weatherLabel: '长白山 → 沈阳', weatherDate: '2026-08-19', weatherFallback: WEATHER_REFERENCE.长白山,
-    decision: { title: 'G142 已购票，按时进站', body: 'G142 车票已确认，8月19日 17:47 长白山站出发；当天按票面时间到站、安检和候车。D4 若大范围关闭，只能在二次登山和按时去沈阳之间二选一。', tone: 'info' },
+    id: 'd5', month: '8月', dayDate: '19', weekday: '周三', city: '长春 → 沈阳', title: '长春上午留白＋G138 前往沈阳',
+    flight: 'G138 长春站 15:54 → 沈阳北 17:11（已购票）', hotel: '沈阳中街—故宫区域家庭房', weatherCity: '长春', weatherLabel: '长春 → 沈阳', weatherDate: '2026-08-19', weatherFallback: WEATHER_REFERENCE.长春,
+    decision: { title: 'G138 已购票：长春站上车，晚上只休息', body: 'G138 车票已确认，8月19日 15:54 长春站发车、17:11 到沈阳北。上午主动留白恢复体力，不新增伪满皇宫等大景点；到沈阳后只休息，不安排老北市或中街。', tone: 'info' },
     entries: [
-      { id: 'd5-1', time: '08:30—09:30', desc: '自然醒、早餐' },
-      { id: 'd5-2', time: '09:45—11:15', desc: '美人松公园或小镇散步', isSight: true, detailsList: [
-        { label: '节奏', value: '只安排轻松散步，不再增加远距离景点，给孩子留出自由活动时间。' },
-        { label: '天气', value: '若 D4 整个景区大范围关闭，不建议上午完整二次登山后赶下午火车。' },
-      ], badges: [{ text: '轻量安排', type: 'green' }, { text: '转场日' }] },
-      { id: 'd5-3', time: '11:20—11:40', desc: '退房、寄存行李' },
-      { id: 'd5-4', time: '11:45—13:00', desc: '午餐' },
-      { id: 'd5-5', time: '13:00—15:00', desc: '室内休息' },
-      { id: 'd5-6', time: '15:00—15:40', desc: '取行李、整理' },
-      { id: 'd5-7', time: '15:40—16:20', desc: '简餐或购买车上食物' },
-      { id: 'd5-8', time: '16:30', desc: '前往长白山站' },
-      { id: 'd5-9', time: '17:47', desc: 'G142 从长白山站出发（已购票）', body: '车票已确认；按票面时间到站、安检和候车。', variant: 'decision' },
-      { id: 'd5-10', time: '19:48参考', desc: '抵达沈阳北站，前往沈阳酒店', body: 'G142 到站后打车前往中街—故宫区域酒店。' },
-      { id: 'd5-11', time: '20:00—20:40', desc: '打车前往中街附近酒店' },
-      { id: 'd5-12', time: '20:40—21:10', desc: '办理入住、洗漱' },
-      { id: 'd5-13', time: '21:10左右', desc: '酒店附近轻食或外卖' },
-      { id: 'd5-14', time: '22:00前', desc: '休息' },
+      { id: 'd5-1', time: '08:00—09:00', desc: '自然醒、早餐' },
+      { id: 'd5-2', time: '09:00—09:30', desc: '整理行李' },
+      { id: 'd5-3', time: '09:30—10:50', desc: '重庆路／人民广场周边轻松散步、买伴手礼', isSight: true, detailsList: [
+        { label: '节奏', value: '只安排低强度：步行、买东北伴手礼、咖啡/甜品；不临时加伪满皇宫、大型博物馆或远郊。' },
+        { label: '天气', value: '高温时缩短散步，直接回酒店休息。' },
+      ], badges: [{ text: '恢复日', type: 'green' }, { text: '转场日' }] },
+      { id: 'd5-4', time: '10:50—11:10', desc: '回酒店' },
+      { id: 'd5-5', time: '11:10—12:10', desc: '提前午餐' },
+      { id: 'd5-6', time: '12:10—12:40', desc: '取行李、最后检查' },
+      { id: 'd5-7', time: '12:40—13:00', desc: '酒店大厅休息' },
+      { id: 'd5-8', time: '13:10—13:20', desc: '前往长春站', body: 'G138 从长春站上车，不是长春西站。' },
+      { id: 'd5-9', time: '13:35—13:55', desc: '抵达长春站' },
+      { id: 'd5-10', time: '13:55—15:20', desc: '安检、休息、候车' },
+      { id: 'd5-11', time: '15:54', desc: 'G138 从长春站出发（已购票）', body: '车票已确认；按票面车次、座位和检票口候车。', variant: 'decision' },
+      { id: 'd5-12', time: '17:11参考', desc: '抵达沈阳北站' },
+      { id: 'd5-13', time: '17:30—18:10', desc: '打车前往沈阳酒店', body: '前往中街—故宫区域酒店办理入住。' },
+      { id: 'd5-14', time: '18:10以后', desc: '晚餐、洗衣、整理次日物品、休息', body: '晚上只休息：不安排老北市、不逛中街、不加正式景点，孩子 21:30—22:00 前睡觉。' },
     ],
   },
   {
@@ -390,38 +398,38 @@ const ITINERARY: DayData[] = [
     ],
   },
   {
-    id: 'd8', month: '8月', dayDate: '22', weekday: '周六', city: '沈阳 → 南京', title: 'G89 高铁返程',
-    flight: 'G89 沈阳北 → 南京（已购票，以订单为准）', hotel: '回家', weatherCity: '沈阳', weatherDate: '2026-08-22', weatherFallback: WEATHER_REFERENCE.沈阳,
+    id: 'd8', month: '8月', dayDate: '22', weekday: '周六', city: '沈阳 → 南京', title: 'G98 高铁返程',
+    flight: 'G98 沈阳北 12:31 → 南京南 19:28（已购票，以订单为准）', hotel: '回家', weatherCity: '沈阳', weatherDate: '2026-08-22', weatherFallback: WEATHER_REFERENCE.沈阳,
     entries: [
       { id: 'd8-1', time: '07:45—08:45', desc: '早餐' },
       { id: 'd8-2', time: '08:45—09:40', desc: '整理行李' },
-      { id: 'd8-3', time: '09:45', desc: '办理退房' },
-      { id: 'd8-4', time: '09:45—10:15', desc: '购买车上食品、最后检查证件' },
-      { id: 'd8-5', time: '按订单提前出发', desc: '从中街附近酒店前往沈阳北站' },
-      { id: 'd8-6', time: '提前到站', desc: '抵达沈阳北站' },
-      { id: 'd8-7', time: '进站后', desc: '安检、候车、午餐' },
-      { id: 'd8-8', time: '按票面时间', desc: 'G89 从沈阳北出发（已购票）', body: 'G89 车票已确认；出行前按 12306 订单核对发车时间、座席和到站信息，提前到沈阳北站安检候车。', variant: 'decision' },
-      { id: 'd8-9', time: '15:30左右', desc: '车上补充零食、活动' },
-      { id: 'd8-10', time: '按票面时间', desc: '抵达南京，回家', body: '按 G89 订单到达时间回家，晚间不再安排额外行程。' },
+      { id: 'd8-3', time: '09:45—10:00', desc: '办理退房' },
+      { id: 'd8-4', time: '10:00—10:20', desc: '购买车上食品、最后检查证件' },
+      { id: 'd8-5', time: '10:30', desc: '前往沈阳北站' },
+      { id: 'd8-6', time: '10:55—11:10', desc: '抵达沈阳北站' },
+      { id: 'd8-7', time: '11:10—12:00', desc: '安检、候车、午餐' },
+      { id: 'd8-8', time: '12:31', desc: 'G98 从沈阳北出发（已购票）', body: 'G98 车票已确认，沈阳北上车、南京南下车；属于过路车，至少提前 1 小时以上抵达沈阳北站。', variant: 'decision' },
+      { id: 'd8-9', time: '19:28参考', desc: '抵达南京南站，回家', body: '按 G98 订单到达时间回家，晚间不再安排额外行程。' },
     ],
   },
 ]
 
 const RESERVATIONS: ReservationItem[] = [
   { id: 'r1', date: '已出票 · 8月14日', title: 'Z366', detail: '南京站 16:58 → 哈尔滨西 次日 14:51 · 软卧', channel: '铁路12306 · 已支付', action: '车票已确认；出行前在 12306 复核票面铺位和证件', state: 'confirmed', status: '已购票', icon: 'train' },
-  { id: 'r2', date: '已出票 · 8月17日', title: 'D552', detail: '哈尔滨站 15:37 → 长白山站 19:38', channel: '铁路12306 · 已支付', action: '车票已确认；当天按票面时间完成安检、候车和接站', state: 'confirmed', status: '已购票', icon: 'train' },
-  { id: 'r3', date: '已出票 · 8月19日', title: 'G142', detail: '长白山站 17:47 → 沈阳北站 19:48', channel: '铁路12306 · 已支付', action: '车票已确认；D5 当天按票面时间到站候车', state: 'confirmed', status: '已购票', icon: 'train' },
-  { id: 'r4', date: '已出票 · 8月22日', title: 'G89', detail: '沈阳北站 → 南京（以订单为准）', channel: '铁路12306 · 已支付', action: '车票已确认；出行前复核发车时间、座席和到站信息', state: 'confirmed', status: '已购票', icon: 'train' },
+  { id: 'r2', date: '已出票 · 8月17日', title: 'G126', detail: '哈尔滨站 16:42 → 长春西 17:51', channel: '铁路12306 · 已支付', action: '车票已确认；哈尔滨站上车，不要误去哈尔滨西站', state: 'confirmed', status: '已购票', icon: 'train' },
+  { id: 'r3', date: '已出票 · 8月19日', title: 'G138', detail: '长春站 15:54 → 沈阳北站 17:11', channel: '铁路12306 · 已支付', action: '车票已确认；长春站上车，不是长春西站', state: 'confirmed', status: '已购票', icon: 'train' },
+  { id: 'r4', date: '已出票 · 8月22日', title: 'G98', detail: '沈阳北站 12:31 → 南京南站 19:28', channel: '铁路12306 · 已支付', action: '车票已确认；过路车，至少提前 1 小时到沈阳北站', state: 'confirmed', status: '已购票', icon: 'train' },
   { id: 'r5', date: '已预订 · 8月16日', title: '东北虎林园', detail: '8月16日 · 普通／惊险观光车', channel: '东北虎林园购票页 · 已支付', action: '门票已确认；出行前复核观光车票型和儿童优惠规则', state: 'confirmed', status: '已预订', icon: 'tiger' },
-  { id: 'r6', date: '已预约 · 8月16日 12:00—14:30', title: '哈工大入校预约', detail: '8月16日校园和航天馆 · 12:00—14:30', channel: '哈工大官方微信公众号 · 已确认', action: '预约已完成；携带预约所用证件，12:00 前到和兴路校门', state: 'confirmed', status: '已预约', icon: 'school' },
-  { id: 'r7', date: '8月17日 · 现场', title: '哈药六厂', detail: '南直路326号 · 公开参观区', channel: '现场身份证登记', action: '无需预约，轻装到场；若改上午直达车，直接取消', state: 'walkin', status: '无需预约', icon: 'museum' },
-  { id: 'r8', date: '8月11日 · 18:00', title: '长白山北景区', detail: '8月18日目标早场入园', channel: '长白山官方小程序', action: '17:55 进入，18:00 抢票；无票只关注官方回流', state: 'upcoming', status: '待抢票', window: { from: '2026-08-11', to: '2026-08-11' }, icon: 'mountain' },
-  { id: 'r9', date: '8月15—17日', title: '沈飞航空博览园', detail: '8月20日 · 航空科普场馆', channel: '沈飞航空博览园官方公众号', action: '完成实名预约；8月19日晚复核二维码和户外展区状态', state: 'upcoming', status: '待预约', window: { from: '2026-08-15', to: '2026-08-17' }, icon: 'museum' },
-  { id: 'r10', date: '8月13—17日', title: '刘老根大舞台', detail: '8月20日 · 目标19:00场', channel: '官方售票页', action: '确认儿童票、节目适龄性和靠过道座位', state: 'upcoming', status: '待购票', window: { from: '2026-08-13', to: '2026-08-17' }, icon: 'ticket' },
-  { id: 'r11', date: '8月14日起', title: '沈阳故宫', detail: '8月21日 · 目标08:30入馆', channel: '官方预约/授权平台', action: '日期开放后立即购买；入馆携带预约使用的证件原件', state: 'upcoming', status: '待预约', window: { from: '2026-08-14', to: '2026-08-21' }, icon: 'museum' },
-  { id: 'r12', date: '8月18—20日', title: '方城环游巴士', detail: '8月21日 · 目标11:00—11:30班次', channel: '沈阳文旅相关小程序／现场售票', action: '查询动态班次；无票改普通公交或中街步行', state: 'upcoming', status: '待预约', window: { from: '2026-08-18', to: '2026-08-20' }, icon: 'route' },
-  { id: 'r13', date: '8月14日起', title: '张学良旧居', detail: '8月21日 · 目标13:45—14:00入馆', channel: '官方预约/授权平台', action: '日期开放后购买；金融博物馆视体力进入', state: 'upcoming', status: '待预约', window: { from: '2026-08-14', to: '2026-08-21' }, icon: 'museum' },
-  { id: 'r14', date: '8月20日 · 现场', title: '中国工业博物馆', detail: '免费入馆 · 现场扫码登记', channel: '中国工业博物馆', action: '无需预约；至少预留90分钟，开放时间当天复核', state: 'walkin', status: '无需预约', icon: 'museum' },
+  { id: 'r6', date: '已预约 · 8月16日', title: '哈工大入校预约', detail: '8月16日校园和航天馆', channel: '哈工大官方微信公众号 · 已确认', action: '预约已完成；携带预约所用证件，13:15 前后到和兴路校门核验', state: 'confirmed', status: '已预约', icon: 'school' },
+  { id: 'r7', date: '8月17日 · 现场', title: '哈药六厂', detail: '南直路326号 · 公开参观区 09:00—17:00', channel: '现场身份证登记', action: '无需预约，身份证登记；午餐后留足高铁进站余量', state: 'walkin', status: '无需预约', icon: 'museum' },
+  { id: 'r8', date: '8月17日晚', title: '长影旧址博物馆', detail: '8月18日 · 目标09:00入馆', channel: '长影旧址博物馆官方平台', action: '8月17日晚核对开馆时间、票务和演出时刻；演出遇上就看', state: 'upcoming', status: '待核验', window: { from: '2026-08-17', to: '2026-08-17' }, icon: 'museum' },
+  { id: 'r9', date: '8月17日晚', title: '长春市动植物公园', detail: '8月18日 · 日场票 14:00 前后', channel: '长春市动植物公园官微', action: '核对日场开园时间、票价、儿童优惠和日夜场是否分票；只买日场', state: 'upcoming', status: '待核验', window: { from: '2026-08-17', to: '2026-08-17' }, icon: 'tiger' },
+  { id: 'r10', date: '8月15—17日', title: '沈飞航空博览园', detail: '8月20日 · 航空科普场馆', channel: '沈飞航空博览园官方公众号', action: '完成实名预约；8月19日晚复核二维码和户外展区状态', state: 'upcoming', status: '待预约', window: { from: '2026-08-15', to: '2026-08-17' }, icon: 'museum' },
+  { id: 'r11', date: '8月13—17日', title: '刘老根大舞台', detail: '8月20日 · 目标19:00场', channel: '官方售票页', action: '确认儿童票、节目适龄性和靠过道座位', state: 'upcoming', status: '待购票', window: { from: '2026-08-13', to: '2026-08-17' }, icon: 'ticket' },
+  { id: 'r12', date: '8月14日起', title: '沈阳故宫', detail: '8月21日 · 目标08:30入馆', channel: '官方预约/授权平台', action: '日期开放后立即购买；入馆携带预约使用的证件原件', state: 'upcoming', status: '待预约', window: { from: '2026-08-14', to: '2026-08-21' }, icon: 'museum' },
+  { id: 'r13', date: '8月18—20日', title: '方城环游巴士', detail: '8月21日 · 目标11:00—11:30班次', channel: '沈阳文旅相关小程序／现场售票', action: '查询动态班次；无票改普通公交或中街步行', state: 'upcoming', status: '待预约', window: { from: '2026-08-18', to: '2026-08-20' }, icon: 'route' },
+  { id: 'r14', date: '8月14日起', title: '张学良旧居', detail: '8月21日 · 目标13:45—14:00入馆', channel: '官方预约/授权平台', action: '日期开放后购买；金融博物馆视体力进入', state: 'upcoming', status: '待预约', window: { from: '2026-08-14', to: '2026-08-21' }, icon: 'museum' },
+  { id: 'r15', date: '8月20日 · 现场', title: '中国工业博物馆', detail: '免费入馆 · 现场扫码登记', channel: '中国工业博物馆', action: '无需预约；至少预留90分钟，开放时间当天复核', state: 'walkin', status: '无需预约', icon: 'museum' },
 ]
 
 const LEGEND_ITEMS: { state: ReservationState; label: string }[] = [
@@ -458,23 +466,24 @@ function reservationActionIcon(state: ReservationState): string {
 
 const HOTELS: HotelData[] = [
   { dayId: 'd0', night: 'D0 宿火车', name: 'Z366 软卧包厢', desc: '已购 Z366 软卧；南京站 16:58 出发，次日 14:51 抵达哈尔滨西。' },
-  { dayId: 'd1', night: 'D1—D2 宿哈尔滨', name: '中央大街—圣索菲亚教堂之间', desc: '家庭房或两张 1.35 米以上床的双床房；退房后确认行李可寄存至 13:30。' },
-  { dayId: 'd3', night: 'D3—D4 宿二道白河', name: '池北区游客集散中心附近', desc: '确认长白山站晚间接站、早餐时间、洗衣和温泉规则；两晚后 D5 退房转沈阳。' },
+  { dayId: 'd1', night: 'D1—D2 宿哈尔滨', name: '中央大街—圣索菲亚教堂之间', desc: '家庭房或两张 1.35 米以上床的双床房；8月17日退房后寄存行李，下午取件转长春。' },
+  { dayId: 'd3', night: 'D3—D4 宿长春', name: '人民广场—重庆路附近', desc: '两晚短停：去长影、动植物公园和长春站都方便；8月19日退房后可寄存行李到下午。' },
   { dayId: 'd5', night: 'D5—D7 宿沈阳', name: '中街—沈阳故宫附近', desc: '方便刘老根、故宫、帅府和老北市；D8 返程打车到沈阳北站方便。' },
 ]
 
 const TIPS = [
-  '天气：哈尔滨、长白山和沈阳的具体天气以出发前 1 天及当天官方预报为准；长白山天池以景区调度为准。',
-  '穿衣：短袖＋薄长袖＋轻薄防风外套，长白山另带一次性雨衣和防滑运动鞋。',
-  '证件：4 人身份证原件、12306 订单、已确认的哈工大预约（12:00—14:30）、长白山预约、沈阳场馆订单在两个成人手机中各保存一份。',
-  '车票：Z366、D552、G142、G89 均已购票；出发前只需在 12306 复核车次、时间、座席和到站信息。',
-  '长白山：D4 是唯一核心游览日，不再单独设置完整备用天；天池关闭时按瀑布与温泉群、绿渊潭、地下森林顺序取舍。',
+  '天气：哈尔滨、长春和沈阳的具体天气以出发前 1 天及当天官方预报为准；午后户外活动注意防暑补水。',
+  '穿衣：短袖＋薄长袖＋轻薄防风外套，防晒帽、驱蚊液和一次性雨衣随身。',
+  '证件：4 人身份证原件、12306 订单、哈工大预约截图、沈阳场馆订单在两个成人手机中各保存一份。',
+  '车票：Z366、G126、G138、G98 均已购票；出发前只需在 12306 复核车次、时间、座席和到站信息。',
+  '哈尔滨：D3 上午哈药六厂后 15:15 前后从酒店出发去哈尔滨站，不要误去哈尔滨西站。',
+  '长春：净月潭已取消，8月18日全部市区活动；动物园不重复哈尔滨虎园的猛兽体验。',
+  '长春：8月19日上午主动留白，不临时塞伪满皇宫或其他大型场馆；G138 从长春站上车。',
   '沈阳：D6 是高强度日，沈飞、酒店休息和刘老根优先；红梅第一删，西塔逛街和工博时长随后压缩。',
   'D7：故宫、环游巴士、帅府、老北市集中在方城和市中心；巴士无票时不影响故宫和帅府，改公交或步行。',
-  '亲子：每天保留休息窗口；地下森林、红梅文创园、金融博物馆和额外场馆都是可放弃项目，不为全打卡硬走。',
-  '长白山：两成人各背轻便背包，孩子只带水杯和薄外套；山顶不建议撑雨伞。',
-  '饮食：东北菜分量大，每顿少点一些；D3 晚到二道白河前提前和酒店确认接站和简餐。',
-  '核验：景区开放、门票、车次、接站和天气敏感项目，出发前一天再次通过官方渠道确认。',
+  '亲子：每天保留休息窗口；红梅文创园、金融博物馆和额外场馆都是可放弃项目，不为全打卡硬走。',
+  '饮食：东北菜分量大，每顿少点一些；D3 晚到长春前和酒店确认入住和行李安排。',
+  '核验：景区开放、门票、车次和天气敏感项目，出发前一天再次通过官方渠道确认。',
 ]
 
 function WeatherCard({ city, state }: { city: string; state: WeatherState }) {
@@ -585,7 +594,7 @@ function TimelineItem({ entry, open, onToggle }: { entry: TimelineEntry; open: b
 export default function HarbinTripPage({ onBack }: Props) {
   const [visible, setVisible] = useState(false)
   const [activeDay, setActiveDay] = useState('prep')
-  const [openItems, setOpenItems] = useState<Record<string, boolean>>({ 'd1-5': true, 'd2-4': true, 'd4-5': true })
+  const [openItems, setOpenItems] = useState<Record<string, boolean>>({ 'd1-7': true, 'd2-4': true, 'd4-5': true, 'd4-11': true })
   const [weatherMap, setWeatherMap] = useState<Record<string, WeatherState>>({})
   const [today] = useState(() => todayString())
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
@@ -660,19 +669,19 @@ export default function HarbinTripPage({ onBack }: Props) {
         <section className={styles.hero}>
           <div className={styles.heroEyebrow}><span>WINDSSEA DAILY</span><span>FAMILY ROUTE · 2026</span></div>
           <h1 className={styles.heroTitle}>2026 东北亲子避暑 9 日</h1>
-          <p className={styles.heroSub}>8.14—8.22 · 2 大 2 小 · 南京出发 · 白山松水间</p>
+          <p className={styles.heroSub}>8.14—8.22 · 2 大 2 小 · 南京出发 · 哈尔滨 · 长春 · 沈阳</p>
           <div className={styles.heroStats}>
             <div className={styles.heroStat}><strong>9</strong><span>天</span></div>
             <div className={styles.heroStat}><strong>3</strong><span>个目的地</span></div>
             <div className={styles.heroStat}><strong>4</strong><span>位同行者</span></div>
-            <div className={styles.heroStat}><strong>1</strong><span>核心天气日</span></div>
+            <div className={styles.heroStat}><strong>3</strong><span>段高铁</span></div>
           </div>
           <div className={styles.heroRoute} aria-label="行程路线">
-            {['南京', '哈尔滨', '长白山', '沈阳', '南京'].map((stop, index) => (
+            {['南京', '哈尔滨', '长春', '沈阳', '南京'].map((stop, index) => (
               <span key={`${stop}-${index}`} className={styles.heroRouteStop}><span className={styles.heroRouteDot}>{index === 0 ? '出发' : index === 4 ? '回家' : index + 1}</span><strong>{stop}</strong>{index < 4 && <span className={styles.heroRouteLine} />}</span>
             ))}
           </div>
-          <div className={styles.heroAlert}><Icon name="alert" size={17} /><span>Z366、D552、G142、G89 车票与东北虎林园门票均已确认；哈工大入校预约已完成（8 月 16 日 12:00—14:30）。D4 是长白山唯一核心天气日，D6 高强度项目按规则删减。</span></div>
+          <div className={styles.heroAlert}><Icon name="alert" size={17} /><span>Z366、G126、G138、G98 车票与东北虎林园门票均已确认；哈工大入校预约已完成。净月潭已取消，8 月 18 日全部在长春市区活动，8 月 19 日上午留白恢复体力。</span></div>
           <div className={styles.heroChips}>
             {DAYS.map(day => <button key={day.id} className={`${styles.heroChip} ${activeDay === day.id ? styles.heroChipActive : ''}`} onClick={() => scrollToDay(day.id)}>{day.emoji} {day.label}</button>)}
           </div>
@@ -684,7 +693,7 @@ export default function HarbinTripPage({ onBack }: Props) {
           <ReservationRail items={RESERVATIONS} today={today} />
           <div className={styles.overviewGrid}>
             <div className={styles.panel}><div className={styles.panelTitle}><Icon name="hotel" size={17} />住宿分段</div><div className={styles.hotelList}>{HOTELS.map(hotel => <HotelCard key={hotel.dayId} hotel={hotel} />)}</div></div>
-            <div className={styles.panel}><div className={styles.panelTitle}><Icon name="route" size={17} />全程规则</div><ul className={styles.ruleList}><li><Icon name="check" size={15} />Z366、D552、G142、G89 已购票；其余车次以 12306 成功订单为准。</li><li><Icon name="check" size={15} />哈工大入校预约已完成，8 月 16 日 12:00—14:30 按预约时段入校。</li><li><Icon name="check" size={15} />长白山到站是长白山站，不是长白山西站。</li><li><Icon name="check" size={15} />长白山只有一个核心天气日，关闭时按景区开放顺序取舍。</li><li><Icon name="check" size={15} />两个孩子的体力优先于全景点打卡，D6 按删减顺序执行。</li></ul></div>
+            <div className={styles.panel}><div className={styles.panelTitle}><Icon name="route" size={17} />全程规则</div><ul className={styles.ruleList}><li><Icon name="check" size={15} />Z366、G126、G138、G98 已购票；其余车次以 12306 成功订单为准。</li><li><Icon name="check" size={15} />哈工大入校预约已完成，8 月 16 日按预约时段入校。</li><li><Icon name="check" size={15} />G126 哈尔滨站上车、长春西下车；G138 长春站上车、沈阳北下车。</li><li><Icon name="check" size={15} />净月潭已取消；8 月 18 日全部在长春市区活动，8 月 19 日上午留白。</li><li><Icon name="check" size={15} />两个孩子的体力优先于全景点打卡，D6 按删减顺序执行。</li></ul></div>
           </div>
         </section>
 
