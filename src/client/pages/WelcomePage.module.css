@@ -354,6 +354,7 @@
 
 .iconWrapOrange { background: var(--orange-faint); color: var(--orange); }
 .iconWrapGreen  { background: var(--green-faint); color: var(--green); }
+.iconWrapBlue   { background: var(--accent-faint); color: var(--accent); }
 
 .tripBody {
   text-align: left;

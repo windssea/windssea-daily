@@ -5,18 +5,19 @@ import ShanxiTripPage from './pages/ShanxiTripPage'
 import QuzhouTripPage from './pages/QuzhouTripPage'
 import NingxiaTripPage from './pages/NingxiaTripPage'
 import HarbinTripPage from './pages/HarbinTripPage'
+import JiangxiTripPage from './pages/JiangxiTripPage'
 import IFramePage from './pages/IFramePage'
 import TravelMapPage from './pages/TravelMapPage'
 import { PinModal } from './components/PinModal'
 import { useAuth } from './hooks/useAuth'
 
-type Page = 'welcome' | 'todo' | 'shanxi' | 'quzhou' | 'huangshan' | 'ningxia' | 'harbin' | 'travelmap'
+type Page = 'welcome' | 'todo' | 'shanxi' | 'quzhou' | 'huangshan' | 'ningxia' | 'harbin' | 'jiangxi' | 'travelmap'
 
 const PROTECTED: Page[] = ['todo', 'travelmap']
 
 function getPageFromHash(): Page {
   const hash = window.location.hash.replace('#', '')
-  if (hash === 'todo' || hash === 'shanxi' || hash === 'quzhou' || hash === 'huangshan' || hash === 'ningxia' || hash === 'harbin' || hash === 'travelmap') return hash
+  if (hash === 'todo' || hash === 'shanxi' || hash === 'quzhou' || hash === 'huangshan' || hash === 'ningxia' || hash === 'harbin' || hash === 'jiangxi' || hash === 'travelmap') return hash
   return 'welcome'
 }
 
@@ -65,6 +66,7 @@ function App() {
   if (page === 'travelmap') return <TravelMapPage onBack={() => navigate('welcome')} />
   if (page === 'ningxia') return <NingxiaTripPage onBack={() => navigate('welcome')} />
   if (page === 'harbin') return <HarbinTripPage onBack={() => navigate('welcome')} />
+  if (page === 'jiangxi') return <JiangxiTripPage onBack={() => navigate('welcome')} />
   if (page === 'huangshan') return (
     <IFramePage
       title="黄山旅游"
@@ -81,6 +83,7 @@ function App() {
         onHuangshanTrip={() => navigate('huangshan')}
         onNingxiaTrip={() => navigate('ningxia')}
         onHarbinTrip={() => navigate('harbin')}
+        onJiangxiTrip={() => navigate('jiangxi')}
         onTravelMap={() => handleProtectedNav('travelmap')}
         isAuthenticated={isAuthenticated}
         onAvatarClick={() => setPinModalOpen(true)}
