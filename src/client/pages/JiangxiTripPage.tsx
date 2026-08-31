@@ -17,6 +17,8 @@ interface WeatherState {
   wind: string
   source: WeatherSource
   advice: string
+  /** 参考态下：实时预报开放日期（如「10月15日」），超出 30 天预报窗口时提示何时自动切换 */
+  liveFrom?: string
 }
 
 type WeatherFallback = Omit<WeatherState, 'source'>
@@ -149,6 +151,19 @@ function weatherTextToIcon(text: string): string {
   if (text.includes('雪')) return 'cloudy'
   if (text.includes('风') || text.includes('沙') || text.includes('雾') || text.includes('霾')) return 'windy'
   return 'cloudy'
+}
+
+/** 和风免费档预报只覆盖未来 30 天；超出窗口的日期返回实时数据开放日（如「10月15日」），窗口内返回 null */
+const FORECAST_HORIZON_DAYS = 30
+
+function forecastOpenDate(dateStr: string): string | null {
+  const target = new Date(`${dateStr}T00:00:00`)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const daysOut = Math.round((target.getTime() - today.getTime()) / 86400000)
+  if (daysOut <= FORECAST_HORIZON_DAYS) return null
+  const open = new Date(target.getTime() - FORECAST_HORIZON_DAYS * 86400000)
+  return `${open.getMonth() + 1}月${open.getDate()}日`
 }
 
 const WEATHER_REFERENCE: Record<string, WeatherFallback> = {
@@ -380,7 +395,7 @@ function WeatherCard({ city, state }: { city: string; state: WeatherState }) {
           </span>
         </div>
         <div className={styles.weatherMain}>{state.text}<span className={styles.weatherTemp}>{state.temp}</span></div>
-        <div className={styles.weatherWind}>{state.wind}</div>
+        <div className={styles.weatherWind}>{state.liveFrom ? `实时预报：${state.liveFrom} 起开放 · 届时自动切换` : state.wind}</div>
         <div className={styles.weatherAdvice}>{state.advice}</div>
       </div>
     </div>
@@ -540,7 +555,12 @@ export default function JiangxiTripPage({ onBack }: Props) {
     window.setTimeout(() => { isScrolling.current = false }, 800)
   }, [])
 
-  const getWeather = (day: DayData): WeatherState => weatherMap[day.id] || { ...day.weatherFallback, source: 'reference' }
+  const getWeather = (day: DayData): WeatherState => {
+    const live = weatherMap[day.id]
+    if (live) return live
+    const liveFrom = forecastOpenDate(day.weatherDate)
+    return { ...day.weatherFallback, source: 'reference', liveFrom: liveFrom ?? undefined }
+  }
   const toggleItem = (id: string) => setOpenItems(current => ({ ...current, [id]: !current[id] }))
   const prepActive = activeDay === 'prep'
   const heroStops = ['南京', '庐山秀峰', '南昌', '望仙谷', '景德镇', '南京']
